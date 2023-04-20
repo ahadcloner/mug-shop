@@ -1,0 +1,77 @@
+.sb-section{
+    background-color: #1c1c1c;
+    opacity: 0.97;
+    top:65px;
+    height: calc(100vh - 65px);
+    width:250px ;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 500ms;
+    position: fixed;
+    z-index: 1;
+}
+.sb-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+}
+.sb-menu{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 6px;
+}
+.sb-menu-item{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #252525;
+    margin-top: 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 500ms;
+}
+.sb-menu-item span{
+    font-size: 14px;
+    transition: all 400ms;
+}
+.sb-menu-item svg{
+    width: 20px;
+    height: 20px;
+    transition: all 400ms;
+}
+.sb-menu-item:hover{
+    transform: scale(1.04);
+    box-shadow: 0 0 2px orange;
+}
+
+.sb-menu-item:hover span{
+    color:orange;
+    padding-right:  10px;
+}
+.sb-menu-item:hover svg{
+    color:orange;
+
+}
+.sb-hide{
+   width: 60px;
+}
+
+.sb-hide .sb-title{
+    display: none;
+}
+.sb-hide .sb-menu-item span{
+    display: none;
+}
+.sb-hide .sb-menu{
+    margin-top: 3.5rem;
+}
+.sb-hide .sb-menu-item{
+    margin: 10px auto;
+}

@@ -1,0 +1,452 @@
+.pd-container {
+    width: calc(100% - 60px);
+    height: calc(100vh - 65px);
+    position: absolute;
+    top: 65px;
+    background-color: #F6F6F5;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.pd-top {
+    width: 98%;
+    height: 78%;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    justify-content: space-between;
+    margin: 10px auto;
+    border-radius: 8px;
+}
+
+.pd-bottom {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.pd-comments-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pd-comments-title h2 {
+    font-size: 18px;
+    padding: 3px;
+    margin-right: 20px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.pd-comments-input {
+    width: 98%;
+    height: 100px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: end;
+    align-items: end;
+    margin-bottom: 20px;
+
+
+}
+
+.pd-comments-input button {
+    font-family: 'vazirmatn', sans-serif;
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    align-self: center;
+    background: white;
+    border: none;
+    position: absolute;
+    left: 25px;
+    margin-top: 5px;
+
+}
+
+.pd-comments-input button svg {
+    color: darkorange;
+    width: 25px;
+    height: 25px;
+
+}
+
+.pd-comments-input input {
+    font-family: 'vazirmatn', serif;
+    width: 99%;
+    height: 40px;
+    text-align: right;
+    font-size: 15px;
+    border-radius: 8px;
+    align-self: center;
+    padding-right: 20px;
+    border: none;
+    box-shadow: 0 0 2px #b9b9b9;
+    position: relative;
+    margin: auto auto;    outline: none;
+
+}
+
+.pd-comments-comments {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.pd-comment-card {
+    width: 98%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    cursor: pointer;
+    margin: 1px auto 20px auto;
+    border-radius: 8px;
+
+}
+
+.pd-comment-top {
+    width: 99%;
+    height: 20%;
+    display: flex;
+    justify-content: end;
+    align-items: start;
+}
+
+.pd-comment-top h3 {
+    color: black;
+    font-size: 16px;
+    padding: 3px;
+    margin: 10px;
+}
+
+.pd-comment-body {
+    width: 99%;
+    height: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    align-items: start;
+}
+.pd-comment-body::after{
+    content: '';
+    width: 95%;
+    height: 1px;
+    background-color: #ebebeb;
+    margin: 0 auto;
+}
+.pd-comment-body:last-child::after{
+    content: '';
+    width: 95%;
+    height: 0;
+}
+
+.pd-comment-body p {
+    padding: 10px;
+    line-height: 30px;
+    text-align: right;
+    color: black;
+    font-size: 16px;
+}
+
+.pd-top-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.row-correcter {
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.pd-top-left-addtocard {
+
+    width: 50%;
+    height: 100%;
+    background-color: #F6F6F5;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-left: 30px;
+    border-radius: 8px;
+    /* border: 1px solid red; */
+
+}
+
+.addtocard-middle-item {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.addtocard-middle-item:first-child{
+    margin-top: 8%;
+}
+
+.price-bold {
+    margin-top: 10px;
+}
+
+.price-bold span{
+    font-weight: 800 !important;
+}
+
+.addtocard-middle-item span {
+    color: #000;
+    margin: 20px 10%;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.addtocard-bottom {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-left: 10px; */
+    margin-bottom: 10px;
+
+}
+
+.addtocard-bottom span {
+    color: black;
+    margin: auto 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.addtocard-bottom button {
+    font-family: 'vazirmatn', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    background-color: darkorange;
+    height: 50px;
+    width: 83%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 1px solid #dadada;
+
+}
+
+.pd-top-left-table {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: 20px;
+    border-radius: 8px;
+    background-color: white;
+    /* border: 1px solid red; */
+}
+
+.pd-top-left-table table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    border-radius: 8px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+
+.pd-top-left-table table tr {
+    width: 93%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 8px;
+
+}
+
+.pd-top-left-table table tr td {
+    color: black;
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+
+}
+.pd-top-left-table table tr td button{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    background-color: black;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pd-top-left-table table tr td span{
+    color: black;
+    font-size: 18px;
+    margin-right: 7px;
+    margin-left: 7px;
+
+}
+.pd-top-left-table table tr td button svg{
+    color: white;
+    font-size: 16px;
+    font-weight: 700;    
+
+
+}
+
+.pd-top-right {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.pd-product-image {
+    display: flex;
+    width: 80%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+}
+
+.pd-image-main {
+    width: 60%;
+
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid #b9b9b9; */
+    border-radius: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: white;
+
+}
+
+.pd-image-main img {
+    width: auto;
+    height: 100%;
+    border-radius: 10px;
+    /* border: 1px solid #b9b9b9; */
+}
+
+.pd-image-album {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    /* border: 1px solid #bebebe; */
+    border-radius: 8px;
+    padding: 10px;
+    background-color: white;
+    cursor: pointer;
+    overflow: hidden;
+    border: 1px solid #f1f1f1;
+
+}
+
+.pd-image-album img {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    margin: 2px;
+    /* border: 1px solid #b9b9b9; */
+}
+
+@media screen and (max-width:1150px) {
+    .pd-comments-title{
+        margin-top: 20px;
+    }
+    .pd-comments-input input{
+        margin: 0 auto;
+    }
+    
+    .pd-bottom{
+       padding-top: 40px;
+    }
+    .pd-top{
+        width: 98%;
+        height: 100%;
+        flex-direction: column-reverse;
+        justify-content: start;
+        align-items: center;
+        border-radius: 8px;
+    }
+    .pd-top-left{
+        height: max-content;
+        background-color: white;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border-radius: 8px;
+    }
+    .row-correcter{
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+    .pd-top-right{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    
+}
+@media screen and (max-width: 850px) {
+    .pd-bottom{
+        padding-top: 0;
+    }
+    .pd-top-right{
+        width: 100%;
+    }
+    .row-correcter{
+        display: flex;
+        flex-direction: column;
+    }
+    .pd-top{
+        height: max-content;
+    }
+    .pd-top-left{
+        height: max-content;
+    }
+    .pd-top-left-table{
+        width: 100%;
+    }
+    .pd-top-left-addtocard{
+        margin: 0 auto;
+        width: 90%;
+    }
+}
+.theme-color{
+    color:darkorange !important;
+}
