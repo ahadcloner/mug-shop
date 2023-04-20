@@ -13,6 +13,7 @@ import BuyCard from "./components/BuyCard";
 import ProductDetail from "./components/ProductDetail";
 import ProductGallery from "./components/ProductGallery";
 import MainPage from "./components/MainPage";
+import Login from "./components/Login";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -25,10 +26,11 @@ function App() {
                 <SideBar></SideBar>
                 <Routes>
                     <Route path={'/'} element={<MainPage/>}/>
-                    <Route path={'/card'} element={<BuyCard/>}/>
+                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/cart'} element={<BuyCard/>}/>
                     <Route path={'/product-detail/:id'} element={<ProductDetail/>}/>
                 </Routes>
-                <UserArea></UserArea>
+                {/*<UserArea></UserArea>*/}
             </BrowserRouter>
                 </SbContext.Provider>
             </UaContext.Provider>
