@@ -8,8 +8,12 @@ import { RiUser6Line } from "react-icons/ri";
 import { VscTriangleDown } from "react-icons/vsc";
 import {UaContext,SbContext} from "./SideBarContext";
 import {useContext} from "react";
+import { useNavigate } from "react-router-dom";
+
+
 
 function NavBar(){
+    const navigate = useNavigate();
     const {sideBarStatus,setSideBarStatus} = useContext(SbContext);
     const {UaClass,setUaClass} = useContext(UaContext);
 
@@ -35,7 +39,7 @@ function NavBar(){
                 </div>
             </div>
             <div className={ 'nb-center'}>
-                <h2>فروشگاه ماگ شاپ</h2>
+                <h2 onClick={()=>navigate('/')}>فروشگاه ماگ شاپ</h2>
             </div>
             <div className={ 'nb-left'}>
                 <div onClick={handleUserArea} className={'nb-user-area'}>
@@ -43,8 +47,8 @@ function NavBar(){
                     <VscTriangleDown/>
                 </div>
                 <div className={'nb-icons'}>
-                    <SlBasket/>
-                    <CgBookmark/>
+                    <SlBasket onClick={()=>navigate('/cart')}/>
+                    <CgBookmark onClick={()=>navigate('/profile')}/>
                 </div>
             </div>
         </nav>

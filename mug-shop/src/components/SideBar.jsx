@@ -6,10 +6,11 @@ import {AiOutlineMessage} from "react-icons/ai";
 import {GiArchiveRegister} from "react-icons/gi";
 import {useContext} from "react";
 import {SbContext} from "./SideBarContext";
-
+import { useNavigate } from "react-router-dom";
 
 function SideBar() {
     const {sideBarStatus, setSideBarStatus} = useContext(SbContext);
+    const navigate = useNavigate();
 
     return (
         <section className={`sb-section ${sideBarStatus}`}>
@@ -17,7 +18,7 @@ function SideBar() {
                 <h2>فروشگاه ماگ شاپ</h2>
             </div>
             <div className={'sb-menu'}>
-                <div className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
+                <div onClick={()=>navigate('/')} className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
                     <span>خانه</span>
                     <BiHomeAlt2/>
                 </div>
@@ -25,7 +26,7 @@ function SideBar() {
                     <span>ثبت نام</span>
                     <GiArchiveRegister/>
                 </div>
-                <div className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
+                <div onClick={()=>navigate('/login')} className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
                     <span>ورود به حساب</span>
                     <IoMdLogIn/>
                 </div>

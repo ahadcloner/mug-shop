@@ -45,6 +45,9 @@ span , h2{
     justify-content: center;
     align-items: center;
 }
+.nb-center h2{
+    cursor: pointer;
+}
 .nb-left{
    flex: 1;
     display: flex;
