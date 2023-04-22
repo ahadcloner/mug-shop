@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import '../assets/styles/UserProfile.css';
+
 import {RiUser6Line, RiInformationLine, RiErrorWarningLine} from "react-icons/ri";
 import {FaShoppingBasket} from "react-icons/fa";
 import {AiOutlineHeart, AiTwotoneEdit} from "react-icons/ai";
 import {BiExit} from "react-icons/bi";
-import {GoVerified} from "react-icons/go";
+import {RxCross1} from "react-icons/rx";
 import {IoMdAdd} from "react-icons/io";
-import Card from "./Card";
+
 import p1 from '../assets/images/1.jpg';
 import p2 from '../assets/images/2.jpg';
 import p3 from '../assets/images/3.jpg';
@@ -14,6 +15,9 @@ import p4 from '../assets/images/4.jpg';
 import p5 from '../assets/images/5.jpg';
 import p6 from '../assets/images/6.jpg';
 import p7 from '../assets/images/7.png';
+import ChangeSingleParameterModal from "./Modals/ChangeSingleParameterModal";
+import TextAreaModal from "./Modals/TextAreaModal";
+import ComboModal from "./Modals/ComboModal";
 
 const profile_addresses=[
     {id:0 , address:'خیابان شهدای خانوک کوچه 5 درب اول سمت راست'},
@@ -43,12 +47,61 @@ let data = [
     {id: 18, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
     {id: 19, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
 ];
+const states = [
+    {id:0 ,value:'کرمان'},
+    {id:1 ,value:'تهران'},
+    {id:2 ,value:'مشهد'},
+    {id:3 ,value:'اصفهان'},
+    {id:4 ,value:'خوزستان'},
+    {id:5 ,value:'قم'}
+]
+
+
 function UserProfile() {
 
     const [showInfo, setShowInfo] = useState(true);
     const [showOrders, setShowOrders] = useState(false);
     const [showFavorite, setShowFavorite] = useState(false);
     const [addressCount , setAddressCount] = useState(0);
+    const [openSingleParameterModal, setOpenSingleParameterModal] = React.useState(false);
+    const [openTextAreaModal, setOpenTextAreaModal] = React.useState(false);
+    const [openComboModal, setOpenComboModal] = React.useState(false);
+    const [modalTitle, setModalTitle] = React.useState('');
+    const [modalFieldTitle, setModalFieldTitle] = React.useState('');
+    const [modalOldValue, setModalOldValue] = React.useState('');
+    const [modalComboData, setModalComboData] = useState([]);
+
+   function open_modal(title , field_title ,old_value){
+       setModalTitle(title);
+       setModalFieldTitle(field_title);
+       setModalOldValue(old_value);
+       setOpenSingleParameterModal(true);
+   }
+    function open_textarea_modal(title , field_title ,old_value){
+        setModalTitle(title);
+        setModalFieldTitle(field_title);
+        setModalOldValue(old_value);
+        setOpenTextAreaModal(true);
+    }
+    function open_combo_modal(title , field_title ,old_value ,data){
+        setModalTitle(title);
+        setModalFieldTitle(field_title);
+        setModalOldValue(old_value);
+        setModalComboData([...data]);
+        setOpenComboModal(true);
+    }
+   function close_modal()
+   {
+       setOpenSingleParameterModal(false);
+   }
+    function close_textarea_modal()
+    {
+        setOpenTextAreaModal(false);
+    }
+    function close_combo_modal(){
+       setOpenComboModal(false);
+    }
+
     const add_address = ()=>{
         if (addressCount<5){
             setAddressCount(addressCount+1);
@@ -73,6 +126,35 @@ function UserProfile() {
     }
     return (
         <div className={'up-container'}>
+            <ChangeSingleParameterModal
+                isOpen={openSingleParameterModal}
+                onRequestClose={close_modal}
+                old_value={modalOldValue}
+                title ={modalTitle}
+                field_title={modalFieldTitle}
+            >
+            </ChangeSingleParameterModal>
+
+            <TextAreaModal
+                isOpen={openTextAreaModal}
+                onRequestClose={close_textarea_modal}
+                old_value={modalOldValue}
+                title ={modalTitle}
+                field_title={modalFieldTitle}
+            >
+            </TextAreaModal>
+
+            <ComboModal
+                isOpen={openComboModal}
+                onRequestClose={close_combo_modal}
+                old_value={modalOldValue}
+                title ={modalTitle}
+                field_title={modalFieldTitle}
+                data ={[...modalComboData]}
+            >
+            </ComboModal>
+
+
             <div className="up-menu">
                 <div className="menu-card">
                     <div className="up-menu-card-row">
@@ -111,7 +193,7 @@ function UserProfile() {
                                 <div className="up-info-col edit">
                                     <span>نام کاربری</span>
                                     <span className={'info-value'}>احد میرحبیبی</span>
-                                    <AiTwotoneEdit/>
+                                    <AiTwotoneEdit onClick={()=>open_modal('تغییر نام کاربری','نام کاربری','احد میرحبیبی')}/>
                                 </div>
                                 <div className="up-info-col">
                                     <span>ایمیل</span>
@@ -122,7 +204,7 @@ function UserProfile() {
                                 <div className="up-info-col edit">
                                     <span>شماره تماس</span>
                                     <span className={'info-value'}>09387153611</span>
-                                    <AiTwotoneEdit/>
+                                    <AiTwotoneEdit onClick={()=>open_modal('تغییر شماره تماس','شماره تماس','09387153611')}/>
                                 </div>
                                 <div className="up-info-col edit">
                                     <span>تاریخ تولد</span>
@@ -135,12 +217,12 @@ function UserProfile() {
                                 <div className="up-info-col edit">
                                     <span>شهر </span>
                                     <span className={'info-value'}>کرمان</span>
-                                    <AiTwotoneEdit/>
+                                    <AiTwotoneEdit onClick={()=>open_combo_modal('تغییر شهر','شهر','کرمان',[...states])}/>
                                 </div>
                                 <div className="up-info-col edit">
                                     <span>استان </span>
                                     <span className={'info-value'}>کرمان</span>
-                                    <AiTwotoneEdit/>
+                                    <AiTwotoneEdit onClick={()=>open_combo_modal('تغییر استان','استان','کرمان',[...states])} />
                                 </div>
                             </div>
                         </div>
@@ -150,10 +232,11 @@ function UserProfile() {
                                     {
                                          profile_addresses.slice(0,addressCount).map((d)=>{
                                              return(
-                                                 <div key={d.id} className="up-addresses-col edit">
+                                                 <div key={d.id} className="up-addresses-col edit delete">
                                                      <span> آدرس{d.id+1}</span>
                                                      <span className={'info-value'}>{d.address}</span>
-                                                     <AiTwotoneEdit/>
+                                                     <AiTwotoneEdit className={'edit-icon'} onClick={()=>open_textarea_modal('تغییر آدرس','آدرس',d.address)}/>
+                                                     <RxCross1 className={'delete-icon'}/>
                                                  </div>
                                              )
                                          })
