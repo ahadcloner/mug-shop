@@ -5,6 +5,7 @@ import {RiUser6Line, RiInformationLine, RiErrorWarningLine} from "react-icons/ri
 import {FaShoppingBasket} from "react-icons/fa";
 import {AiOutlineHeart, AiTwotoneEdit} from "react-icons/ai";
 import {BiExit} from "react-icons/bi";
+import {CiLocationOn} from "react-icons/ci";
 import {RxCross1} from "react-icons/rx";
 import {IoMdAdd} from "react-icons/io";
 
@@ -19,12 +20,12 @@ import ChangeSingleParameterModal from "./Modals/ChangeSingleParameterModal";
 import TextAreaModal from "./Modals/TextAreaModal";
 import ComboModal from "./Modals/ComboModal";
 
-const profile_addresses=[
-    {id:0 , address:'خیابان شهدای خانوک کوچه 5 درب اول سمت راست'},
-    {id:1 , address:'بلوار جمهوری یانک رسالت'},
-    {id:2 , address:'خیابان شهید مصطفی خمینی کوچه 45'},
-    {id:3 , address:'خیابان شهید عباس پور مقابل کلانتری'},
-    {id:4 , address:'خیابان جمهوری کوچه 12 فرعی اول سمت راست'},
+const profile_addresses = [
+    {id: 0, address: 'خیابان شهدای خانوک کوچه 5 درب اول سمت راست'},
+    {id: 1, address: 'بلوار جمهوری یانک رسالت'},
+    {id: 2, address: 'خیابان شهید مصطفی خمینی کوچه 45'},
+    {id: 3, address: 'خیابان شهید عباس پور مقابل کلانتری'},
+    {id: 4, address: 'خیابان جمهوری کوچه 12 فرعی اول سمت راست'},
 ]
 let data = [
     {id: 1, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
@@ -48,12 +49,12 @@ let data = [
     {id: 19, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
 ];
 const states = [
-    {id:0 ,value:'کرمان'},
-    {id:1 ,value:'تهران'},
-    {id:2 ,value:'مشهد'},
-    {id:3 ,value:'اصفهان'},
-    {id:4 ,value:'خوزستان'},
-    {id:5 ,value:'قم'}
+    {id: 0, value: 'کرمان'},
+    {id: 1, value: 'تهران'},
+    {id: 2, value: 'مشهد'},
+    {id: 3, value: 'اصفهان'},
+    {id: 4, value: 'خوزستان'},
+    {id: 5, value: 'قم'}
 ]
 
 
@@ -62,7 +63,9 @@ function UserProfile() {
     const [showInfo, setShowInfo] = useState(true);
     const [showOrders, setShowOrders] = useState(false);
     const [showFavorite, setShowFavorite] = useState(false);
-    const [addressCount , setAddressCount] = useState(0);
+    const [showAddresses, setShowAddresses] = useState(false);
+    const [showOrderDetail, setShowOrderDetail] = useState(false);
+    const [addressCount, setAddressCount] = useState(0);
     const [openSingleParameterModal, setOpenSingleParameterModal] = React.useState(false);
     const [openTextAreaModal, setOpenTextAreaModal] = React.useState(false);
     const [openComboModal, setOpenComboModal] = React.useState(false);
@@ -70,41 +73,49 @@ function UserProfile() {
     const [modalFieldTitle, setModalFieldTitle] = React.useState('');
     const [modalOldValue, setModalOldValue] = React.useState('');
     const [modalComboData, setModalComboData] = useState([]);
+    const [activeMenu, setActiveMenu] = useState('infos');
 
-   function open_modal(title , field_title ,old_value){
-       setModalTitle(title);
-       setModalFieldTitle(field_title);
-       setModalOldValue(old_value);
-       setOpenSingleParameterModal(true);
-   }
-    function open_textarea_modal(title , field_title ,old_value){
+    const change_menu = (item) => {
+        setActiveMenu(item);
+    }
+
+    function open_modal(title, field_title, old_value) {
+        setModalTitle(title);
+        setModalFieldTitle(field_title);
+        setModalOldValue(old_value);
+        setOpenSingleParameterModal(true);
+    }
+
+    function open_textarea_modal(title, field_title, old_value) {
         setModalTitle(title);
         setModalFieldTitle(field_title);
         setModalOldValue(old_value);
         setOpenTextAreaModal(true);
     }
-    function open_combo_modal(title , field_title ,old_value ,data){
+
+    function open_combo_modal(title, field_title, old_value, data) {
         setModalTitle(title);
         setModalFieldTitle(field_title);
         setModalOldValue(old_value);
         setModalComboData([...data]);
         setOpenComboModal(true);
     }
-   function close_modal()
-   {
-       setOpenSingleParameterModal(false);
-   }
-    function close_textarea_modal()
-    {
-        setOpenTextAreaModal(false);
-    }
-    function close_combo_modal(){
-       setOpenComboModal(false);
+
+    function close_modal() {
+        setOpenSingleParameterModal(false);
     }
 
-    const add_address = ()=>{
-        if (addressCount<5){
-            setAddressCount(addressCount+1);
+    function close_textarea_modal() {
+        setOpenTextAreaModal(false);
+    }
+
+    function close_combo_modal() {
+        setOpenComboModal(false);
+    }
+
+    const add_address = () => {
+        if (addressCount < 5) {
+            setAddressCount(addressCount + 1);
         }
     }
     const show_menu = (item) => {
@@ -112,17 +123,37 @@ function UserProfile() {
             setShowInfo(true);
             setShowOrders(false);
             setShowFavorite(false);
+            setShowAddresses(false);
+            setShowOrderDetail(false);
         }
         if (item === 'orders') {
             setShowInfo(false);
             setShowOrders(true);
             setShowFavorite(false);
+            setShowAddresses(false);
+            setShowOrderDetail(false);
         }
         if (item === 'favorites') {
             setShowInfo(false);
             setShowOrders(false);
             setShowFavorite(true);
+            setShowAddresses(false);
+            setShowOrderDetail(false);
         }
+        if (item === 'addresses') {
+            setShowInfo(false);
+            setShowOrders(false);
+            setShowFavorite(false);
+            setShowAddresses(true);
+            setShowOrderDetail(false);
+        }
+    }
+    const change_show_order_detail = ()=>{
+        setShowInfo(false);
+        setShowOrders(false);
+        setShowFavorite(false);
+        setShowAddresses(false);
+        setShowOrderDetail(true);
     }
     return (
         <div className={'up-container'}>
@@ -130,7 +161,7 @@ function UserProfile() {
                 isOpen={openSingleParameterModal}
                 onRequestClose={close_modal}
                 old_value={modalOldValue}
-                title ={modalTitle}
+                title={modalTitle}
                 field_title={modalFieldTitle}
             >
             </ChangeSingleParameterModal>
@@ -139,7 +170,7 @@ function UserProfile() {
                 isOpen={openTextAreaModal}
                 onRequestClose={close_textarea_modal}
                 old_value={modalOldValue}
-                title ={modalTitle}
+                title={modalTitle}
                 field_title={modalFieldTitle}
             >
             </TextAreaModal>
@@ -148,9 +179,9 @@ function UserProfile() {
                 isOpen={openComboModal}
                 onRequestClose={close_combo_modal}
                 old_value={modalOldValue}
-                title ={modalTitle}
+                title={modalTitle}
                 field_title={modalFieldTitle}
-                data ={[...modalComboData]}
+                data={[...modalComboData]}
             >
             </ComboModal>
 
@@ -164,15 +195,31 @@ function UserProfile() {
                 </div>
                 <div className="menu-menus">
                     <ul>
-                        <li onClick={() => show_menu('infos')}>
+                        <li className={`${activeMenu === "infos" ? 'active-menu' : ''}`} onClick={() => {
+                            show_menu('infos');
+                            change_menu('infos')
+                        }}>
                             <RiInformationLine/>
                             <span>اطلاعات شخصی</span>
                         </li>
-                        <li onClick={() => show_menu('orders')}>
+                        <li className={`${activeMenu === "addresses" ? 'active-menu' : ''}`} onClick={() => {
+                            show_menu('addresses');
+                            change_menu('addresses')
+                        }}>
+                            <CiLocationOn/>
+                            <span>آدرس ها</span>
+                        </li>
+                        <li className={`${activeMenu === "orders" ? 'active-menu' : ''}`} onClick={() => {
+                            show_menu('orders');
+                            change_menu('orders')
+                        }}>
                             <FaShoppingBasket/>
                             <span>سفارشات</span>
                         </li>
-                        <li onClick={() => show_menu('favorites')}>
+                        <li className={`${activeMenu === "favorites" ? 'active-menu' : ''}`} onClick={() => {
+                            show_menu('favorites');
+                            change_menu('favorites')
+                        }}>
                             <AiOutlineHeart/>
                             <span>علاقه مندی ها</span>
                         </li>
@@ -193,7 +240,8 @@ function UserProfile() {
                                 <div className="up-info-col edit">
                                     <span>نام کاربری</span>
                                     <span className={'info-value'}>احد میرحبیبی</span>
-                                    <AiTwotoneEdit onClick={()=>open_modal('تغییر نام کاربری','نام کاربری','احد میرحبیبی')}/>
+                                    <AiTwotoneEdit
+                                        onClick={() => open_modal('تغییر نام کاربری', 'نام کاربری', 'احد میرحبیبی')}/>
                                 </div>
                                 <div className="up-info-col">
                                     <span>ایمیل</span>
@@ -204,7 +252,8 @@ function UserProfile() {
                                 <div className="up-info-col edit">
                                     <span>شماره تماس</span>
                                     <span className={'info-value'}>09387153611</span>
-                                    <AiTwotoneEdit onClick={()=>open_modal('تغییر شماره تماس','شماره تماس','09387153611')}/>
+                                    <AiTwotoneEdit
+                                        onClick={() => open_modal('تغییر شماره تماس', 'شماره تماس', '09387153611')}/>
                                 </div>
                                 <div className="up-info-col edit">
                                     <span>تاریخ تولد</span>
@@ -226,49 +275,55 @@ function UserProfile() {
                                 </div>
                             </div>
                         </div>
-                        <div className={ 'up-address-container'}>
-                            <div className="up-addresses">
-                                <div className="up-addresses-row">
-                                    {
-                                         profile_addresses.slice(0,addressCount).map((d)=>{
-                                             return(
-                                                 <div key={d.id} className="up-addresses-col edit delete">
-                                                     <span> آدرس{d.id+1}</span>
-                                                     <span className={'info-value'}>{d.address}</span>
-                                                     <AiTwotoneEdit className={'edit-icon'} onClick={()=>open_textarea_modal('تغییر آدرس','آدرس',d.address)}/>
-                                                     <RxCross1 className={'delete-icon'}/>
-                                                 </div>
-                                             )
-                                         })
-                                    }
-
-                                </div>
-                            </div>
-                            {
-                                addressCount <3 ?
-                                    <>
-                                        <button className={'add-row-btn'} onClick={()=>{add_address()}}><IoMdAdd/></button>
-                                        <span className={'add-row-span'}> افزودن آدرس </span>
-                                    </>:<></>
-                            }
-                        </div>
                     </>
+                }
+                {
+                    showAddresses &&
+                    <div className={'up-address-container'}>
+                        <div className="up-addresses">
+                            <div className="up-addresses-row">
+                                {
+                                    profile_addresses.slice(0, addressCount).map((d) => {
+                                        return (
+                                            <div key={d.id} className="up-addresses-col edit delete">
+                                                <span> آدرس{d.id + 1}</span>
+                                                <span className={'info-value'}>{d.address}</span>
+                                                <AiTwotoneEdit className={'edit-icon'}
+                                                               onClick={() => open_textarea_modal('تغییر آدرس', 'آدرس', d.address)}/>
+                                                <RxCross1 className={'delete-icon'}/>
+                                            </div>
+                                        )
+                                    })
+                                }
+
+                            </div>
+                        </div>
+                        {
+                            addressCount < 5 ?
+                                <>
+                                    <button className={'add-row-btn'} onClick={() => {
+                                        add_address()
+                                    }}><IoMdAdd/></button>
+                                    <span className={'add-row-span'}> افزودن آدرس </span>
+                                </> : <></>
+                        }
+                    </div>
                 }
                 {
                     showOrders &&
                     <div className={'up-orders-container'}>
                         <table>
-                            <th>
-                                <td>ردیف</td>
-                                <td>شماره سفارش</td>
-                                <td>تعداد کالا</td>
-                                <td>مبلغ سفارش</td>
-                                <td>تاریخ سفارش</td>
-                                <td>وضعیت</td>
-                                <td>عملیات</td>
-                            </th>
+                            <thead>
+                                <th>ردیف</th>
+                                <th>شماره سفارش</th>
+                                <th>تعداد کالا</th>
+                                <th>مبلغ سفارش</th>
+                                <th>تاریخ سفارش</th>
+                                <th>وضعیت</th>
+                                <th>عملیات</th>
+                            </thead>
                             <tbody>
-                            <tr>
+                            <tr onClick={()=>change_show_order_detail()}>
                                 <td>1</td>
                                 <td>10001</td>
                                 <td>3</td>
@@ -279,7 +334,7 @@ function UserProfile() {
                                 </td>
                                 <td>جزئیات سفارش</td>
                             </tr>
-                            <tr>
+                            <tr onClick={()=>change_show_order_detail()}>
                                 <td>2</td>
                                 <td>10001</td>
                                 <td>3</td>
@@ -291,7 +346,7 @@ function UserProfile() {
                                 </td>
                                 <td>جزئیات سفارش</td>
                             </tr>
-                            <tr>
+                            <tr onClick={()=>change_show_order_detail()}>
                                 <td>3</td>
                                 <td>10001</td>
                                 <td>3</td>
@@ -302,7 +357,7 @@ function UserProfile() {
                                 </td>
                                 <td>جزئیات سفارش</td>
                             </tr>
-                            <tr>
+                            <tr onClick={()=>change_show_order_detail()}>
                                 <td>4</td>
                                 <td>10001</td>
                                 <td>3</td>
@@ -317,6 +372,10 @@ function UserProfile() {
                             </tbody>
                         </table>
                     </div>
+                }
+                {
+                    showOrderDetail &&
+                    <>this is order detail page</>
                 }
                 {
                     showFavorite &&

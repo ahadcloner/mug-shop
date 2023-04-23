@@ -58,33 +58,33 @@ function BuyCard() {
                 </div>
                     <div className="bc-factor-send">
                         <form >
+                            {/*<div className="form-row">*/}
+                            {/*    <select name="state" id="state">*/}
+                            {/*        <option value="1">استان</option>*/}
+                            {/*        <option value="1">کرمان</option>*/}
+                            {/*        <option value="2">تهران</option>*/}
+                            {/*        <option value="3">مشهد</option>*/}
+                            {/*        <option value="4">اصفهان</option>*/}
+                            {/*    </select>*/}
+                            {/*    <select name="state" id="state" >*/}
+                            {/*        <option value="1">شهر</option>*/}
+                            {/*        <option value="1">کرمان</option>*/}
+                            {/*        <option value="2">تهران</option>*/}
+                            {/*        <option value="3">مشهد</option>*/}
+                            {/*        <option value="4">اصفهان</option>*/}
+                            {/*    </select>*/}
+                            {/*</div>*/}
+                            {/*<div className="form-row">*/}
+                            {/*    <textarea name="address" id="address"*/}
+                            {/*    placeholder={"خیابان - کوچه - پلاک - کدپستی"}>*/}
+                            {/*    </textarea>*/}
+                            {/*</div>*/}
+                            {/*<div className="form-row">*/}
+                            {/*    <input type="text" placeholder={'نام و نام خانوادگی گیرنده'}/>*/}
+                            {/*    <input className={"reverse-align"} type="text" placeholder={"09123456789"}/>*/}
+                            {/*</div>*/}
                             <div className="form-row">
-                                <select name="state" id="state">
-                                    <option value="1">استان</option>
-                                    <option value="1">کرمان</option>
-                                    <option value="2">تهران</option>
-                                    <option value="3">مشهد</option>
-                                    <option value="4">اصفهان</option>
-                                </select>
-                                <select name="state" id="state" >
-                                    <option value="1">شهر</option>
-                                    <option value="1">کرمان</option>
-                                    <option value="2">تهران</option>
-                                    <option value="3">مشهد</option>
-                                    <option value="4">اصفهان</option>
-                                </select>
-                            </div>
-                            <div className="form-row">
-                                <textarea name="address" id="address"
-                                placeholder={"خیابان - کوچه - پلاک - کدپستی"}>
-                                </textarea>
-                            </div>
-                            <div className="form-row">
-                                <input type="text" placeholder={'نام و نام خانوادگی گیرنده'}/>
-                                <input className={"reverse-align"} type="text" placeholder={"09123456789"}/>
-                            </div>
-                            <div className="form-row">
-                             <button>پرداخت آنلاین</button>
+                             <button>ثبت سفارش</button>
                             </div>
 
                         </form>

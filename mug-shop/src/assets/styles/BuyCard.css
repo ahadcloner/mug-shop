@@ -203,6 +203,7 @@
     flex-direction: column;
     border-radius: 0 0 8px 8px;
 
+
 }
 form {
     margin-top:0 ;
@@ -210,7 +211,7 @@ form {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: end;
     align-items: center;
 
 }
@@ -258,17 +259,22 @@ form {
     flex: 1;
     margin-right: 20px;
 
-}.form-row button{
+}
+.form-row button{
     width: 93%;
     margin: 20px auto;
     height: 50px;
     font-family: 'vazirmatn', sans-serif;
      font-size: 16px;
+    font-weight: 600;
     border-radius: 8px;
     border: none;
+    cursor: pointer;
     background-color: darkorange;
  }
-
+.form-row button:hover{
+    transform: scale(1.05)!important;
+}
 .reverse-align{
     text-align: left !important;
 }
