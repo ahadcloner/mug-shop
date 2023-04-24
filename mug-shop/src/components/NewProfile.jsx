@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../assets/styles/NewProfile.css';
 import {RiUser6Line, RiInformationLine, RiErrorWarningLine} from "react-icons/ri";
 import {BsBasket3} from "react-icons/bs";
@@ -18,6 +18,7 @@ import p5 from '../assets/images/5.jpg';
 import p6 from '../assets/images/6.jpg';
 import p7 from '../assets/images/7.png';
 import Card from "./Card";
+import {useParams} from "react-router-dom";
 let data = [
     {id: 1, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
     {id: 2, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
@@ -41,7 +42,12 @@ let data = [
 ];
 
 function NewProfile() {
-    const [activeMenu, setActiveMenu] = useState('info');
+    const section = useParams();
+
+    const [activeMenu, setActiveMenu] = useState(section.section);
+    useEffect(() => {
+        setActiveMenu(section.section);
+    }, [section]);
     const change_menu = (m) => {
         if(m==='info'){
             setActiveMenu('info');
@@ -87,6 +93,13 @@ function NewProfile() {
                     activeMenu ==='address' &&
                     <button className={'add-btn'}>
                         افزودن آدرس
+                    </button>
+
+                }
+                {
+                    activeMenu ==='order_detail' &&
+                    <button className={'add-btn'}>
+                        بازگشت به لیست
                     </button>
                 }
 

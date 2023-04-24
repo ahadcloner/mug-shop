@@ -12,7 +12,7 @@ import { IoMdAdd } from "react-icons/io";
 import { AiOutlineMinus } from "react-icons/ai";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-AOS.init();
+import {useParams} from "react-router-dom";
 let data = [
   { id: 1, title: "ماگ حرارتی مدل اول", price: "27,000", picture: p1 },
   { id: 2, title: "ماگ حرارتی مدل دوم", price: "410,000", picture: p2 },
@@ -29,6 +29,9 @@ let data = [
 ];
 
 function ProductDetail() {
+  const index = useParams();
+  console.log('od is ',index)
+  let product = data.find((d)=>d.id===parseInt(index.id))
   return (
     <section className={"pd-container"}>
       <div className="pd-top">
@@ -74,7 +77,7 @@ function ProductDetail() {
             <div className="pd-top-left-addtocard">
               <div className="addtocard-middle-item">
                 <span>نام محصول</span>
-                <span>ماگ حرارتی مدل داستان</span>
+                <span>{product.title}</span>
               </div>
               <div className="addtocard-middle-item">
                 <span>امتیاز کاربران</span>
@@ -82,7 +85,7 @@ function ProductDetail() {
               </div>
               <div className="addtocard-middle-item price-bold">
                 <span>قیمت محصول</span>
-                <span className="theme-color">4,320,000</span>
+                <span className="theme-color">{product.price}</span>
               </div>
               <div className="addtocard-bottom">
                 <button>افزودن به سبد خرید</button>
@@ -93,7 +96,7 @@ function ProductDetail() {
         <div className="pd-top-right">
           <div className="pd-product-image">
             <div className="pd-image-main">
-              <img src={p1} />
+              <img src={product.picture} />
             </div>
             <div className="pd-image-album">
               <img src={p2} />

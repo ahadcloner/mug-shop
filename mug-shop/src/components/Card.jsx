@@ -4,13 +4,14 @@ import p1 from '../assets/images/2.jpg';
 import { CgBookmark } from "react-icons/cg";
 import { IoMdAdd } from "react-icons/io";
 import { AiOutlineMinus } from "react-icons/ai";
+import {useNavigate} from "react-router-dom";
 
 function Card({picture ,price ,name}){
 
     return(
-        <article data-aos="zoom-out-up"> className={'c-container'}>
+        <article > className={'c-container'}>
             <div className={'c-top'}>
-                <img src={picture}/>
+                 <img  src={picture} alt={name}/>
             </div>
             <div className={'c-bottom'}>
                 <div className={'c-title'}>

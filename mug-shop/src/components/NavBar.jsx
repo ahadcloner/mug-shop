@@ -48,7 +48,7 @@ function NavBar(){
                 </div>
                 <div className={'nb-icons'}>
                     <SlBasket onClick={()=>navigate('/cart')}/>
-                    <CgBookmark onClick={()=>navigate('/profile')}/>
+                    <CgBookmark onClick={()=>navigate('/profile/favorite')}/>
                 </div>
             </div>
         </nav>

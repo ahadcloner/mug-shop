@@ -110,7 +110,7 @@
 .add-btn{
     position: absolute;
     left: 20px;
-    width: 120px;
+    min-width: 120px;
     height: 38px;
     border-radius: 8px;
     border: none;

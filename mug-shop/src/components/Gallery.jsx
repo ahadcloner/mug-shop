@@ -8,6 +8,7 @@ import p5 from '../assets/images/5.jpg';
 import p6 from '../assets/images/6.jpg';
 import p7 from '../assets/images/7.png';
 import Card from "./Card";
+import {useNavigate} from "react-router-dom";
 let data =[
     {id:1 ,title:'ماگ حرارتی مدل اول' ,price:'27,000' , picture:p1},
     {id:2 ,title:'ماگ حرارتی مدل دوم' ,price:'410,000' , picture:p2},
@@ -24,6 +25,7 @@ let data =[
 ];
 
 function Gallery(){
+
     return(
         <section data-aos="fade-right"
                  data-aos-offset="1000"
@@ -31,7 +33,7 @@ function Gallery(){
             {
                 data.map((d )=>{
                     return(
-                    <Card key={d.id} price={d.price} picture={d.picture} name={d.title} />
+                    <Card  key={d.id} price={d.price} picture={d.picture} name={d.title} />
                     )
                 })}
 

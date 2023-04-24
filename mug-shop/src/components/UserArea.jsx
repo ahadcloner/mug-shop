@@ -12,7 +12,7 @@ function UserArea(){
         <div className={`ua-container ${UaClass}`}>
             <div className="ua-item">
                 <FaUserTie/>
-                <span onClick={()=>navigate('/profile')}>مشاهده پروفایل</span>
+                <span onClick={()=>navigate('/profile/info')}>مشاهده پروفایل</span>
             </div>
             <div className="ua-item">
                 <ImExit/>
