@@ -19,6 +19,8 @@ import p7 from '../assets/images/7.png';
 import ChangeSingleParameterModal from "./Modals/ChangeSingleParameterModal";
 import TextAreaModal from "./Modals/TextAreaModal";
 import ComboModal from "./Modals/ComboModal";
+import CardProduct from "./CardProduct";
+import Card from "./Card";
 
 const profile_addresses = [
     {id: 0, address: 'خیابان شهدای خانوک کوچه 5 درب اول سمت راست'},
@@ -341,7 +343,6 @@ function UserProfile() {
                                 <td>145,600</td>
                                 <td>1400/01/10</td>
                                 <td className={'process'}>
-
                                     جاری
                                 </td>
                                 <td>جزئیات سفارش</td>
@@ -375,7 +376,13 @@ function UserProfile() {
                 }
                 {
                     showOrderDetail &&
-                    <>this is order detail page</>
+
+                    data.slice(0,4).map((d)=>{
+                        return(
+                            <CardProduct key={d.id} picture={d.picture} title={d.title} price={d.price} />
+                        )
+                    })
+
                 }
                 {
                     showFavorite &&

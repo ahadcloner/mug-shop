@@ -16,6 +16,7 @@ import MainPage from "./components/MainPage";
 import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
 import NotFound from "./components/NotFound";
+import NewProfile from "./components/NewProfile";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -29,7 +30,7 @@ function App() {
                 <Routes>
                     <Route path={'/'} element={<MainPage/>}/>
                     <Route path={'/login'} element={<Login/>}/>
-                    <Route path={'/profile'} element={<UserProfile/>}/>
+                    <Route path={'/profile'} element={<NewProfile/>}/>
                     <Route path={'/cart'} element={<BuyCard/>}/>
                     <Route path={'/product-detail/:id'} element={<ProductDetail/>}/>
                     <Route path={'*'} element={<NotFound/>}/>

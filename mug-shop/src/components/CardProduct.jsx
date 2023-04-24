@@ -6,7 +6,7 @@ import {BsTrash2} from "react-icons/bs";
 import {HiOutlineArrowUpCircle} from "react-icons/hi2";
 import {upload} from "@testing-library/user-event/dist/upload";
 
-function CardProduct({picture, title, price}) {
+function CardProduct({picture, title, price, show_album}) {
     return (
         <div className={"bc-product"}>
             <div className="bc-top">
@@ -37,16 +37,20 @@ function CardProduct({picture, title, price}) {
                     <button className={'red'}><BsTrash2/></button>
 
                 </div>
-                <div className="bc-albume">
-                    <button>بارگذاری عکس دلخواه</button>
-                    <input type={"file"}/>
-                    <div className="bc-gallery">
-                        <img src={picture} alt={title}/>
-                        <img src={picture} alt={title}/>
-                        <img src={picture} alt={title}/>
 
+
+                    <div className="bc-albume">
+                        {show_album && <button>بارگذاری عکس دلخواه</button>}
+                        <input type={"file"}/>
+                        <div className="bc-gallery">
+                            <img src={picture} alt={title}/>
+                            <img src={picture} alt={title}/>
+                            <img src={picture} alt={title}/>
+                        </div>
                     </div>
-                </div>
+
+
+
             </div>
         </div>
     );
