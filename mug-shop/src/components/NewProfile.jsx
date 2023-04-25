@@ -18,7 +18,7 @@ import p5 from '../assets/images/5.jpg';
 import p6 from '../assets/images/6.jpg';
 import p7 from '../assets/images/7.png';
 import Card from "./Card";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 let data = [
     {id: 1, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
     {id: 2, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
@@ -43,11 +43,12 @@ let data = [
 
 function NewProfile() {
     const section = useParams();
-
     const [activeMenu, setActiveMenu] = useState(section.section);
-    useEffect(() => {
-        setActiveMenu(section.section);
-    }, [section]);
+    const navigate = useNavigate();
+
+
+
+
     const change_menu = (m) => {
         if(m==='info'){
             setActiveMenu('info');
@@ -80,7 +81,7 @@ function NewProfile() {
                     <span>آدرس ها</span>
                     <TbLocation/>
                 </div>
-                <div onClick={()=>change_menu('order')}  className={`np-menu-row ${activeMenu==='order'?'active':''}`}>
+                <div onClick={()=>change_menu('order')}  className={`np-menu-row ${activeMenu==='order'?'active':''} ${activeMenu==='order_detail'?'active':''}`}>
                     <span>سفارشات</span>
                     <BsBasket3/>
                 </div>
@@ -136,55 +137,55 @@ function NewProfile() {
                 {
                     activeMenu==='address' &&
                     <div className={'address-container'}>
-                        <div className="address-card edit delete">
+                        <div className="address-card">
                             <div className="address-title">
                                 <span>آدرس منزل</span>
                             </div>
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2></BsTrash2>
-                            <AiTwotoneEdit></AiTwotoneEdit>
+                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
-                        <div className="address-card edit delete">
+                        <div className="address-card">
                             <div className="address-title">
                                 <span>آدرس منزل</span>
                             </div>
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2></BsTrash2>
-                            <AiTwotoneEdit></AiTwotoneEdit>
+                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
-                        <div className="address-card edit delete">
+                        <div className="address-card">
                             <div className="address-title">
                                 <span>آدرس منزل</span>
                             </div>
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2></BsTrash2>
-                            <AiTwotoneEdit></AiTwotoneEdit>
+                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
-                        <div className="address-card edit delete">
+                        <div className="address-card">
                             <div className="address-title">
                                 <span>آدرس منزل</span>
                             </div>
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2></BsTrash2>
-                            <AiTwotoneEdit></AiTwotoneEdit>
+                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
-                        <div className="address-card edit delete">
+                        <div className="address-card">
                             <div className="address-title">
                                 <span>آدرس منزل</span>
                             </div>
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2></BsTrash2>
-                            <AiTwotoneEdit></AiTwotoneEdit>
+                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
 
                         <button>افزودن آدرس</button>
@@ -202,6 +203,7 @@ function NewProfile() {
                             <span>وضعیت</span>
                             <span>نمایش جزئیات</span>
                         </div>
+                        
                         <div onClick={()=>change_menu('order_detail')} className="order-body">
                             <span>1</span>
                             <span>362541</span>
@@ -253,8 +255,30 @@ function NewProfile() {
                 {
                     activeMenu === 'order_detail' &&
                     data.map((d)=>{return(
-                        <CardProduct title={d.title} price={d.price} picture={d.picture} show_album={false}></CardProduct>
+                        <CardProduct id={d.id} title={d.title} price={d.price} picture={d.picture} show_album={false}></CardProduct>
                     )})
+                }
+                {
+                    activeMenu ==='favorite' &&
+                    <div className={'favorite-container'}>
+                        {
+                            data.slice(0,4).map((d)=>{
+                                return(
+                                    <div onClick={()=>{navigate('/product-detail/'+d.id)}} key={d.id} className="fave-card">
+                                        <div className="fave-image">
+                                            <img src={d.picture} alt={d.title}/>
+                                        </div>
+                                        <div className="fave-body">
+                                            <span>{d.title}</span>
+                                            <span>{d.price}</span>
+                                        </div>
+                                        <BsTrash2></BsTrash2>
+                                    </div>
+                                )
+                            })
+                        }
+
+                    </div>
                 }
             </div>
         </div>

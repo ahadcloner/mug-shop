@@ -5,10 +5,12 @@ import {AiOutlineMinus} from "react-icons/ai";
 import {BsTrash2} from "react-icons/bs";
 import {HiOutlineArrowUpCircle} from "react-icons/hi2";
 import {upload} from "@testing-library/user-event/dist/upload";
+import {useNavigate} from "react-router-dom";
 
-function CardProduct({picture, title, price, show_album}) {
+function CardProduct({id ,picture, title, price, show_album}) {
+    const navigate = useNavigate();
     return (
-        <div className={"bc-product"}>
+        <div onClick={()=>navigate('/product-detail/'+id)} className={"bc-product"}>
             <div className="bc-top">
                 <img src={picture} alt={title}/>
                 <div className="bc-info">
