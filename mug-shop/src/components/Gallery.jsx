@@ -27,9 +27,7 @@ let data =[
 function Gallery(){
 
     return(
-        <section data-aos="fade-right"
-                 data-aos-offset="1000"
-                 data-aos-easing="ease-in-sine" className={'g-container'}>
+        <section className={'g-container'}>
             {
                 data.map((d )=>{
                     return(

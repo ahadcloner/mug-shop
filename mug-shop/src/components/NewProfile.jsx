@@ -70,184 +70,193 @@ function NewProfile() {
     }
 
     return (
-        <div className={'mp-container'}>
+        <div className={'np-container'}>
             <div className="np-menu">
-                <div onClick={()=>change_menu('info')} className={`np-menu-item ${activeMenu==='info'?'active':''}`}>
+                <div onClick={()=>change_menu('info')}  className={`np-menu-row ${activeMenu==='info'?'active':''}`}>
                     <span>اطلاعات شخصی</span>
                     <RiInformationLine/>
                 </div>
-                <div onClick={()=>change_menu('address')} className={`np-menu-item ${activeMenu==='address'?'active':''}`}>
+                <div onClick={()=>change_menu('address')}  className={`np-menu-row ${activeMenu==='address'?'active':''}`}>
                     <span>آدرس ها</span>
                     <TbLocation/>
                 </div>
-                <div onClick={()=>change_menu('order')} className={`np-menu-item ${activeMenu==='order'?'active':''}`}>
+                <div onClick={()=>change_menu('order')}  className={`np-menu-row ${activeMenu==='order'?'active':''}`}>
                     <span>سفارشات</span>
                     <BsBasket3/>
                 </div>
-                <div onClick={()=>change_menu('favorite')} className={`np-menu-item ${activeMenu==='favorite'?'active':''}`}>
+                <div onClick={()=>change_menu('favorite')}  className={`np-menu-row ${activeMenu==='favorite'?'active':''}`}>
                     <span>علاقه مندی ها</span>
                     <AiOutlineHeart/>
                 </div>
 
-                {
-                    activeMenu ==='address' &&
-                    <button className={'add-btn'}>
-                        افزودن آدرس
-                    </button>
-
-                }
-                {
-                    activeMenu ==='order_detail' &&
-                    <button className={'add-btn'}>
-                        بازگشت به لیست
-                    </button>
-                }
-
-
             </div>
-            {
-                activeMenu === 'info' &&
-                <section id={'info'} className={'np-info-container'}>
-                    <div className="info-card">
-                        <span>ایمیل</span>
-                        <span>ahad.mirhabibi@gmail.com</span>
+            <div className="np-view">
+                {
+                    activeMenu ==='info' &&
+                    <div className={'info-container'}>
+                        <div className={"info-card align-right"}>
+                            <span>ایمیل</span>
+                            <input type={"text"} value={'ahad.mirhabibi@gmail.com'}/>
+                        </div>
+                        <div className={"info-card"}>
+                            <span>نام کاربری</span>
+                            <input type={"text"} value={'احد میرحبیبی'}/>
+                        </div>
+                        <div className={"info-card align-right"}>
+                            <span>شماره تماس</span>
+                            <input type={"text"} value={'09387153611'}/>
+                        </div>
+                        <div className={"info-card"}>
+                            <span>تاریخ تولد</span>
+                            <input type={"text"} value={'1374/01/08'}/>
+                        </div>
+                        <div className={"info-card align-right"}>
+                            <span>استان</span>
+                            <select name="state" id="state">
+                                <option>تهران</option>
+                                <option>کرمان</option>
+                                <option>قم</option>
+                                <option>خراسان</option>
+                                <option>اصفهان</option>
+                            </select>
+                        </div>
+                        <div className={"info-card"}>
+                            <span>شهر</span>
+                            <select name="city" id="city">
+                                <option>تهران</option>
+                                <option>کرمان</option>
+                                <option>قم</option>
+                                <option>خراسان</option>
+                                <option>اصفهان</option>
+                            </select>
+                        </div>
+                        <button>ویرایش اطلاعات</button>
                     </div>
-                    <div className="info-card">
-                        <span>نام کاربری</span>
-                        <span>احد میرحبیبی</span>
-                    </div>
-                    <div className="info-card">
-                        <span>تاریخ تولد</span>
-                        <span>1374/01/08</span>
-                    </div>
-                    <div className="info-card">
-                        <span>استان</span>
-                        <span>کرمان</span>
-                    </div>
-                    <div className="info-card">
-                        <span>شهر</span>
-                        <span>کرمان</span>
-                    </div>
-                    <div className="info-card">
-                        <span>شماره تماس</span>
-                        <span>09387153611</span>
-                    </div>
-                </section>
-            }
-            {
-                activeMenu === 'address' &&
-
-                <section id='address' className={'np-address-container'} >
-                    <div className="address-card">
-                        <span>منزل</span>
-                        <span>خیابان شهدای خانوک کوچه 5</span>
-                    </div>
-                    <div className="address-card">
-                        <span>منزل</span>
-                        <span>خیابان شهدای خانوک کوچهخیابان شهدای خانوک کوچهخیابان شهدای خانوک کوچه خیابان شهدای خانوک کوچه5خیابان شهدای خانوک کوچه</span>
-                    </div>
-                    <div className="address-card">
-                        <span>منزل</span>
-                        <span>خیابان شهدای خانوک کوچه 5</span>
-                    </div>
-                    <div className="address-card">
-                        <span>منزل</span>
-                        <span>خیابان شهدای خانوک کوچه 5</span>
-                    </div>
-
-                </section>
-
-
-            }
-            {
-                activeMenu === 'order' &&
-                <section id={'order'} className={'order-container'}>
-                   <div className="order-header">
-                        <span>ردیف</span>
-                        <span>شماره سفارش</span>
-                        <span>تعداد اقلام</span>
-                        <span>مبلغ کل</span>
-                        <span>تاریخ سفارش</span>
-                        <span>وضعیت سفارش</span>
-                        <span>نمایش جزیات</span>
-                   </div>
-
-                    <div onClick={()=>show_order_detail()} className="order-body">
-                        <span>1</span>
-                        <span>1008765</span>
-                        <span>5</span>
-                        <span>136,500</span>
-                        <span>1402/01/12</span>
-                        <span className={'deliver'}>تحویل شده</span>
-                        <span className={'link'}>...</span>
-                    </div>
-
-                    <div onClick={()=>show_order_detail()} className="order-body">
-                        <span>2</span>
-                        <span>1008765</span>
-                        <span>5</span>
-                        <span>136,500</span>
-                        <span>1402/01/12</span>
-                        <span className={'doing'}>درحال پردازش</span>
-                        <span className={'link'}>...</span>
-                    </div>
-
-                    <div onClick={()=>show_order_detail()} className="order-body">
-                        <span>3</span>
-                        <span>1008765</span>
-                        <span>5</span>
-                        <span>136,500</span>
-                        <span>1402/01/12</span>
-                        <span className={'deliver'}>تحویل شده</span>
-                        <span className={'link'}>...</span>
-                    </div>
-
-                    <div onClick={()=>show_order_detail()} className="order-body">
-                        <span>4</span>
-                        <span>1008765</span>
-                        <span>5</span>
-                        <span>136,500</span>
-                        <span>1402/01/12</span>
-                        <span className={'cancel'}>تحویل شده</span>
-                        <span className={'link'}>...</span>
-                    </div>
-                </section>
-            }
-            {
-                activeMenu === 'favorite' &&
-                <section id={'fave-container'} className={'fave-container'}>
-                    {
-                        data.map((d)=>{return(
-                            <div key={d.id} className="fave-card">
-                                <div className="fave-image">
-                                    <img src= {d.picture} alt={d.title}/>
-                                </div>
-                                <div className="fave-body">
-                                    <div className="fave-body-info">
-                                        <h2>{d.title}</h2>
-                                        <span>تومان{d.price}</span>
-                                    </div>
-                                    <div className="fave-body-action">
-                                        <button><BsTrash2/></button>
-                                    </div>
-                                </div>
+                }
+                {
+                    activeMenu==='address' &&
+                    <div className={'address-container'}>
+                        <div className="address-card edit delete">
+                            <div className="address-title">
+                                <span>آدرس منزل</span>
                             </div>
-                        )})
-                    }
+                            <div className="address-value">
+                                <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
+                            </div>
+                            <BsTrash2></BsTrash2>
+                            <AiTwotoneEdit></AiTwotoneEdit>
+                        </div>
+                        <div className="address-card edit delete">
+                            <div className="address-title">
+                                <span>آدرس منزل</span>
+                            </div>
+                            <div className="address-value">
+                                <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
+                            </div>
+                            <BsTrash2></BsTrash2>
+                            <AiTwotoneEdit></AiTwotoneEdit>
+                        </div>
+                        <div className="address-card edit delete">
+                            <div className="address-title">
+                                <span>آدرس منزل</span>
+                            </div>
+                            <div className="address-value">
+                                <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
+                            </div>
+                            <BsTrash2></BsTrash2>
+                            <AiTwotoneEdit></AiTwotoneEdit>
+                        </div>
+                        <div className="address-card edit delete">
+                            <div className="address-title">
+                                <span>آدرس منزل</span>
+                            </div>
+                            <div className="address-value">
+                                <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
+                            </div>
+                            <BsTrash2></BsTrash2>
+                            <AiTwotoneEdit></AiTwotoneEdit>
+                        </div>
+                        <div className="address-card edit delete">
+                            <div className="address-title">
+                                <span>آدرس منزل</span>
+                            </div>
+                            <div className="address-value">
+                                <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
+                            </div>
+                            <BsTrash2></BsTrash2>
+                            <AiTwotoneEdit></AiTwotoneEdit>
+                        </div>
 
+                        <button>افزودن آدرس</button>
+                    </div>
+                }
+                {
+                    activeMenu==='order' &&
+                    <div className={'order-container'}>
+                        <div className="order-header">
+                            <span>ردیف</span>
+                            <span>شماره سفارش</span>
+                            <span>تاریخ</span>
+                            <span>تعداد اقلام</span>
+                            <span>مبلغ</span>
+                            <span>وضعیت</span>
+                            <span>نمایش جزئیات</span>
+                        </div>
+                        <div onClick={()=>change_menu('order_detail')} className="order-body">
+                            <span>1</span>
+                            <span>362541</span>
+                            <span>1402/01/25</span>
+                            <span>3</span>
+                            <span>136,500</span>
+                            <span className={'deliver-span'}>تحویل داده شده</span>
+                            <span>...</span>
+                        </div>
+                        <div onClick={()=>change_menu('order_detail')} className="order-body">
+                            <span>2</span>
+                            <span>362541</span>
+                            <span>1402/01/25</span>
+                            <span>3</span>
+                            <span>136,500</span>
+                            <span className={'process-span'}>در حال پردازش</span>
+                            <span >...</span>
+                        </div>
+                        <div onClick={()=>change_menu('order_detail')} className="order-body">
+                            <span>3</span>
+                            <span>362541</span>
+                            <span>1402/01/25</span>
+                            <span>3</span>
+                            <span>136,500</span>
+                            <span className={'cancel-span'}>لغو شده</span>
+                            <span >...</span>
+                        </div>
+                        <div onClick={()=>change_menu('order_detail')} className="order-body">
+                            <span>4</span>
+                            <span>362541</span>
+                            <span>1402/01/25</span>
+                            <span>3</span>
+                            <span>136,500</span>
+                            <span className={'deliver-span'}>تحویل داده شده</span>
+                            <span>...</span>
+                        </div>
+                        <div onClick={()=>change_menu('order_detail')} className="order-body">
+                            <span>5</span>
+                            <span>362541</span>
+                            <span>1402/01/25</span>
+                            <span>3</span>
+                            <span>136,500</span>
+                            <span className={'deliver-span'}>تحویل داده شده</span>
+                            <span>...</span>
+                        </div>
 
-                </section>
-            }
-            {
-                activeMenu ==="order_detail" &&
-                <section id={'order-detail'} className={'order-detail-container'}>
-                    <CardProduct title={data[0].title} price={data[0].price} picture={data[0].picture} show_album={false}/>
-                    <CardProduct title={data[0].title} price={data[0].price} picture={data[0].picture} show_album={false}/>
-                    <CardProduct title={data[0].title} price={data[0].price} picture={data[0].picture} show_album={false}/>
-                    <CardProduct title={data[0].title} price={data[0].price} picture={data[0].picture} show_album={false}/>
-                    <CardProduct title={data[0].title} price={data[0].price} picture={data[0].picture} show_album={false}/>
-                </section>
-            }
+                    </div>
+                }
+                {
+                    activeMenu === 'order_detail' &&
+                    data.map((d)=>{return(
+                        <CardProduct title={d.title} price={d.price} picture={d.picture} show_album={false}></CardProduct>
+                    )})
+                }
+            </div>
         </div>
     )
 }

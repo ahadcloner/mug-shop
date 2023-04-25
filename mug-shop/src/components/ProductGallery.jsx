@@ -10,6 +10,7 @@ import p7 from '../assets/images/7.png';
 import {IoMdAdd} from "react-icons/io";
 import {AiOutlineMinus} from "react-icons/ai";
 import {CgBookmark} from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
 
 let data = [
     {id: 1, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
@@ -22,18 +23,10 @@ let data = [
     {id: 8, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
     {id: 9, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
     {id: 10, title: 'ماگ حرارتی مدل سوم', price: '23000', picture: p3},
-    {id: 11, title: 'ماگ حرارتی مدل چهارم', price: '3,600', picture: p4},
-    {id: 12, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
-    {id: 13, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
-    {id: 14, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
-    {id: 15, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
-    {id: 16, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
-    {id: 17, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
-    {id: 18, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
-    {id: 19, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
 ];
 
 function ProductGallery() {
+    const navigate = useNavigate();
     return (
         <div className={'pg-container'}>
             <div className="pg-card-container">
@@ -41,7 +34,7 @@ function ProductGallery() {
                     {
                         data.map((d) => {
                             return (
-                                <div key={d.id} className={'pg-card'}>
+                                <div onClick={()=>navigate('product-detail/'+d.id)} key={d.id} className={'pg-card'}>
                                     <div className="pg-card-image">
                                         <img src={d.picture} alt={d.title}/>
                                     </div>

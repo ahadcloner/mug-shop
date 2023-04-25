@@ -4,15 +4,15 @@ import p1 from '../assets/images/2.jpg';
 import { CgBookmark } from "react-icons/cg";
 import { IoMdAdd } from "react-icons/io";
 import { AiOutlineMinus } from "react-icons/ai";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 function Card({picture ,price ,name}){
-
+    const navigate = useNavigate();
     return(
-        <article > className={'c-container'}>
-            <div className={'c-top'}>
+        <Link to={'/product-detail/1'}  className={'c-container'}>
+            <Link to='/product-detail/1' className={'c-top'}>
                  <img  src={picture} alt={name}/>
-            </div>
+            </Link>
             <div className={'c-bottom'}>
                 <div className={'c-title'}>
                     <h2>{name}</h2>
@@ -27,7 +27,7 @@ function Card({picture ,price ,name}){
                     <button><IoMdAdd/></button>
                 </div>
             </div>
-        </article>
+        </Link>
     )
 }
 export default Card;
