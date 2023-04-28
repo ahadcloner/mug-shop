@@ -17,6 +17,7 @@ import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
 import NotFound from "./components/NotFound";
 import NewProfile from "./components/NewProfile";
+import Footer from "./components/Footer";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -36,6 +37,7 @@ function App() {
                     <Route path={'*'} element={<NotFound/>}/>
                 </Routes>
                 <UserArea></UserArea>
+
             </BrowserRouter>
                 </SbContext.Provider>
             </UaContext.Provider>

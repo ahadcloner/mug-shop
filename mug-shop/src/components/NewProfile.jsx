@@ -203,7 +203,7 @@ function NewProfile() {
                             <span>وضعیت</span>
                             <span>نمایش جزئیات</span>
                         </div>
-                        
+
                         <div onClick={()=>change_menu('order_detail')} className="order-body">
                             <span>1</span>
                             <span>362541</span>

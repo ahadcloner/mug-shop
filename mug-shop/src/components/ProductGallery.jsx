@@ -10,7 +10,8 @@ import p7 from '../assets/images/7.png';
 import {IoMdAdd} from "react-icons/io";
 import {AiOutlineMinus} from "react-icons/ai";
 import {CgBookmark} from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import Footer from "./Footer";
 
 let data = [
     {id: 1, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
@@ -18,54 +19,64 @@ let data = [
     {id: 3, title: 'ماگ حرارتی مدل سوم', price: '23000', picture: p3},
     {id: 4, title: 'ماگ حرارتی مدل چهارم', price: '3,600', picture: p4},
     {id: 5, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
-    {id: 6, title: 'ماگ حرارتی مدل ششم', price: '135,000', picture: p6},
-    {id: 7, title: 'ماگ حرارتی مدل هفتم', price: '100,000', picture: p7},
-    {id: 8, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
-    {id: 9, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
-    {id: 10, title: 'ماگ حرارتی مدل سوم', price: '23000', picture: p3},
+    {id: 6, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
+    {id: 7, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
+    {id: 8, title: 'ماگ حرارتی مدل سوم', price: '23000', picture: p3},
+    {id: 9, title: 'ماگ حرارتی مدل چهارم', price: '3,600', picture: p4},
+    {id: 10, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
+    {id: 11, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
+    {id: 12, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
+    {id: 13, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
+    {id: 14, title: 'ماگ حرارتی مدل سوم', price: '23000', picture: p3},
+    {id: 15, title: 'ماگ حرارتی مدل چهارم', price: '3,600', picture: p4},
+    {id: 16, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
+
 ];
 
 function ProductGallery() {
     const navigate = useNavigate();
     return (
-        <div className={'pg-container'}>
-            <div className="pg-card-container">
-                <div className={'correcter'}>
-                    {
-                        data.map((d) => {
-                            return (
-                                <div onClick={()=>navigate('product-detail/'+d.id)} key={d.id} className={'pg-card'}>
-                                    <div className="pg-card-image">
-                                        <img src={d.picture} alt={d.title}/>
-                                    </div>
-                                    <div className="pg-card-body">
-                                        <div className="pg-card-title">
-                                            <h2>{d.title}</h2>
+            <div className={'pg-container'}>
+                <div className="pg-card-container">
+                    <div className={'correcter'}>
+                        {
+                            data.map((d) => {
+                                return (
+                                    <div onClick={() => navigate('product-detail/' + d.id)} key={d.id}
+                                         className={'pg-card'}>
+                                        <div className="pg-card-image">
+                                            <img src={d.picture} alt={d.title}/>
                                         </div>
-                                        <div className="pg-card-price">
-                                            <span>{d.price}</span>
-                                            <span>قیمت</span>
-                                        </div>
-                                        <div className="pg-card-actions">
-                                            <div className={'seprate'}>
-                                                <button><CgBookmark/></button>
+                                        <div className="pg-card-body">
+                                            <div className="pg-card-title">
+                                                <h2>{d.title}</h2>
                                             </div>
-
-                                            <div className={'functional'}>
-                                                <button><AiOutlineMinus/></button>
-                                                <span>1</span>
-                                                <button><IoMdAdd/></button>
+                                            <div className="pg-card-price">
+                                                <span>{d.price}</span>
+                                                <span>قیمت</span>
                                             </div>
+                                            <div className="pg-card-actions">
+                                                <div className={'seprate'}>
+                                                    <button><CgBookmark/></button>
+                                                </div>
 
+                                                <div className={'functional'}>
+                                                    <button><AiOutlineMinus/></button>
+                                                    <span>1</span>
+                                                    <button><IoMdAdd/></button>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
+                    </div>
+                    <Footer/>
                 </div>
             </div>
-        </div>
+
     )
 }
 
