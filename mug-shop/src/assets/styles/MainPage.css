@@ -1,9 +1,9 @@
 .mp-container{
     width: calc( 100% - 60px);
-    height:calc(100vh - 65px);
+    /*height:calc(100vh - 65px);*/
     position: absolute;
     top: 65px;
-    background-color: #F6F6F5;
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: start;

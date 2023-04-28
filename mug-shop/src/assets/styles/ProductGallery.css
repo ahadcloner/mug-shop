@@ -2,7 +2,7 @@
 .pg-container {
     position: absolute;
     width: calc(100% - 60px);
-    top: 565px;
+    top: 70px;
     height: 100%;
 }
 
@@ -19,7 +19,31 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, calc(100% / 5 - 20px));
     justify-content: space-evenly;
-    background-color: #F6F6F5;
+    background-color: white;
+    position: relative;
+}
+.return-btn{
+    position: absolute;
+    top: -65px;
+    width: 180px;
+    left: 0;
+    height: 50px;
+    border-radius: 8px;
+    background-color: darkorange;
+    border:none;
+    font-size: 14px;
+    font-family: 'vazirmatn', sans-serif;
+    margin: 10px;
+    cursor: pointer;
+}
+.return-btn:hover{
+    transform: scale(1.02);
+}
+.cat-title{
+    position: absolute;
+    left: calc(50% - 50px);
+    top: -45px;
+    color: black;
 }
 
 .pg-card {

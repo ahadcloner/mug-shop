@@ -33,12 +33,14 @@ let data = [
 
 ];
 
-function ProductGallery() {
+function ProductGallery({changeView,title}) {
     const navigate = useNavigate();
     return (
             <div className={'pg-container'}>
                 <div className="pg-card-container">
                     <div className={'correcter'}>
+                        <button onClick={()=>changeView()}  className={'return-btn'}>بازگشت به دسته بندی ها</button>
+                        <h2 className={'cat-title'}>{title}</h2>
                         {
                             data.map((d) => {
                                 return (
@@ -73,7 +75,7 @@ function ProductGallery() {
                             })
                         }
                     </div>
-                    <Footer/>
+                    {/*<Footer/>*/}
                 </div>
             </div>
 
