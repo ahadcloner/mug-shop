@@ -10,9 +10,15 @@ function UserArea(){
     const navigate = useNavigate();
     return(
         <div className={`ua-container ${UaClass}`}>
-            <div className="ua-item">
+            <div
+                onClick={
+                ()=>{
+                    navigate('/profile/info');
+                    setUaClass(UaClass === 'ua-hide'?'ua-show':'ua-hide');
+
+            }} className="ua-item">
                 <FaUserTie/>
-                <span onClick={()=>navigate('/profile/info')}>مشاهده پروفایل</span>
+                <span >مشاهده پروفایل</span>
             </div>
             <div className="ua-item">
                 <ImExit/>

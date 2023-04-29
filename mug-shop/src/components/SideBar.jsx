@@ -22,11 +22,11 @@ function SideBar() {
                     <span>خانه</span>
                     <BiHomeAlt2/>
                 </div>
-                <div className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
+                <div onClick={()=>navigate('/login/register')} className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
                     <span>ثبت نام</span>
                     <GiArchiveRegister/>
                 </div>
-                <div onClick={()=>navigate('/login')} className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
+                <div onClick={()=>navigate('/login/login')} className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
                     <span>ورود به حساب</span>
                     <IoMdLogIn/>
                 </div>

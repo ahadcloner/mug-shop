@@ -4,24 +4,24 @@
     position: absolute;
     top: 65px;
     background-color: white;
-
-
     display: flex;
     justify-content: center;
     align-items: center;
 }
+/*login section*/
 .login-form{
     width: 35%;
-    height: 50%;
+    height: 60%;
     background-color: white;
     border-radius: 8px;
     border: 1px solid #ececec;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: start;
     align-items: center;
     z-index: 1;
     box-shadow: 0 0 3px #eaeaea;
+    position: relative;
 
 }
 .login-top{
@@ -68,15 +68,16 @@
 
 .login-action{
     width: 100%;
+    height: 110px   ;
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
-    align-items: center;
+    align-items: end;
     margin-top: 10px;
 }
 .login-action button{
     cursor: pointer;
-   width: 90%;
+    width: 90%;
     height: 50px;
     background: darkorange;
     color:black;
@@ -92,10 +93,273 @@
 .login-link{
     width: 100%;
    display: flex;
-    justify-content: start;
+    flex-direction: column-reverse;
+    justify-content: center;
     align-items: center;
 }
 .login-link span{
+    color: black;
+    font-size: 14px;
+    margin:10px
+}
+/*forget password section*/
+
+.forget-form{
+    width: 35%;
+    height: 40%;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    z-index: 1;
+    box-shadow: 0 0 3px #eaeaea;
+    position: relative;
+}
+
+.forget-top{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.forget-top span{
+    color: black;
+    font-size: 18px;
+    margin: 20px;
+    font-weight: 700;
+}
+.forget-mid{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.forget-row{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.forget-row span{
+    font-size: 16px;
+    color: black;
+    margin: 10px 25px;
+    align-self: end;
+}
+.forget-row input{
+    width: 90%;
+    margin: 5px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    font-size: 15px;
+    text-align: center;
+    outline: none;
+
+}
+
+.forget-action{
+    width: 100%;
+    height: 110px   ;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: end;
+    margin-top: 10px;
+}
+.forget-action button{
+    cursor: pointer;
+    width: 90%;
+    height: 50px;
+    background: darkorange;
+    color:black;
+    border: none;
+    font-size: 16px;
+    font-family: 'vazirmatn', sans-serif;
+    border-radius: 8px;
+    margin: 10px auto;
+}
+.forget-action button:hover{
+    transform: scale(1.05) !important;
+}
+
+/*confirm code */
+
+.confirm-form{
+    width: 35%;
+    height: 40%;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    z-index: 1;
+    box-shadow: 0 0 3px #eaeaea;
+    position: relative;
+}
+
+.confirm-top{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-top span{
+    color: black;
+    font-size: 18px;
+    margin: 20px;
+    font-weight: 700;
+}
+.confirm-mid{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.confirm-row{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.confirm-row span{
+    font-size: 16px;
+    color: black;
+    margin: 10px 25px;
+    align-self: end;
+}
+.confirm-row input{
+    width: 90%;
+    margin: 5px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    font-size: 15px;
+    text-align: center;
+    outline: none;
+
+}
+
+.confirm-action{
+    width: 100%;
+    height: 110px   ;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: end;
+    margin-top: 10px;
+}
+.confirm-action button{
+    cursor: pointer;
+    width: 90%;
+    height: 50px;
+    background: darkorange;
+    color:black;
+    border: none;
+    font-size: 16px;
+    font-family: 'vazirmatn', sans-serif;
+    border-radius: 8px;
+    margin: 10px auto;
+}
+.confirm-action button:hover{
+    transform: scale(1.05) !important;
+}
+
+/*register section*/
+.register-form{
+    width: 35%;
+    height: 70%;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    z-index: 1;
+    box-shadow: 0 0 3px #eaeaea;
+    position: relative;
+
+}
+.register-top{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.register-top span{
+    color: black;
+    font-size: 18px;
+    margin: 20px;
+    font-weight: 700;
+}
+.register-mid{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.register-row{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.register-row span{
+    font-size: 16px;
+    color: black;
+    margin: 10px 25px;
+    align-self: end;
+}
+.register-row input{
+    width: 90%;
+    margin: 5px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    font-size: 15px;
+    text-align: center;
+    outline: none;
+
+}
+
+.register-action{
+    width: 100%;
+    height: 110px   ;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: end;
+    margin-top: 10px;
+}
+.register-action button{
+    cursor: pointer;
+    width: 90%;
+    height: 50px;
+    background: darkorange;
+    color:black;
+    border: none;
+    font-size: 16px;
+    font-family: 'vazirmatn', sans-serif;
+    border-radius: 8px;
+    margin: 10px auto;
+}
+.register-action button:hover{
+    transform: scale(1.05) !important;
+}
+.register-link{
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+}
+.register-link span{
     color: black;
     font-size: 14px;
     margin:10px
@@ -169,4 +433,18 @@
         transform: scale(15) rotate(960deg) translate(-50%, -50%);
         opacity: 0;
     }
+}
+.forget-link{
+    position: absolute;
+    font-size: 16px;
+    color: black;
+    top: 57%;
+    left: 20px;
+}
+.register-link{
+    position: absolute;
+    font-size: 16px;
+    color: darkorange;
+    bottom: 30px;
+    font-weight: 600;
 }

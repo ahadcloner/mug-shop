@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../assets/styles/NewProfile.css';
 import {RiInformationLine} from "react-icons/ri";
 import {BsBasket3} from "react-icons/bs";
@@ -42,7 +42,9 @@ function NewProfile() {
     const section = useParams();
     const [activeMenu, setActiveMenu] = useState(section.section);
     const navigate = useNavigate();
-
+    useEffect(()=>{
+        setActiveMenu(section.section)
+    },[section])
 
 
 
