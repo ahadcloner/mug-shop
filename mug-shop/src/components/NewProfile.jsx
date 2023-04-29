@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import '../assets/styles/NewProfile.css';
-import {RiUser6Line, RiInformationLine, RiErrorWarningLine} from "react-icons/ri";
+import {RiInformationLine} from "react-icons/ri";
 import {BsBasket3} from "react-icons/bs";
 import {AiOutlineHeart, AiTwotoneEdit} from "react-icons/ai";
-import {BiExit} from "react-icons/bi";
 import {TbLocation} from "react-icons/tb";
-import {RxCross1} from "react-icons/rx";
-import {IoMdAdd} from "react-icons/io";
 import CardProduct from "./CardProduct";
-import {BsTrash2} from "react-icons/bs";
+import {HiOutlineTrash} from "react-icons/hi";
 
 import p1 from '../assets/images/1.jpg';
 import p2 from '../assets/images/2.jpg';
@@ -17,7 +14,7 @@ import p4 from '../assets/images/4.jpg';
 import p5 from '../assets/images/5.jpg';
 import p6 from '../assets/images/6.jpg';
 import p7 from '../assets/images/7.png';
-import Card from "./Card";
+
 import {useNavigate, useParams} from "react-router-dom";
 let data = [
     {id: 1, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
@@ -144,7 +141,7 @@ function NewProfile() {
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <HiOutlineTrash className={'orange'}></HiOutlineTrash>
                             <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
                         <div className="address-card">
@@ -154,7 +151,7 @@ function NewProfile() {
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <HiOutlineTrash className={'orange'}></HiOutlineTrash>
                             <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
                         <div className="address-card">
@@ -164,7 +161,7 @@ function NewProfile() {
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <HiOutlineTrash className={'orange'}></HiOutlineTrash>
                             <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
                         <div className="address-card">
@@ -174,7 +171,7 @@ function NewProfile() {
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <HiOutlineTrash className={'orange'}></HiOutlineTrash>
                             <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
                         <div className="address-card">
@@ -184,7 +181,7 @@ function NewProfile() {
                             <div className="address-value">
                                 <span>کرمان خیابان شهدای خانوک نبش کوچه 5</span>
                             </div>
-                            <BsTrash2 className={'orange'}></BsTrash2>
+                            <HiOutlineTrash className={'orange'}></HiOutlineTrash>
                             <AiTwotoneEdit className={'edit'}></AiTwotoneEdit>
                         </div>
 
@@ -255,7 +252,7 @@ function NewProfile() {
                 {
                     activeMenu === 'order_detail' &&
                     data.map((d)=>{return(
-                        <CardProduct id={d.id} title={d.title} price={d.price} picture={d.picture} show_album={false}></CardProduct>
+                        <CardProduct id={d.id} title={d.title} price={d.price} picture={d.picture} show_album={false} show_trash={false}></CardProduct>
                     )})
                 }
                 {
@@ -272,7 +269,7 @@ function NewProfile() {
                                             <span>{d.title}</span>
                                             <span>{d.price}</span>
                                         </div>
-                                        <BsTrash2></BsTrash2>
+                                        <HiOutlineTrash></HiOutlineTrash>
                                     </div>
                                 )
                             })

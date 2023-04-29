@@ -8,8 +8,7 @@ import p5 from '../assets/images/5.jpg';
 import p6 from '../assets/images/6.jpg';
 import p7 from '../assets/images/7.png';
 import {IoMdAdd} from "react-icons/io";
-import {AiOutlineMinus} from "react-icons/ai";
-import {CgBookmark} from "react-icons/cg";
+import {AiOutlineMinus,AiOutlineHeart} from "react-icons/ai";
 import {useNavigate} from "react-router-dom";
 import Footer from "./Footer";
 
@@ -39,7 +38,7 @@ function ProductGallery({changeView,title}) {
             <div className={'pg-container'}>
                 <div className="pg-card-container">
                     <div className={'correcter'}>
-                        <button onClick={()=>changeView()}  className={'return-btn'}>بازگشت به دسته بندی ها</button>
+                        <span onClick={()=>changeView()}  className={'return-btn'}>بازگشت </span>
                         <h2 className={'cat-title'}>{title}</h2>
                         {
                             data.map((d) => {
@@ -59,7 +58,7 @@ function ProductGallery({changeView,title}) {
                                             </div>
                                             <div className="pg-card-actions">
                                                 <div className={'seprate'}>
-                                                    <button><CgBookmark/></button>
+                                                    <button><AiOutlineHeart/></button>
                                                 </div>
 
                                                 <div className={'functional'}>

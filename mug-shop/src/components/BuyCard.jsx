@@ -32,7 +32,7 @@ function BuyCard() {
                 {
                     data.map((d) => {
                         return (
-                            <CardProduct   key={d.id} picture={d.picture} title={d.title} price={d.price} show_album={true}/>
+                            <CardProduct   key={d.id} picture={d.picture} title={d.title} price={d.price} show_album={true} show_trash={true}/>
                         )
                     })
                 }

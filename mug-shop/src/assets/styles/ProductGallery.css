@@ -21,20 +21,19 @@
     justify-content: space-evenly;
     background-color: white;
     position: relative;
+    margin-top: 40px;
 }
 .return-btn{
     position: absolute;
-    top: -65px;
+    top: -60px;
     width: 180px;
-    left: 0;
-    height: 50px;
-    border-radius: 8px;
-    background-color: darkorange;
+    left: 20px;
+    font-size: 16px;
     border:none;
-    font-size: 14px;
     font-family: 'vazirmatn', sans-serif;
     margin: 10px;
     cursor: pointer;
+    color: darkorange;
 }
 .return-btn:hover{
     transform: scale(1.02);
@@ -42,7 +41,7 @@
 .cat-title{
     position: absolute;
     left: calc(50% - 50px);
-    top: -45px;
+    top: -55px;
     color: black;
 }
 

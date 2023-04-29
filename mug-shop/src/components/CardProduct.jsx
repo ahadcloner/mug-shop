@@ -2,12 +2,12 @@ import React from "react";
 import p3 from "../assets/images/3.jpg";
 import {IoMdAdd} from "react-icons/io";
 import {AiOutlineMinus} from "react-icons/ai";
-import {BsTrash2} from "react-icons/bs";
+import {HiOutlineTrash} from "react-icons/hi";
 import {HiOutlineArrowUpCircle} from "react-icons/hi2";
 import {upload} from "@testing-library/user-event/dist/upload";
 import {useNavigate} from "react-router-dom";
 
-function CardProduct({id ,picture, title, price, show_album}) {
+function CardProduct({id ,picture, title, price, show_album ,show_trash}) {
     const navigate = useNavigate();
     return (
         <div onClick={()=>navigate('/product-detail/'+id)} className={"bc-product"}>
@@ -36,7 +36,11 @@ function CardProduct({id ,picture, title, price, show_album}) {
                 <div className="bc-actions">
                     <button><IoMdAdd/></button>
                     <button><AiOutlineMinus/></button>
-                    <button className={'red'}><BsTrash2/></button>
+                    {
+                        show_trash &&
+                        <button className={'red'}><HiOutlineTrash/></button>
+                    }
+
 
                 </div>
 

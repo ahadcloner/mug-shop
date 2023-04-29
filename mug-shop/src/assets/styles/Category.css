@@ -67,26 +67,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
+    /*background-color: black;*/
     padding: 5px;
     border-radius: 8px;
 }
 .cat-container svg{
-    color: white;
+    color: darkorange;
     width: 20px;
     height: 20px;
 
 }
 .view-title{
     font-size: 14px;
-    color: white;
-    margin:auto 10px;
+    color: darkorange;
+    margin:auto 2px;
 }
 .cat-container h2{
     position: absolute;
     right: 0;
     top: -50px;
     color: black;
-    margin: 10px;
+    margin: 10px auto;
 
 }

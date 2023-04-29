@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 import '../assets/styles/NavBar.css'
 import { RxHamburgerMenu } from "react-icons/rx";
-import { CgBookmark } from "react-icons/cg";
+import { AiOutlineHeart } from "react-icons/ai";
 import { BiSearchAlt } from "react-icons/bi";
 import { SlBasket } from "react-icons/sl";
-import { RiUser6Line } from "react-icons/ri";
 import { VscTriangleDown } from "react-icons/vsc";
 import {UaContext,SbContext} from "./SideBarContext";
 import {useContext} from "react";
@@ -48,7 +47,7 @@ function NavBar(){
                 </div>
                 <div className={'nb-icons'}>
                     <SlBasket onClick={()=>navigate('/cart')}/>
-                    <CgBookmark onClick={()=>navigate('/profile/favorite')}/>
+                    <AiOutlineHeart onClick={()=>navigate('/profile/favorite')}/>
                 </div>
             </div>
         </nav>

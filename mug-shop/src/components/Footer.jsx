@@ -1,8 +1,8 @@
 import React from "react";
 import '../assets/styles/Footer.css';
-import gurrantee from '../assets/images/award.png'
+import gurrantee from '../assets/images/gurrantee.png'
 import support from '../assets/images/support.png'
-import send from '../assets/images/truck.png'
+import send from '../assets/images/delivery.png'
 import trust from '../assets/images/trust.png'
 import enamad from '../assets/images/enamad.png'
 import etehadie from '../assets/images/etehadie.png'

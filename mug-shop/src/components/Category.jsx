@@ -6,7 +6,7 @@ import p2 from "../assets/images/2.jpg";
 import p3 from "../assets/images/3.jpg";
 import p4 from "../assets/images/4.jpg";
 import p5 from "../assets/images/5.jpg";
-import {BiExpand} from "react-icons/bi";
+import {BiChevronLeft} from "react-icons/bi";
 import Footer from "./Footer";
 
 function Category({data, title, changeView}) {
@@ -28,7 +28,7 @@ function Category({data, title, changeView}) {
                     })
                 }
                 <div className="cat-card-action">
-                    <BiExpand/>
+                    <BiChevronLeft/>
                     <span onClick={() => changeView()} className={'view-title'}>مشاهده محصولات</span>
                 </div>
                 <h2>{title}</h2>

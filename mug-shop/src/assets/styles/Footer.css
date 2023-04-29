@@ -1,21 +1,17 @@
 /*for add to git*/
 .f-container{
-    background-color: white;
+    background-color: #232323;
     position: absolute;
     right: 0;
     left: 0;
+
     top:calc( 100% + 30px);
     align-self: end;
     height: 600px;
-    border-radius: 8px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-
-
-
-
 }
 .footer-top{
     display: flex;
@@ -33,7 +29,7 @@
 
 }
 .footer-title span{
-    color: black;
+    color: white;
     font-size: 16px;
     font-weight: 700;
 }
@@ -58,7 +54,7 @@
     align-self: end;
 }
 .footer-social svg{
-    color: black;
+    color: white;
     width: 30px;
     height: 30px;
     margin: 10px;
@@ -67,6 +63,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    background-color: #232323;
+
 }
 .footer-rights span{
     color: darkorange;
@@ -96,7 +94,7 @@
 
 }
 .links-right span{
-    color: black;
+    color: white;
     font-size: 16px;
 }
 .icons{
@@ -112,7 +110,7 @@
 .sep{
     width: 80%;
     height: 1px;
-    background-color: #eaeaea;
+    background-color: #5d5d5d;
     margin: 30px auto;
 }
 .feeds-input  {

@@ -3,12 +3,12 @@
     height: 486px;
     /*border: 1px solid #e5e5e5;*/
     margin-top: 10px;
-    margin-bottom: 5px;
     background-color: white;
     border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 40px;
 }
 .car-image{
     width: 100%;
