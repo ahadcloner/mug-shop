@@ -1,15 +1,24 @@
 .cat-container{
     width: 97%;
     height: 300px;
-    border-radius: 8px;
-    background-color: white;
+    /*border-radius: 8px;*/
+    /*background-color: white;*/
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
     position: relative;
     margin: 55px auto;
     cursor: pointer;
-    /*border-bottom: 1px solid #eaeaea;*/
+    /*padding: 1px;*/
+    /*background-color: #fafafa;*/
+    /*border: 1px solid #f6f6f6;*/
+    background: rgba(255, 255, 255, 0);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(6.5px);
+    -webkit-backdrop-filter: blur(6.5px);
+    border: 1px solid rgba(238, 238, 238, 0.43);
+
 }
 .cat-card{
     height: 99%;
@@ -25,6 +34,7 @@
     margin: 1px;
     border-radius: 8px;
     box-shadow:  0 0 3px #eeeeee;
+
 }
 .cat-card:hover{
     box-shadow: 0 0 10px #eaeaea;
