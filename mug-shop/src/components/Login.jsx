@@ -2,11 +2,19 @@ import React, {useEffect, useState} from "react";
 import '../assets/styles/Login.css';
 import { ImMug } from "react-icons/im";
 import {useParams} from "react-router-dom";
+import axios from "axios";
 
 function Login(){
     const section = useParams();
     const [pageState ,setPageState] =useState(section.section);
     const [confirmMode ,setConfirmMode] =useState('register');
+    const call_register = ()=>{
+        axios.get('http://localhost:8000/api/user/register').then(
+            (response)=>{
+                console.log(response['data']['message'])
+            }
+        )
+    }
     useEffect((
     )=>{
         setPageState(section.section)
@@ -102,8 +110,12 @@ function Login(){
                     </div>
                     <div className="register-action">
                         <button onClick={()=>{
+
                             setConfirmMode('register');
-                            setPageState('confirm');}}
+                            setPageState('confirm');
+                            call_register();
+                        }
+                        }
                         >ثبت نام</button>
                     </div>
                     <span onClick={()=>setPageState('login')} className={'register-link'}>
