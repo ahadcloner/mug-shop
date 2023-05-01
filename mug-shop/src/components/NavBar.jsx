@@ -8,6 +8,7 @@ import { VscTriangleDown } from "react-icons/vsc";
 import {UaContext,SbContext} from "./SideBarContext";
 import {useContext} from "react";
 import { useNavigate } from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 
 
@@ -15,6 +16,7 @@ function NavBar(){
     const navigate = useNavigate();
     const {sideBarStatus,setSideBarStatus} = useContext(SbContext);
     const {UaClass,setUaClass} = useContext(UaContext);
+    const [cookie, setCookie, removeCookie] = useCookies(['token']);
 
     const [inputOp,setInputOp] = useState(0);
     const handleClick=()=>{
@@ -42,8 +44,19 @@ function NavBar(){
             </div>
             <div className={ 'nb-left'}>
                 <div onClick={handleUserArea} className={'nb-user-area'}>
-                    <span>احد میرحبیبی</span>
-                    <VscTriangleDown/>
+                    {
+                        cookie.token &&
+                        <>
+                            <span>احد میرحبیبی</span>
+                            <VscTriangleDown/>
+                        </>
+
+                    }
+                    {
+                        !cookie.token &&
+                        <span onClick={()=>{navigate('/login/login')}}>ورود به حساب</span>
+                    }
+
                 </div>
                 <div className={'nb-icons'}>
                     <SlBasket onClick={()=>navigate('/cart')}/>

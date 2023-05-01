@@ -18,6 +18,7 @@ import UserProfile from "./components/UserProfile";
 import NotFound from "./components/NotFound";
 import NewProfile from "./components/NewProfile";
 import Footer from "./components/Footer";
+import {ToastContainer} from "react-toastify";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -37,7 +38,18 @@ function App() {
                     <Route path={'*'} element={<NotFound/>}/>
                 </Routes>
                 <UserArea></UserArea>
-
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                />
             </BrowserRouter>
                 </SbContext.Provider>
             </UaContext.Provider>

@@ -448,3 +448,6 @@
     bottom: 30px;
     font-weight: 600;
 }
+.Toastify__toast-container{
+    width: max-content!important;
+}
