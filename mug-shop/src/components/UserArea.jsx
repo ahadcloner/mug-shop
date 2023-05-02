@@ -27,7 +27,7 @@ function UserArea(){
         data.append('token' , cookie.token);
         var config = {
             method: 'post',
-            url: 'http://localhost:8000/api/user/logout',
+            url: 'https://hitmug.ir/api/user/logout',
             headers: {
                 'Authorization': 'Bearer '+cookie.token,
             },

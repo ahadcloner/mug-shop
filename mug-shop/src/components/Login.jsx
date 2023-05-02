@@ -56,7 +56,7 @@ function Login() {
             bodyFormData.append('password', registerPassword);
             let api = await axios({
                 method: "post",
-                url: "http://localhost:8000/api/user/register",
+                url: "https://hitmug.ir/api/user/register",
                 data: bodyFormData,
                 headers: {"Content-Type": "multipart/form-data"},
             })
@@ -87,7 +87,7 @@ function Login() {
         const data = new FormData();
         data.append('email', loginEmail);
         data.append('password', loginPassword);
-        let api = await axios.post('http://localhost:8000/api/user/login', data)
+        let api = await axios.post('https://hitmug.ir/api/user/login', data)
             .then((response) => {
                 notify_success(response['data']['message']);
                 let token = response['data']['token'];
