@@ -14,7 +14,7 @@ function Category({data, title, changeView}) {
         <>
             <div className={'cat-container'}>
                 {
-                    data.slice(0, 5).map((d) => {
+                    data.slice(0, 6).map((d) => {
                         return (
                             <div key={d.id} className="cat-card">
                                 <div className="cat-card-image">
