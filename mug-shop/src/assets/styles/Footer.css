@@ -119,14 +119,17 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: end;
+    align-items: center;
+}
+.feeds-input > span{
+    align-self: end;
 }
 .feeds-action{
     width: 100%;
     height: 30%;
 }
 .feeds-action button{
-    width: 98%;
+    width: 100%;
     height: 50px;
     border: none;
     border-radius: 8px;
@@ -149,5 +152,85 @@
     font-size: 16px;
     text-align: center;
     border: 1px solid #eaeaea;
-
+}
+@media screen and (max-width: 1000px) {
+    .footer-links{
+        flex-wrap: wrap;
+        height: auto;
+    }
+    .links-right{
+        width: 49%;
+    }
+    .spans{
+        width: 100%;
+        flex-direction: row;
+    }
+    .spans span{
+        color: darkorange;
+    }
+    .f-container{
+        height: auto;
+    }
+    .news{
+        width: 80%;
+    }
+    .axes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+    }
+    .icons{
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
+@media screen and (max-width: 680px) {
+    .f-container img{
+        width: 70px;
+        height: 70px;
+        align-self: end;
+    }
+    .footer-top{
+        flex-wrap: wrap;
+    }
+}
+@media screen and (max-width: 450px) {
+    .f-container{
+        right: 0;
+    }
+    .f-container img{
+        width: 50px;
+        height: 50px;
+        align-self: end;
+    }
+    .footer-title span{
+        font-size: 14px;
+    }
+    .feeds-action button{
+        height: 38px;
+    }
+    .feeds-input input{
+        height: 30px;
+    }
+}
+@media screen and (max-width: 380px) {
+    .f-container img{
+        width: 45px;
+        height: 45px;
+        align-self: end;
+    }
+    .footer-title span{
+        font-size: 12px;
+    }
+    .feeds-action button{
+        height: 38px;
+    }
+    .feeds-input input{
+        height: 30px;
+    }
+    .spans span{
+        font-size: 14px;
+    }
 }

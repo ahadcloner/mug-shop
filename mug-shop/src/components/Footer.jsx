@@ -30,7 +30,7 @@ function Footer() {
             </div>
             <div className="sep"></div>
             <div className="footer-links">
-                <div className="links-right">
+                <div className="links-right spans">
 
                     <span>در باره ما</span>
                     <span>قوانین سایت</span>
@@ -38,7 +38,7 @@ function Footer() {
                     <span>آموزش ها</span>
 
                 </div>
-                <div className="links-right">
+                <div className="links-right news">
                     <div className="feeds-input">
                         <span>عضویت در خبرنامه سایت</span>
                         <input type={"text"} placeholder={'ایمیل خود را وارد کنید'}/>
@@ -47,7 +47,7 @@ function Footer() {
                         <button>درخواست</button>
                     </div>
                 </div>
-                <div className="links-right">
+                <div className="links-right axes">
                     <div className="icons">
                         <img src={enamad} alt={'permission'}/>
                         <img src={etehadie} alt={'branch'}/>
