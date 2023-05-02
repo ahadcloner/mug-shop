@@ -75,3 +75,9 @@
 .sb-hide .sb-menu-item{
     margin: 10px auto;
 }
+
+@media screen and (max-width: 576px) {
+    .sb-hide{
+        width: 0;
+    }
+}

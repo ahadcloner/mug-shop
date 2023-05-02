@@ -8,8 +8,14 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-
 }
+
+@media screen and (max-width: 576px) {
+    .mp-container {
+        width: calc( 100%);
+    }
+}
+
 .mp-cat{
     width: 95%;
     height: 70px;
