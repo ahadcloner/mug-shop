@@ -11,7 +11,9 @@
 /*login section*/
 .login-form{
     width: 35%;
-    height: 60%;
+    height: max-content;
+    padding-bottom: 60px;
+    max-height: 60%;
     background-color: white;
     border-radius: 8px;
     border: 1px solid #ececec;
@@ -102,6 +104,43 @@
     font-size: 14px;
     margin:10px
 }
+
+@media screen and (max-width: 1200px) {
+    .login-form{
+        width: 40%;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .login-form{
+        width: 50%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .login-form{
+        width: 60%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .login-form{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 576px) {
+    .login-container{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .login-form{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .login-form {
+        width: 90%;
+    }
+}
+
 /*forget password section*/
 
 .forget-form{
@@ -185,6 +224,42 @@
 .forget-action button:hover{
     transform: scale(1.05) !important;
 }
+@media screen and (max-width: 1200px) {
+    .forget-form{
+        width: 40%;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .forget-form{
+        width: 50%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .forget-form{
+        width: 60%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .forget-form{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 576px) {
+    .login-container{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .forget-form{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .forget-form {
+        width: 90%;
+    }
+}
+
 
 /*confirm code */
 
@@ -268,6 +343,41 @@
 }
 .confirm-action button:hover{
     transform: scale(1.05) !important;
+}
+@media screen and (max-width: 1200px) {
+    .confirm-form{
+        width: 40%;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .confirm-form{
+        width: 50%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .confirm-form{
+        width: 60%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .confirm-form{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 576px) {
+    .login-container{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .confirm-form{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .confirm-form {
+        width: 90%;
+    }
 }
 
 /*register section*/
@@ -364,7 +474,41 @@
     font-size: 14px;
     margin:10px
 }
-
+@media screen and (max-width: 1200px) {
+    .register-form{
+        width: 40%;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .register-form{
+        width: 50%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .register-form{
+        width: 60%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .register-form{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 576px) {
+    .login-container{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .register-form{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .register-form {
+        width: 90%;
+    }
+}
 /*animation for login page background*/
 .hero {
     position: relative;
