@@ -8,7 +8,7 @@
     align-items: center;
 }
 .np-menu{
-    width: 20%;
+    width: 300px;
     height: 89%;
     background-color: white;
     position: fixed;
@@ -19,11 +19,82 @@
 }
 .np-view{
     background-color: white;
-    width: 78%;
+    width: calc(100% - 325px);
     height: 97%;
     border-radius: 8px;
     margin: 5px;
 }
+@media screen and (max-width: 1000px) {
+    .np-menu{
+        width: 250px;
+    }
+    .np-view{
+        width:calc(100% - 275px) ;
+    }
+}
+@media screen and (max-width: 900px) {
+    .np-menu{
+        width: 200px;
+    }
+    .np-view{
+        width:calc(100% - 225px) ;
+    }
+}
+@media screen and (max-width: 650px) {
+    .np-menu{
+        width: calc(95%);
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 0;
+        margin:10px;
+        height: 50px;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    .np-view{
+        margin-top:calc(65px + 60px);
+        width:calc(100%) ;
+    }
+    .np-menu-row{
+        height: 48px;
+    }
+
+    .np-menu-row span{
+        font-size: 14px!important;
+        margin: 5px!important;
+    }
+    .np-menu-row svg{
+        width: 20px!important;
+        height: 20px!important;
+        margin: 5px!important;
+    }
+
+}
+@media screen and (max-width: 576px) {
+    .np-container{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .np-menu-row svg{
+       display: none;
+    }
+
+}
+@media screen and (max-width: 400px) {
+
+    .np-menu-row svg{
+        display: none;
+    }
+    .np-menu-row span{
+        font-size: 13px!important;
+        margin: 5px!important;
+    }
+
+}
+
+
 .np-menu-row{
     display: flex;
     justify-content: end;
@@ -70,6 +141,13 @@
     position: relative;
     padding-bottom: 110px;
     padding-top: 20px;
+}
+@media screen and (max-width: 1383px) {
+    .info-card
+    {
+        width: 98%!important;
+
+    }
 }
 .info-card{
     width: 49%;
@@ -155,7 +233,7 @@
     position: relative;
 }
 .address-card{
-    width: 49%;
+    width: 98%;
     height: 100px;
     border-radius: 8px;
     border:1px solid #f5f5f5;
@@ -163,6 +241,27 @@
     position: relative;
     transition: all 0.5s;
     cursor: pointer;
+}
+@media screen and (max-width: 600px){
+    .address-title span{
+        font-size: 14px!important;
+    }
+    .address-value span{
+        font-size: 14px!important;
+        font-weight: 600;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .orange{
+
+        margin: 5px!important;
+    }
+    .edit{
+        top: 25px!important;
+        margin: 5px!important;
+
+    }
 }
 .address-card:hover{
     transform: scale(1.02);
@@ -223,12 +322,11 @@
     font-weight: 600;
 }
 
+
 /*orders section*/
 .order-container
 {
     width: 100%;
-
-
 }
 .order-header{
     width: 99%;
@@ -285,6 +383,16 @@
     color: red!important;
     font-weight: 600;
 }
+@media screen and (max-width: 1150px) {
+    .order-container span{
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .order-container span{
+        font-size: 12px;
+    }
+}
 /*favorite section*/
 .favorite-container{
     width: 100%;
@@ -295,7 +403,7 @@
     align-items: start;
 }
 .fave-card{
-    width: 32%;
+    width: calc(100% / 3 - 15px);
     height: 200px;
     border-radius: 8px;
     background-color: white;
@@ -340,14 +448,20 @@
     font-size: 16px;
     font-weight: 600;
 }
+.fave-body label{
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+}
 .fave-body span:first-child{
     font-weight: 600;
     font-size: 18px;
 }
-.fave-card span:last-child::after{
+.fave-card label::after{
     content: 'تومان';
     position: absolute;
-    left: 55px;
+    left: -40px;
 }
 .fave-card > svg{
     position: absolute;
@@ -355,4 +469,19 @@
     left: 0;
     bottom: 0;
     margin: 10px;
+}
+@media screen and (max-width: 1300px) {
+    .fave-card{
+        width: calc(100% / 2 - 15px);
+    }
+}
+@media screen and (max-width: 1100px) {
+    .fave-card{
+        width: calc(100%  - 15px);
+    }
+}
+@media screen and (max-width:1000px) {
+    .favorite-container span{
+        font-size: 14px!important;
+    }
 }

@@ -17,7 +17,7 @@ import p7 from '../assets/images/7.png';
 
 import {useNavigate, useParams} from "react-router-dom";
 let data = [
-    {id: 1, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
+    {id: 1, title: 'ماگ حرارتی مدل اول', price: '410,000', picture: p1},
     {id: 2, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
     {id: 3, title: 'ماگ حرارتی مدل سوم', price: '23000', picture: p3},
     {id: 4, title: 'ماگ حرارتی مدل چهارم', price: '3,600', picture: p4},
@@ -27,7 +27,7 @@ let data = [
     {id: 8, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
     {id: 9, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
     {id: 10, title: 'ماگ حرارتی مدل سوم', price: '23000', picture: p3},
-    {id: 11, title: 'ماگ حرارتی مدل چهارم', price: '3,600', picture: p4},
+    {id: 11, title: 'ماگ حرارتی مدل چهارم', price: ' تومان 3,600', picture: p4},
     {id: 12, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
     {id: 13, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
     {id: 14, title: 'ماگ حرارتی مدل پنجم', price: '65000', picture: p5},
@@ -269,7 +269,7 @@ function NewProfile() {
                                         </div>
                                         <div className="fave-body">
                                             <span>{d.title}</span>
-                                            <span>{d.price}</span>
+                                            <label>{d.price}</label>
                                         </div>
                                         <HiOutlineTrash></HiOutlineTrash>
                                     </div>
