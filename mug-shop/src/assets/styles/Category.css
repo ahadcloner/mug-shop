@@ -133,6 +133,12 @@
     .cat-container{
         height: auto;
     }
+    span{
+        font-size: 14px!important;
+    }
+    h2{
+        font-size: 16px!important;
+    }
 }
 @media screen and (max-width: 750px) {
     .cat-card{
@@ -158,6 +164,12 @@
     }
     .cat-container{
         height: auto;
+    }
+    span{
+        font-size: 12px!important;
+    }
+    h2{
+        font-size: 14px!important;
     }
 
     @media screen and (max-width: 450px) {
