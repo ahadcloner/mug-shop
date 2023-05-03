@@ -26,6 +26,134 @@
     background-color: #F6F6F5;
     margin: 10px;
 }
+@media screen and (max-width: 1300px) {
+    .bc-factor{
+        width: 33%;
+    }
+    .bc-cards{
+        width: 65%;
+    }
+}
+@media screen and (max-width: 1100px) {
+    .bc-factor{
+        width: 28%;
+    }
+    .bc-cards{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 950px) {
+    .bc-container{
+        flex-direction: column!important;
+    }
+    .bc-factor{
+        position: absolute;
+        width: 100%;
+        height: 300px;
+
+    }
+    .bc-cards{
+        width: 100%;
+        margin-top: 300px!important;
+    }
+    .bc-product{
+        height: 300px!important;
+    }
+    .bc-top img {
+        width: 100px!important;
+        height: 100px!important;
+    }
+    .bc-row span {
+        font-size: 14px!important;
+    }
+    .bc-albume button{
+        height: 38px!important;
+        font-size: 14px!important;
+    }
+    /*.bc-gallery img{*/
+    /*    width: 30px!important;*/
+    /*    height: 30px!important;*/
+    /*}*/
+}
+@media screen and (max-width: 650px) {
+    .bc-actions{
+        align-items: center!important;
+        margin-bottom: 20px;
+        width: 90%!important;
+    }
+    .bc-down{
+        flex-direction: column-reverse!important;
+        height: 200px!important;
+        align-items: end!important;
+        justify-content: space-between!important;
+
+    }
+    .bc-product{
+        height: max-content;
+    }
+    .bc-albume{
+        margin-right: 30px;
+        width: 100%!important;
+        margin-top: 20px;
+    }
+    .bc-gallery{
+        height: max-content!important;
+        max-width:40% ;
+        width: max-content;
+    }
+    .bc-cards{
+        margin-top: 300px!important;
+    }
+    .red{
+        margin-right: auto!important;
+    }
+
+}
+@media screen and (max-width: 576px) {
+    .bc-container{
+        width: 100%;
+    }
+    .bc-factor{
+        margin: 10px auto!important;
+    }
+}
+@media screen and (max-width: 450px) {
+    .bc-albume img{
+        width: 40px!important;
+        height: 40px!important;
+    }
+    .bc-row{
+        margin-top: 10px!important;
+        height: 30px;
+    }
+    .bc-cards{
+        margin-top: 310px!important;
+    }
+
+}
+@media (max-width: 400px) {
+    .bc-top{
+       flex-wrap: wrap!important;
+        justify-content: space-evenly!important;
+    }
+    .bc-top img{
+        width: 80px!important;
+        height:80px!important; ;
+        margin: 5px auto!important;
+    }
+    .bc-cards{
+        height: max-content!important;
+        margin-top: 300px!important;
+    }
+    .bc-albume button{
+        height: 30px!important;
+        font-size: 12px!important;
+    }
+    .bc-product{
+        height: 380px!important;
+    }
+    
+}
 
 .bc-product {
     width: 98%;
@@ -121,11 +249,13 @@
 
 .bc-albume {
     width: 50%;
-    height: 90%;
+    height: max-content;
+    max-height: 100%;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
+
 }
 .bc-albume button{
     height: 50px;
