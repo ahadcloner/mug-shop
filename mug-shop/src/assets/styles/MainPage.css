@@ -18,11 +18,36 @@
 
 .mp-cat{
     width: 95%;
-    height: 70px;
+    height: 80px;
     display: flex;
     justify-content: end;
     align-items: center;
     margin-top: 30px;
+}
+@media screen and (max-width: 1000px){
+    .mp-cat{
+        align-items: end;
+    }
+    .cat-title{
+        top:-60px!important;
+    }
+    .return-btn{
+        margin-top: 45px;
+    }
+}
+@media screen and (max-width: 475px){
+    .mp-cat{
+        width: 100%;
+        align-items: end;
+        justify-content: end;
+    }
+    .mp-cat span{
+        margin-right: 10px!important;
+    }
+    .return-btn{
+        margin-top: 5px;
+        left: -15px;
+    }
 }
 
 
