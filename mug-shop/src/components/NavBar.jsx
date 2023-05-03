@@ -103,12 +103,9 @@ function NavBar() {
 
                 </div>
                 <div className={'nb-icons'}>
-                    {cookie.token && <ImExit onClick={() => {
-                        call_logout()
-                    }} className={'small-screen'}/>}
                     <SlBasket onClick={() => navigate('/cart')}/>
                     {cookie.token && <AiOutlineHeart onClick={() => navigate('/profile/favorite')}/>}
-                    {cookie.token && <FaUserTie onClick={()=>{navigate('/profile/info')}} className={'small-screen'}/>}
+                    {cookie.token && <FaUserTie onClick={()=>{handleUserArea()}} className={'small-screen'}/>}
 
                 </div>
             </div>
