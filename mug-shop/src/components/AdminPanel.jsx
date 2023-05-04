@@ -43,13 +43,58 @@ const users_buttons=[
     }
 ]
 
+const roles_headers = [
+    {id: 0, title: 'ردیف'},
+    {id: 1, title: 'نام'},
+    {id: 2, title: 'نام گارد'},
+    {id: 3, title: 'عملیات'},
+]
+const roles_field_names = [
+    {id: 0, title: 'name',is_date:false},
+    {id: 1, title: 'gurd_name',is_date:false},
+]
+const roles_buttons=[
+    {
+        id:0 ,title:'ویرایش نقش' , func:''
+    },
+    {
+        id:1 ,title:'ویرایش دسترسی ها' , func:''
+    }
+]
+
+const permission_headers = [
+    {id: 0, title: 'ردیف'},
+    {id: 1, title: 'نام'},
+    {id: 2, title: 'نام گارد'},
+    {id: 3, title: 'عملیات'},
+]
+const permission_field_names = [
+    {id: 0, title: 'name',is_date:false},
+    {id: 1, title: 'gurd_name',is_date:false},
+]
+const permission_buttons=[
+    {
+        id:0 ,title:'ویرایش دسترسی' , func:''
+    }
+]
+
 function AdminPanel() {
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
     const [users, setUsers] = useState([]);
+    const [roles, setRoles] = useState([]);
+    const [permissions, setPermissions] = useState([]);
     const [refreshData , setRefreshData]=useState(false);
+    const [refreshRoleData , setRefreshRoleData]=useState(false);
+    const [refreshPermissionData , setRefreshPermissionData]=useState(false);
     const change_refresh =()=>{
         setRefreshData(!refreshData);
+    }
+    const change_refresh_roles =()=>{
+        setRefreshRoleData(!refreshRoleData);
+    }
+    const change_refresh_permissions =()=>{
+        setRefreshPermissionData(!refreshPermissionData);
     }
     const change_menu = (name) => {
         setApActiveMenu(name);
@@ -75,9 +120,54 @@ function AdminPanel() {
             });
 
     }
+    const get_roles = async () => {
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'https://hitmug.ir/api/role/index',
+            headers: {
+                'Authorization': 'Bearer '+cookie.token
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                setRoles( response.data.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+    const get_permissions = async () => {
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'https://hitmug.ir/api/permision/index',
+            headers: {
+                'Authorization': 'Bearer '+cookie.token
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                setPermissions( response.data.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+
     useEffect(() => {
        get_users()
     }, [refreshData]);
+    useEffect(() => {
+        get_roles()
+    }, [refreshRoleData]);
+    useEffect(() => {
+        get_permissions()
+    }, [refreshPermissionData]);
     return (
         <div className={'ap-container'}>
             <div className="ap-menu">
@@ -172,11 +262,26 @@ function AdminPanel() {
                             grid_title={'نقش ها'}
                             action_title={'افزودن نقش'}
                             have_action={true}
-                            headers={users_headers}
-                            data={users}
-                            reload={change_refresh}
-                            field_names ={users_field_names}
-                            buttons={users_buttons}
+                            headers={roles_headers}
+                            data={roles}
+                            reload={change_refresh_roles}
+                            field_names ={roles_field_names}
+                            buttons={roles_buttons}
+                        />
+                    </>
+                }
+                {
+                    apActiveMenu === 'permissions' &&
+                    <>
+                        <DataGrid
+                            grid_title={'دسترسی ها'}
+                            action_title={'افزودن دسترسی'}
+                            have_action={true}
+                            headers={permission_headers}
+                            data={permissions}
+                            reload={change_refresh_permissions}
+                            field_names ={permission_field_names}
+                            buttons={permission_buttons}
                         />
                     </>
                 }
