@@ -19,38 +19,40 @@ import NotFound from "./components/NotFound";
 import NewProfile from "./components/NewProfile";
 import Footer from "./components/Footer";
 import {ToastContainer} from "react-toastify";
+import AdminPanel from "./components/AdminPanel";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
     const [UaClass, setUaClass] = useState('ua-hide');
     return (<main>
-        <UaContext.Provider value={{UaClass, setUaClass}}>
-            <SbContext.Provider value={{sideBarStatus, setSideBarStatus}}>
-            <BrowserRouter>
-                <NavBar></NavBar>
-                <SideBar></SideBar>
-                <Routes>
-                    <Route path={'/'} element={<MainPage/>}/>
-                    <Route path={'/login/:section'} element={<Login/>}/>
-                    <Route path={'/profile/:section'} element={<NewProfile/>}/>
-                    <Route path={'/cart'} element={<BuyCard/>}/>
-                    <Route path={'/product-detail/:id'} element={<ProductDetail/>}/>
-                    <Route path={'*'} element={<NotFound/>}/>
-                </Routes>
-                <UserArea></UserArea>
-                <ToastContainer
-                    position="top-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                />
-            </BrowserRouter>
+            <UaContext.Provider value={{UaClass, setUaClass}}>
+                <SbContext.Provider value={{sideBarStatus, setSideBarStatus}}>
+                    <BrowserRouter>
+                        <NavBar></NavBar>
+                        <SideBar></SideBar>
+                        <Routes>
+                            <Route path={'/'} element={<MainPage/>}/>
+                            <Route path={'/login/:section'} element={<Login/>}/>
+                            <Route path={'/profile/:section'} element={<NewProfile/>}/>
+                            <Route path={'/cart'} element={<BuyCard/>}/>
+                            <Route path={'/product-detail/:id'} element={<ProductDetail/>}/>
+                            <Route path={'/admin'} element={<AdminPanel/>}/>
+                            <Route path={'*'} element={<NotFound/>}/>
+                        </Routes>
+                        <UserArea></UserArea>
+                        <ToastContainer
+                            position="top-center"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="colored"
+                        />
+                    </BrowserRouter>
                 </SbContext.Provider>
             </UaContext.Provider>
         </main>
