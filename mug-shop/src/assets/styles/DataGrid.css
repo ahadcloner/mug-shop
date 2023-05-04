@@ -1,0 +1,96 @@
+.grid-container{
+    width: 98%;
+    border-radius: 8px;
+    margin: 10px auto ;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eeeeee;
+}
+.grid-top{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.grid-title{
+    width: 100%;
+    min-width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.grid-title span{
+    color: black;
+    font-size: 18px;
+}
+
+.grid-action{
+    width: 200px;
+    height: 100%;
+}
+.grid-action button{
+    background-color: darkorange;
+    border: none;
+    border-radius: 8px;
+    height: 50px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: 'vazirmatn', sans-serif;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+}
+.grid-bottom{
+    width: 100%;
+    height: 80%;
+    margin: 30px auto 10px auto;
+    overflow: auto;
+}
+table{
+    direction: rtl;
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    text-align: center;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+}
+td {
+    text-align: center;
+    padding: 16px;
+    font-size: 16px;
+    border: 1px solid #e7e7e7;
+    width: max-content;
+    white-space: nowrap;
+}
+
+.header{
+    background-color: #F6F6F5;
+    border-radius: 8px;
+    border: 1px solid #e7e7e7;
+
+}
+.table-data{
+    border-radius: 8px;
+    border: 1px solid #e7e7e7;
+
+}
+td button{
+    height: 50px;
+    background-color: black;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'vazirmatn', sans-serif;
+    border: none;
+
+    margin: 5px;
+}
+
+
