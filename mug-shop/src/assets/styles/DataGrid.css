@@ -24,6 +24,7 @@
 .grid-title span{
     color: black;
     font-size: 18px;
+    font-weight: 600;
 }
 
 .grid-action{
@@ -95,3 +96,11 @@ td button{
 }
 
 
+.account-active{
+    color: limegreen!important;
+    font-weight: 600;
+}
+.account-not-active{
+    color: red!important;
+    font-weight: 600;
+}

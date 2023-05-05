@@ -10,79 +10,92 @@ import {HiOutlineDocumentReport} from "react-icons/hi";
 import DataGrid from "./DataGrid";
 import axios from "axios";
 import {useCookies} from "react-cookie";
+import AdminModalUserAddress from '../components/AdminModals/AdminModalUserAddress';
 
-const users_headers = [
-    {id: 0, title: 'ردیف'},
-    {id: 1, title: 'ایمیل'},
-    {id: 2, title: 'نام کاربری'},
-    {id: 3, title: 'تاریخ ثبت نام'},
-    {id: 4, title: 'تاریخ تولد'},
-    {id: 5, title: 'استان'},
-    {id: 6, title: 'شهر'},
-    {id: 7, title: 'شماره تماس'},
-    {id: 8, title: 'وضعیت'},
-    {id: 9, title: 'عملیات'},
-];
 
-const users_field_names = [
-    {id: 0, title: 'email',is_date:false},
-    {id: 1, title: 'full_name',is_date:false},
-    {id: 2, title: 'created_at',is_date:true},
-    {id: 3, title: 'birth_date',is_date:false},
-    {id: 4, title: 'city.state.name',is_date:false},
-    {id: 5, title: 'city.name',is_date:false},
-    {id: 6, title: 'mobile',is_date:false},
-    {id: 7, title: 'status',is_date:false},
-    // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
-]
-const users_buttons=[
-    {
-        id:0 ,title:'ویرایش اطلاعات' , func:''
-    },
-    {
-        id:1 ,title:'مدیریت نقش ها' , func:''
-    },
-    {
-        id:2 ,title:'آدرس ها' , func:''
-    }
-]
 
-const roles_headers = [
-    {id: 0, title: 'ردیف'},
-    {id: 1, title: 'نام'},
-    {id: 2, title: 'نام گارد'},
-    {id: 3, title: 'عملیات'},
-]
-const roles_field_names = [
-    {id: 0, title: 'name',is_date:false},
-    {id: 1, title: 'gurd_name',is_date:false},
-]
-const roles_buttons=[
-    {
-        id:0 ,title:'ویرایش نقش' , func:''
-    },
-    {
-        id:1 ,title:'ویرایش دسترسی ها' , func:''
-    }
-]
 
-const permission_headers = [
-    {id: 0, title: 'ردیف'},
-    {id: 1, title: 'نام'},
-    {id: 2, title: 'نام گارد'},
-    {id: 3, title: 'عملیات'},
-]
-const permission_field_names = [
-    {id: 0, title: 'name',is_date:false},
-    {id: 1, title: 'gurd_name',is_date:false},
-]
-const permission_buttons=[
-    {
-        id:0 ,title:'ویرایش دسترسی' , func:''
-    }
-]
 
 function AdminPanel() {
+    const [isOpenAddressModal , setIsOpenAddressModal]=useState(false);
+    const [AddressModalUserId , setAddressModalUserId]=useState();
+    const openAddressModal=(user_id)=>{
+        setAddressModalUserId(user_id)
+        setIsOpenAddressModal(true)
+    }
+    const closeAddressModal =()=>{
+        setIsOpenAddressModal(false)
+    }
+    const users_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'ایمیل'},
+        {id: 2, title: 'نام کاربری'},
+        {id: 3, title: 'تاریخ ثبت نام'},
+        {id: 4, title: 'تاریخ تولد'},
+        {id: 5, title: 'استان'},
+        {id: 6, title: 'شهر'},
+        {id: 7, title: 'شماره تماس'},
+        {id: 8, title: 'وضعیت'},
+        {id: 9, title: 'عملیات'},
+    ];
+    const users_field_names = [
+        {id: 0, title: 'email',is_date:false,is_boolean:false},
+        {id: 1, title: 'full_name',is_date:false,is_boolean:false},
+        {id: 2, title: 'created_at',is_date:true,is_boolean:false},
+        {id: 3, title: 'birth_date',is_date:false,is_boolean:false},
+        {id: 4, title: 'city.state.name',is_date:false,is_boolean:false},
+        {id: 5, title: 'city.name',is_date:false,is_boolean:false},
+        {id: 6, title: 'mobile',is_date:false,is_boolean:false},
+        {id: 7, title: 'status',is_date:false,is_boolean:true},
+        // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
+    ]
+    const users_buttons=[
+        {
+            id:0 ,title:'ویرایش اطلاعات' , func:''
+        },
+        {
+            id:1 ,title:'مدیریت نقش ها' , func:''
+        },
+        {
+            id:2 ,title:'آدرس ها' , func:(e)=>openAddressModal(e)
+        }
+    ]
+
+    const roles_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'نام'},
+        {id: 2, title: 'نام گارد'},
+        {id: 3, title: 'عملیات'},
+    ]
+    const roles_field_names = [
+        {id: 0, title: 'name',is_date:false},
+        {id: 1, title: 'guard_name',is_date:false},
+    ]
+    const roles_buttons=[
+        {
+            id:0 ,title:'ویرایش نقش' , func:''
+        },
+        {
+            id:1 ,title:'ویرایش دسترسی ها' , func:''
+        }
+    ]
+
+    const permission_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'نام'},
+        {id: 2, title: 'نام گارد'},
+        {id: 3, title: 'عملیات'},
+    ]
+    const permission_field_names = [
+        {id: 0, title: 'name',is_date:false},
+        {id: 1, title: 'guard_name',is_date:false},
+    ]
+    const permission_buttons=[
+        {
+            id:0 ,title:'ویرایش دسترسی' , func:''
+        }
+    ]
+
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
     const [users, setUsers] = useState([]);
@@ -174,6 +187,14 @@ function AdminPanel() {
     }, [refreshPermissionData]);
     return (
         <div className={'ap-container'}>
+
+            {/*define modals*/}
+            <AdminModalUserAddress
+                isOpen={isOpenAddressModal}
+                onRequestClose={closeAddressModal}
+                user_id={AddressModalUserId}
+            />
+
             <div className="ap-menu">
                 <div onClick={() => {
                     change_menu('users')

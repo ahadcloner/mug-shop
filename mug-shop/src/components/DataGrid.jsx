@@ -64,7 +64,14 @@ function DataGrid({grid_title, have_action, action_title, headers, data, reload,
                                                     }
                                                     else
                                                     {
-                                                        return  <td key={f.id}>{d[f.title]}</td>
+                                                        if (f.is_boolean)
+                                                        {
+                                                            return <td className={`${d[f.title]==='1'?'account-active':'account-not-active'}`} key={f.id}>{d[f.title]==='1'?'فعال':'غیر فعال'}</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            return  <td key={f.id}>{d[f.title]}</td>
+                                                        }
                                                     }
 
                                                 }
@@ -74,7 +81,7 @@ function DataGrid({grid_title, have_action, action_title, headers, data, reload,
                                     <td>
                                         {
                                             buttons.map((b) => {
-                                                return <button key={b.id}>{b.title}</button>
+                                                return <button onClick={b.func !=='' ?()=>{ b.func(d.id)}:()=>{}} key={b.id}>{b.title}</button>
                                             })
                                         }
                                     </td>
