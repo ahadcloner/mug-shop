@@ -22,14 +22,15 @@ const users_headers = [
     {id: 7, title: 'شماره تماس'},
     {id: 8, title: 'وضعیت'},
     {id: 9, title: 'عملیات'},
-]
+];
+
 const users_field_names = [
     {id: 0, title: 'email',is_date:false},
     {id: 1, title: 'full_name',is_date:false},
     {id: 2, title: 'created_at',is_date:true},
     {id: 3, title: 'birth_date',is_date:false},
-    {id: 4, title: 'state',is_date:false},
-    {id: 5, title: 'city',is_date:false},
+    {id: 4, title: 'city.state.name',is_date:false},
+    {id: 5, title: 'city.name',is_date:false},
     {id: 6, title: 'mobile',is_date:false},
     {id: 7, title: 'status',is_date:false},
     // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
@@ -40,6 +41,9 @@ const users_buttons=[
     },
     {
         id:1 ,title:'مدیریت نقش ها' , func:''
+    },
+    {
+        id:2 ,title:'آدرس ها' , func:''
     }
 ]
 
@@ -113,7 +117,7 @@ function AdminPanel() {
         axios.request(config)
             .then((response) => {
                 setUsers( response.data.data)
-                console.log(users)
+                // console.log('users',response.data.data)
             })
             .catch((error) => {
                 console.log(error);

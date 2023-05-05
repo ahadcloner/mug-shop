@@ -4,6 +4,7 @@ import '../assets/styles/DataGrid.css';
 function DataGrid({grid_title, have_action, action_title, headers, data, reload, field_names, buttons}) {
 
     const mydata = [...data];
+
     const format_date = (sample) => {
         if (sample !== null) {
             let mysample = sample.toString()
@@ -38,7 +39,7 @@ function DataGrid({grid_title, have_action, action_title, headers, data, reload,
                         }
                     </tr>
                     {
-                        data.map((d, index) => {
+                        mydata.map((d, index) => {
 
                             return (
                                 <tr className={'table-data'} key={d.id}>
@@ -46,14 +47,28 @@ function DataGrid({grid_title, have_action, action_title, headers, data, reload,
                                     <td>{index + 1}</td>
                                     {
                                         field_names.map((f) => {
-                                            return (
 
-                                                    f.is_date ?
-                                                    <td key={f.id}>{format_date(d[f.title])}</td>
-                                                    :
-                                                    <td key={f.id}>{d[f.title]}</td>
+                                                if(f.is_date){
 
-                                            )
+                                                    return <td key={f.id}>{format_date(d[f.title])}</td>
+                                                }
+                                                if(! f.is_date){
+                                                    let test = f.title.split('.');
+                                                    if(test.length===2 && d[test[0].toString()] )
+                                                    {
+                                                        return  <td key={f.id}>{d[test[0].toString()][test[1].toString()]}</td>
+                                                    }
+                                                    else if(test.length===3 && d[test[0].toString()] && d[test[0].toString()][test[1].toString()])
+                                                    {
+                                                        return  <td key={f.id}>{d[test[0].toString()][test[1].toString()][test[2].toString()]}</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        return  <td key={f.id}>{d[f.title]}</td>
+                                                    }
+
+                                                }
+
                                         })
                                     }
                                     <td>
