@@ -30,7 +30,7 @@ function SideBar() {
                     <span>ورود به حساب</span>
                     <IoMdLogIn/>
                 </div>
-                <div className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
+                <div onClick={()=>{navigate('/admin')}} className={`sb-menu-item ${sideBarStatus==='sb-hide'?'special-menu':''}`}>
                     <span>ارسال پیام</span>
                     <AiOutlineMessage/>
                 </div>
