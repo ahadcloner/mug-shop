@@ -10,22 +10,12 @@ import {HiOutlineDocumentReport} from "react-icons/hi";
 import DataGrid from "./DataGrid";
 import axios from "axios";
 import {useCookies} from "react-cookie";
-import AdminModalUserAddress from '../components/AdminModals/AdminModalUserAddress';
-
-
-
+import AddUser from "./AdminForms/AddUser";
+import AddAddress from "./AdminForms/AddAddress";
 
 
 function AdminPanel() {
-    const [isOpenAddressModal , setIsOpenAddressModal]=useState(false);
-    const [AddressModalUserId , setAddressModalUserId]=useState();
-    const openAddressModal=(user_id)=>{
-        setAddressModalUserId(user_id)
-        setIsOpenAddressModal(true)
-    }
-    const closeAddressModal =()=>{
-        setIsOpenAddressModal(false)
-    }
+
     const users_headers = [
         {id: 0, title: 'ردیف'},
         {id: 1, title: 'ایمیل'},
@@ -51,14 +41,22 @@ function AdminPanel() {
     ]
     const users_buttons=[
         {
-            id:0 ,title:'ویرایش اطلاعات' , func:''
+            id:0 ,title:'تغییر وضعیت' , func:''
         },
         {
-            id:1 ,title:'مدیریت نقش ها' , func:''
+            id:1 ,title:'ویرایش اطلاعات' , func:()=>change_menu('edit-user')
         },
         {
-            id:2 ,title:'آدرس ها' , func:(e)=>openAddressModal(e)
-        }
+            id:2 ,title:'مدیریت نقش ها' , func:''
+        },
+        {
+            id:3 ,title:'آدرس ها' , func:(e)=>{
+                change_menu('user-address');
+                get_user_addresses(e);
+                change_refresh_user_address();
+            }
+        },
+
     ]
 
     const roles_headers = [
@@ -96,14 +94,40 @@ function AdminPanel() {
         }
     ]
 
+    const user_address_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'استان'},
+        {id: 2, title: 'شهر'},
+        {id: 3, title: 'آدرس'},
+        {id: 4, title: 'عملیات'},
+    ];
+    const user_address_field_names = [
+        {id: 0, title: 'state_id',is_date:false,is_boolean:false},
+        {id: 1, title: 'city_id',is_date:false,is_boolean:false},
+        {id: 2, title: 'title',is_date:true,is_boolean:false},
+        // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
+    ]
+    const user_address_buttons=[
+        {
+            id:0 ,title:'ویرایش آدرس' , func:()=>change_menu('edit-address')
+        },
+        {
+            id:1 ,title:'حذف آدرس' , func:''
+        },
+
+    ]
+
+
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
     const [permissions, setPermissions] = useState([]);
+    const [userAddresses, setUserAddresses] = useState([]);
     const [refreshData , setRefreshData]=useState(false);
     const [refreshRoleData , setRefreshRoleData]=useState(false);
     const [refreshPermissionData , setRefreshPermissionData]=useState(false);
+    const [refreshUserAddressData , setRefreshUserAddressData]=useState(false);
     const change_refresh =()=>{
         setRefreshData(!refreshData);
     }
@@ -112,6 +136,9 @@ function AdminPanel() {
     }
     const change_refresh_permissions =()=>{
         setRefreshPermissionData(!refreshPermissionData);
+    }
+    const change_refresh_user_address =()=>{
+        setRefreshUserAddressData(!refreshUserAddressData);
     }
     const change_menu = (name) => {
         setApActiveMenu(name);
@@ -127,7 +154,7 @@ function AdminPanel() {
             }
         };
 
-        axios.request(config)
+       await axios.request(config)
             .then((response) => {
                 setUsers( response.data.data)
                 // console.log('users',response.data.data)
@@ -147,7 +174,7 @@ function AdminPanel() {
             }
         };
 
-        axios.request(config)
+       await axios.request(config)
             .then((response) => {
                 setRoles( response.data.data)
             })
@@ -166,7 +193,7 @@ function AdminPanel() {
             }
         };
 
-        axios.request(config)
+        await axios.request(config)
             .then((response) => {
                 setPermissions( response.data.data)
             })
@@ -175,6 +202,35 @@ function AdminPanel() {
             });
 
     }
+
+    const get_user_addresses = async (user_id)=>{
+        let data={};
+        if(user_id!=='')
+        {
+             data ={
+                'user_id':user_id
+            }
+        }
+
+        let config = {
+            method: 'post',
+            url: 'https://hitmug.ir/api/user/get-addresses',
+
+            data:data,
+            headers: {
+                'Authorization': 'Bearer '+cookie.token
+            }
+        };
+
+       await axios.request(config)
+            .then((response) => {
+               setUserAddresses( response.data.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
 
     useEffect(() => {
        get_users()
@@ -185,20 +241,25 @@ function AdminPanel() {
     useEffect(() => {
         get_permissions()
     }, [refreshPermissionData]);
+    useEffect(() => {
+        get_user_addresses('')
+    }, [refreshUserAddressData]);
+
     return (
         <div className={'ap-container'}>
 
             {/*define modals*/}
-            <AdminModalUserAddress
-                isOpen={isOpenAddressModal}
-                onRequestClose={closeAddressModal}
-                user_id={AddressModalUserId}
-            />
+
 
             <div className="ap-menu">
                 <div onClick={() => {
                     change_menu('users')
-                }} className={`ap-menu-row ${apActiveMenu === 'users' ? 'apActive' : ''}`}>
+                }} className={`ap-menu-row ${apActiveMenu === 'users' 
+                || apActiveMenu==='user-address'
+                || apActiveMenu==='add-user'
+                || apActiveMenu==='edit-address'
+                || apActiveMenu==='edit-user'
+                ||apActiveMenu==='add-address' ? 'apActive' : ''}`}>
                     <AiOutlineUser/>
                     <span>مدیریت کاربران</span>
                 </div>
@@ -266,11 +327,14 @@ function AdminPanel() {
             </div>
             <div className="ap-view">
                 {
+
                     apActiveMenu === 'users' &&
                     <>
                         <DataGrid
                             grid_title={'کاربران'}
                             action_title={'افزودن کاربر'}
+                            action_function={(e)=>change_menu(e)}
+                            action_function_argument={'add-user'}
                             have_action={true}
                             headers={users_headers}
                             data={users}
@@ -307,6 +371,47 @@ function AdminPanel() {
                             reload={change_refresh_permissions}
                             field_names ={permission_field_names}
                             buttons={permission_buttons}
+                        />
+                    </>
+                }
+                {
+                    apActiveMenu === 'user-address' &&
+                    <>
+                       <DataGrid
+                        grid_title={'آدرس های کاربر'}
+                        data={userAddresses}
+                        have_action={true}
+                        headers={user_address_headers}
+                        action_title={'افزودن آدرس'}
+                        action_function={(e)=>{
+                            change_menu(e)
+                        }}
+                        action_function_argument='add-address'
+                        field_names={user_address_field_names}
+                        buttons={user_address_buttons}
+                        reload={change_refresh_user_address}
+                       />
+                    </>
+                }
+                {
+                    (apActiveMenu === 'add-user' ||apActiveMenu==='edit-user') &&
+                    <>
+                       <AddUser
+                           mode={apActiveMenu==='add-user'?'create':'edit'}
+                           fields={[
+                                'id' , 'email' , 'password' ,'username','mobile', 'state','city'
+                           ]}
+                       />
+                    </>
+                }
+                {
+                    ( apActiveMenu === 'add-address' || apActiveMenu==='edit-address') &&
+                    <>
+                        <AddAddress
+                            mode={apActiveMenu==='add-address'?'create':'edit'}
+                            fields={[
+                               'id' , 'state' , 'city' ,'title'
+                            ]}
                         />
                     </>
                 }

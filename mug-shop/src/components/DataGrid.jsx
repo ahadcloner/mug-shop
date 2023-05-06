@@ -1,7 +1,7 @@
 import React from "react";
 import '../assets/styles/DataGrid.css';
 
-function DataGrid({grid_title, have_action, action_title, headers, data, reload, field_names, buttons}) {
+function DataGrid({grid_title, have_action, action_title,action_function,action_function_argument, headers, data, reload, field_names, buttons}) {
 
     const mydata = [...data];
 
@@ -25,7 +25,7 @@ function DataGrid({grid_title, have_action, action_title, headers, data, reload,
                 {
                     have_action &&
                     <div className="grid-action">
-                        <button>{action_title}</button>
+                        <button onClick={()=>action_function!==''?action_function(action_function_argument!==''?action_function_argument:''):()=>{}}>{action_title}</button>
                     </div>
                 }
             </div>
@@ -46,6 +46,7 @@ function DataGrid({grid_title, have_action, action_title, headers, data, reload,
 
                                     <td>{index + 1}</td>
                                     {
+                                        // eslint-disable-next-line array-callback-return
                                         field_names.map((f) => {
 
                                                 if(f.is_date){
