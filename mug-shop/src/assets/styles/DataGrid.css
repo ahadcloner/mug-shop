@@ -50,18 +50,18 @@
     margin: 30px auto 10px auto;
     overflow: auto;
 }
-table{
+.dg-table{
     direction: rtl;
     border-collapse: collapse;
     width: 100%;
 }
-th {
+.header th {
     text-align: center;
     padding: 16px;
     font-size: 16px;
     font-weight: 600;
 }
-td {
+.table-data td {
     text-align: center;
     padding: 16px;
     font-size: 16px;

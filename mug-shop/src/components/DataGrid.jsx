@@ -30,7 +30,7 @@ function DataGrid({grid_title, have_action, action_title, headers, data, reload,
                 }
             </div>
             <div className="grid-bottom">
-                <table>
+                <table className={'dg-table'}>
                     <tr className={'header'}>
                         {
                             headers.map((h) =>
