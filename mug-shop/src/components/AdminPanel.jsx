@@ -29,28 +29,28 @@ function AdminPanel() {
         {id: 9, title: 'عملیات'},
     ];
     const users_field_names = [
-        {id: 0, title: 'email',is_date:false,is_boolean:false},
-        {id: 1, title: 'full_name',is_date:false,is_boolean:false},
-        {id: 2, title: 'created_at',is_date:true,is_boolean:false},
-        {id: 3, title: 'birth_date',is_date:false,is_boolean:false},
-        {id: 4, title: 'city.state.name',is_date:false,is_boolean:false},
-        {id: 5, title: 'city.name',is_date:false,is_boolean:false},
-        {id: 6, title: 'mobile',is_date:false,is_boolean:false},
-        {id: 7, title: 'status',is_date:false,is_boolean:true},
+        {id: 0, title: 'email', is_date: false, is_boolean: false},
+        {id: 1, title: 'full_name', is_date: false, is_boolean: false},
+        {id: 2, title: 'created_at', is_date: true, is_boolean: false},
+        {id: 3, title: 'birth_date', is_date: false, is_boolean: false},
+        {id: 4, title: 'city.state.name', is_date: false, is_boolean: false},
+        {id: 5, title: 'city.name', is_date: false, is_boolean: false},
+        {id: 6, title: 'mobile', is_date: false, is_boolean: false},
+        {id: 7, title: 'status', is_date: false, is_boolean: true},
         // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
     ]
-    const users_buttons=[
+    const users_buttons = [
         {
-            id:0 ,title:'تغییر وضعیت' , func:''
+            id: 0, title: 'تغییر وضعیت', func: (e) => change_user_status(e)
         },
         {
-            id:1 ,title:'ویرایش اطلاعات' , func:()=>change_menu('edit-user')
+            id: 1, title: 'ویرایش اطلاعات', func: () => change_menu('edit-user')
         },
         {
-            id:2 ,title:'مدیریت نقش ها' , func:''
+            id: 2, title: 'مدیریت نقش ها', func: ''
         },
         {
-            id:3 ,title:'آدرس ها' , func:(e)=>{
+            id: 3, title: 'آدرس ها', func: (e) => {
                 change_menu('user-address');
                 get_user_addresses(e);
                 change_refresh_user_address();
@@ -66,15 +66,15 @@ function AdminPanel() {
         {id: 3, title: 'عملیات'},
     ]
     const roles_field_names = [
-        {id: 0, title: 'name',is_date:false},
-        {id: 1, title: 'guard_name',is_date:false},
+        {id: 0, title: 'name', is_date: false},
+        {id: 1, title: 'guard_name', is_date: false},
     ]
-    const roles_buttons=[
+    const roles_buttons = [
         {
-            id:0 ,title:'ویرایش نقش' , func:''
+            id: 0, title: 'ویرایش نقش', func: ''
         },
         {
-            id:1 ,title:'ویرایش دسترسی ها' , func:''
+            id: 1, title: 'ویرایش دسترسی ها', func: ''
         }
     ]
 
@@ -85,12 +85,12 @@ function AdminPanel() {
         {id: 3, title: 'عملیات'},
     ]
     const permission_field_names = [
-        {id: 0, title: 'name',is_date:false},
-        {id: 1, title: 'guard_name',is_date:false},
+        {id: 0, title: 'name', is_date: false},
+        {id: 1, title: 'guard_name', is_date: false},
     ]
-    const permission_buttons=[
+    const permission_buttons = [
         {
-            id:0 ,title:'ویرایش دسترسی' , func:''
+            id: 0, title: 'ویرایش دسترسی', func: ''
         }
     ]
 
@@ -102,17 +102,17 @@ function AdminPanel() {
         {id: 4, title: 'عملیات'},
     ];
     const user_address_field_names = [
-        {id: 0, title: 'state_id',is_date:false,is_boolean:false},
-        {id: 1, title: 'city_id',is_date:false,is_boolean:false},
-        {id: 2, title: 'title',is_date:true,is_boolean:false},
+        {id: 0, title: 'state_id', is_date: false, is_boolean: false},
+        {id: 1, title: 'city_id', is_date: false, is_boolean: false},
+        {id: 2, title: 'title', is_date: true, is_boolean: false},
         // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
     ]
-    const user_address_buttons=[
+    const user_address_buttons = [
         {
-            id:0 ,title:'ویرایش آدرس' , func:()=>change_menu('edit-address')
+            id: 0, title: 'ویرایش آدرس', func: () => change_menu('edit-address')
         },
         {
-            id:1 ,title:'حذف آدرس' , func:''
+            id: 1, title: 'حذف آدرس', func: ''
         },
 
     ]
@@ -124,20 +124,31 @@ function AdminPanel() {
     const [roles, setRoles] = useState([]);
     const [permissions, setPermissions] = useState([]);
     const [userAddresses, setUserAddresses] = useState([]);
-    const [refreshData , setRefreshData]=useState(false);
-    const [refreshRoleData , setRefreshRoleData]=useState(false);
-    const [refreshPermissionData , setRefreshPermissionData]=useState(false);
-    const [refreshUserAddressData , setRefreshUserAddressData]=useState(false);
-    const change_refresh =()=>{
+    const [refreshData, setRefreshData] = useState(false);
+    const [refreshRoleData, setRefreshRoleData] = useState(false);
+    const [refreshPermissionData, setRefreshPermissionData] = useState(false);
+    const [refreshUserAddressData, setRefreshUserAddressData] = useState(false);
+    const [newUser, setNewUser] = useState({
+        email: '',
+        full_name: '',
+        mobile: '',
+        city_id: '',
+        birth_date: '',
+        status:false,
+        password:''
+    });
+
+
+    const change_refresh = () => {
         setRefreshData(!refreshData);
     }
-    const change_refresh_roles =()=>{
+    const change_refresh_roles = () => {
         setRefreshRoleData(!refreshRoleData);
     }
-    const change_refresh_permissions =()=>{
+    const change_refresh_permissions = () => {
         setRefreshPermissionData(!refreshPermissionData);
     }
-    const change_refresh_user_address =()=>{
+    const change_refresh_user_address = () => {
         setRefreshUserAddressData(!refreshUserAddressData);
     }
     const change_menu = (name) => {
@@ -150,13 +161,13 @@ function AdminPanel() {
             maxBodyLength: Infinity,
             url: 'https://hitmug.ir/api/user/index',
             headers: {
-                'Authorization': 'Bearer '+cookie.token
+                'Authorization': 'Bearer ' + cookie.token
             }
         };
 
-       await axios.request(config)
+        await axios.request(config)
             .then((response) => {
-                setUsers( response.data.data)
+                setUsers(response.data.data)
                 // console.log('users',response.data.data)
             })
             .catch((error) => {
@@ -170,13 +181,13 @@ function AdminPanel() {
             maxBodyLength: Infinity,
             url: 'https://hitmug.ir/api/role/index',
             headers: {
-                'Authorization': 'Bearer '+cookie.token
+                'Authorization': 'Bearer ' + cookie.token
             }
         };
 
-       await axios.request(config)
+        await axios.request(config)
             .then((response) => {
-                setRoles( response.data.data)
+                setRoles(response.data.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -189,13 +200,13 @@ function AdminPanel() {
             maxBodyLength: Infinity,
             url: 'https://hitmug.ir/api/permision/index',
             headers: {
-                'Authorization': 'Bearer '+cookie.token
+                'Authorization': 'Bearer ' + cookie.token
             }
         };
 
         await axios.request(config)
             .then((response) => {
-                setPermissions( response.data.data)
+                setPermissions(response.data.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -203,12 +214,11 @@ function AdminPanel() {
 
     }
 
-    const get_user_addresses = async (user_id)=>{
-        let data={};
-        if(user_id!=='')
-        {
-             data ={
-                'user_id':user_id
+    const get_user_addresses = async (user_id) => {
+        let data = {};
+        if (user_id !== '') {
+            data = {
+                'user_id': user_id
             }
         }
 
@@ -216,15 +226,15 @@ function AdminPanel() {
             method: 'post',
             url: 'https://hitmug.ir/api/user/get-addresses',
 
-            data:data,
+            data: data,
             headers: {
-                'Authorization': 'Bearer '+cookie.token
+                'Authorization': 'Bearer ' + cookie.token
             }
         };
 
-       await axios.request(config)
+        await axios.request(config)
             .then((response) => {
-               setUserAddresses( response.data.data)
+                setUserAddresses(response.data.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -233,7 +243,7 @@ function AdminPanel() {
 
 
     useEffect(() => {
-       get_users()
+        get_users()
     }, [refreshData]);
     useEffect(() => {
         get_roles()
@@ -245,6 +255,29 @@ function AdminPanel() {
         get_user_addresses('')
     }, [refreshUserAddressData]);
 
+    const change_user_status = async (user_id) => {
+        const config = {
+            method: 'post',
+            url: 'https://hitmug.ir/api/user/change-status',
+            data: {
+                user_id: user_id
+            },
+            headers: {
+                authorization: 'Bearer ' + cookie.token
+            }
+        }
+        await axios.request(config)
+            .then((res) => {
+                // console.log(res.data.message);
+                change_refresh();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+    const register_user = () => {
+
+    }
     return (
         <div className={'ap-container'}>
 
@@ -254,12 +287,12 @@ function AdminPanel() {
             <div className="ap-menu">
                 <div onClick={() => {
                     change_menu('users')
-                }} className={`ap-menu-row ${apActiveMenu === 'users' 
-                || apActiveMenu==='user-address'
-                || apActiveMenu==='add-user'
-                || apActiveMenu==='edit-address'
-                || apActiveMenu==='edit-user'
-                ||apActiveMenu==='add-address' ? 'apActive' : ''}`}>
+                }} className={`ap-menu-row ${apActiveMenu === 'users'
+                || apActiveMenu === 'user-address'
+                || apActiveMenu === 'add-user'
+                || apActiveMenu === 'edit-address'
+                || apActiveMenu === 'edit-user'
+                || apActiveMenu === 'add-address' ? 'apActive' : ''}`}>
                     <AiOutlineUser/>
                     <span>مدیریت کاربران</span>
                 </div>
@@ -333,13 +366,13 @@ function AdminPanel() {
                         <DataGrid
                             grid_title={'کاربران'}
                             action_title={'افزودن کاربر'}
-                            action_function={(e)=>change_menu(e)}
+                            action_function={(e) => change_menu(e)}
                             action_function_argument={'add-user'}
                             have_action={true}
                             headers={users_headers}
                             data={users}
                             reload={change_refresh}
-                            field_names ={users_field_names}
+                            field_names={users_field_names}
                             buttons={users_buttons}
                         />
                     </>
@@ -354,7 +387,7 @@ function AdminPanel() {
                             headers={roles_headers}
                             data={roles}
                             reload={change_refresh_roles}
-                            field_names ={roles_field_names}
+                            field_names={roles_field_names}
                             buttons={roles_buttons}
                         />
                     </>
@@ -369,7 +402,7 @@ function AdminPanel() {
                             headers={permission_headers}
                             data={permissions}
                             reload={change_refresh_permissions}
-                            field_names ={permission_field_names}
+                            field_names={permission_field_names}
                             buttons={permission_buttons}
                         />
                     </>
@@ -377,40 +410,42 @@ function AdminPanel() {
                 {
                     apActiveMenu === 'user-address' &&
                     <>
-                       <DataGrid
-                        grid_title={'آدرس های کاربر'}
-                        data={userAddresses}
-                        have_action={true}
-                        headers={user_address_headers}
-                        action_title={'افزودن آدرس'}
-                        action_function={(e)=>{
-                            change_menu(e)
-                        }}
-                        action_function_argument='add-address'
-                        field_names={user_address_field_names}
-                        buttons={user_address_buttons}
-                        reload={change_refresh_user_address}
-                       />
+                        <DataGrid
+                            grid_title={'آدرس های کاربر'}
+                            data={userAddresses}
+                            have_action={true}
+                            headers={user_address_headers}
+                            action_title={'افزودن آدرس'}
+                            action_function={(e) => {
+                                change_menu(e)
+                            }}
+                            action_function_argument='add-address'
+                            field_names={user_address_field_names}
+                            buttons={user_address_buttons}
+                            reload={change_refresh_user_address}
+                        />
                     </>
                 }
                 {
-                    (apActiveMenu === 'add-user' ||apActiveMenu==='edit-user') &&
+                    (apActiveMenu === 'add-user' || apActiveMenu === 'edit-user') &&
                     <>
-                       <AddUser
-                           mode={apActiveMenu==='add-user'?'create':'edit'}
-                           fields={[
-                                'id' , 'email' , 'password' ,'username','mobile', 'state','city'
-                           ]}
-                       />
+                        <AddUser
+                            mode={apActiveMenu === 'add-user' ? 'create' : 'edit'}
+                            fields={[
+                                'id', 'email', 'password', 'username', 'mobile', 'state', 'city'
+                            ]}
+                            value={newUser}
+                            value_setter={(e)=>setNewUser(e)}
+                        />
                     </>
                 }
                 {
-                    ( apActiveMenu === 'add-address' || apActiveMenu==='edit-address') &&
+                    (apActiveMenu === 'add-address' || apActiveMenu === 'edit-address') &&
                     <>
                         <AddAddress
-                            mode={apActiveMenu==='add-address'?'create':'edit'}
+                            mode={apActiveMenu === 'add-address' ? 'create' : 'edit'}
                             fields={[
-                               'id' , 'state' , 'city' ,'title'
+                                'id', 'state', 'city', 'title'
                             ]}
                         />
                     </>
