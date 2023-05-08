@@ -286,7 +286,8 @@ function AdminPanel() {
 
             <div className="ap-menu">
                 <div onClick={() => {
-                    change_menu('users')
+                    change_menu('users');
+                    change_refresh();
                 }} className={`ap-menu-row ${apActiveMenu === 'users'
                 || apActiveMenu === 'user-address'
                 || apActiveMenu === 'add-user'
