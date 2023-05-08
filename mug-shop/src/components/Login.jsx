@@ -41,7 +41,6 @@ function Login() {
         progress: undefined,
         theme: "colored",
     });
-
     useEffect(()=>{
 
         if(cookie.token ){

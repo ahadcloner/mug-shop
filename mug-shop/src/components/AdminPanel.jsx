@@ -437,6 +437,7 @@ function AdminPanel() {
                             value={newUser}
                             value_setter={(e)=>setNewUser(e)}
                             reload={change_refresh}
+                            change_menue ={(e)=>change_menu(e)}
                         />
                     </>
                 }

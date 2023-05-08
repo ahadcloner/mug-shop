@@ -24,6 +24,7 @@ import AdminPanel from "./components/AdminPanel";
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
     const [UaClass, setUaClass] = useState('ua-hide');
+
     return (<main>
             <UaContext.Provider value={{UaClass, setUaClass}}>
                 <SbContext.Provider value={{sideBarStatus, setSideBarStatus}}>

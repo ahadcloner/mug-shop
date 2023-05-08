@@ -2,8 +2,11 @@ import React, {useEffect, useState} from "react";
 import './AddUser.css';
 import {useCookies} from "react-cookie";
 import axios from "axios";
+import PersianDatePicker from "../PersianDatePicker";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
-function AddUser({mode, fields, value, value_setter,reload}) {
+function AddUser({mode, fields, value, value_setter,reload ,change_menue}) {
     const handleInputChange = (event) => {
         const {name, value} = event.target;
         value_setter((prevUser) => ({
@@ -17,6 +20,29 @@ function AddUser({mode, fields, value, value_setter,reload}) {
     const [selectedState, setSelectedState] = useState(0);
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState(0);
+    const [selectedStatus, setSelectedStatus] = useState(false);
+    const [selectedDate ,setSelectedDate] = useState(new Date().toLocaleDateString('fa-IR'));
+
+    const notify_success = (message) => toast.success(message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
+    const notify_danger = (message) => toast.error(message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    });
 
     const get_states = async () => {
         const config = {
@@ -30,8 +56,11 @@ function AddUser({mode, fields, value, value_setter,reload}) {
             .then((res) => {
                 // console.log(res.data.data)
                 setStates(res.data.data)
+
             })
-            .catch((err) => console.log(err))
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     const get_cities = async (id) => {
@@ -50,26 +79,45 @@ function AddUser({mode, fields, value, value_setter,reload}) {
     }
 
     const submitForm = async () => {
+        console.log('>>>>>>',selectedStatus)
         const config = {
             method: 'post',
             url: 'https://hitmug.ir/api/user/register',
             data: {
                 'email': value.email,
                 'password': value.password,
-                // 'birth_date':value.birth_date
+                'birth_date':selectedDate.format?.(),
                 'mobile': value.mobile,
                 'full_name':value.full_name,
-                'city_id': cities[selectedCity].id
+                'city_id': cities[selectedCity]['id'],
+                'status':!selectedStatus
 
             }
         }
         await axios.request(config)
             .then((res) => {
-                console.log(res);
+                notify_success(res['data']['message'])
                 reload();
-
+                change_menue('users');
             })
-            .catch((err) => console.log(err))
+            .catch((err) =>{
+                let status = parseInt(err['response']['status']);
+                const errors = err['response']['data']['errors'];
+                if(errors['email'])
+                {
+                    errors['email'].map((e)=>{
+                        notify_danger(e)
+                    })
+                }
+                if(errors['password'])
+                {
+                    errors['password'].map((e)=>{
+                        notify_danger(e)
+                    })
+                }
+
+                notify_danger(errors['password'][0])
+            })
     }
 
 
@@ -124,6 +172,15 @@ return (
                            value={mode === 'edit' ? fields[4] : value.mobile}/>
                 </div>
             </div>
+            <div className="aufb-row align-right">
+                <div className="aufbr-child">
+                    <span>تاریخ تولد</span>
+                    <PersianDatePicker
+                        date={selectedDate}
+                        date_setter ={setSelectedDate}
+                    />
+                </div>
+            </div>
             <div className="aufb-row">
                 <div className="aufbr-child">
                     <span>استان</span>
@@ -154,7 +211,9 @@ return (
             <div className="aufb-row align-right">
                 <div className="aufbr-child">
                     <span>وضعیت</span>
-                    <select value={mode === 'create' ? value.status : ''}>
+                    <select onChange={(e)=>{
+                        setSelectedStatus(Boolean(e.target.selectedIndex))
+                    }}>
                         <option>فعال</option>
                         <option>غیر فعال</option>
                     </select>
