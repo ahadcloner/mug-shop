@@ -44,7 +44,8 @@ function AdminPanel() {
             id: 0, title: 'تغییر وضعیت', func: (e) => change_user_status(e)
         },
         {
-            id: 1, title: 'ویرایش اطلاعات', func: () => change_menu('edit-user')
+            // id: 1, title: 'ویرایش اطلاعات', func: () => change_menu('edit-user')
+            id: 1, title: 'ویرایش اطلاعات', func: (e) => get_user(e)
         },
         {
             id: 2, title: 'مدیریت نقش ها', func: ''
@@ -241,6 +242,9 @@ function AdminPanel() {
             });
     }
 
+    const get_user=(id)=>{
+
+    }
 
     useEffect(() => {
         get_users()
