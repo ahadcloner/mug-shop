@@ -6,6 +6,7 @@ import {ImMug} from "react-icons/im";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {useCookies} from "react-cookie";
+import {Notifier} from "./Utils/Notifier";
 
 
 
@@ -21,26 +22,26 @@ function Login() {
     const [loginPassword, setLoginPassword] = useState('');
     const navigate = useNavigate();
 
-    const notify_success = (message) => toast.success(message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-    });
-    const notify_danger = (message) => toast.error(message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-    });
+    // const notify_success = (message) => toast.success(message, {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "colored",
+    // });
+    // const notify_danger = (message) => toast.error(message, {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "colored",
+    // });
     useEffect(()=>{
 
         if(cookie.token ){
@@ -60,18 +61,18 @@ function Login() {
                 headers: {"Content-Type": "multipart/form-data"},
             })
                 .then(function (response) {
-                    notify_success(response['data']['message'])
+                    Notifier('success',response['data']['message'])
                     setConfirmMode('register');
                     setPageState('confirm');
                 })
                 .catch(function (response) {
                     let status = parseInt(response['response']['status']);
                     const errors = response['response']['data']['errors'];
-                    notify_danger(errors['email'][0])
-                    notify_danger(errors['password'][0])
+                    Notifier('danger',errors['email'][0])
+                    Notifier('danger',errors['password'][0])
                 });
         } else {
-            notify_danger('رمز عبور با تکرار رمز عبور مطابقت ندارد')
+            Notifier('danger','رمز عبور با تکرار رمز عبور مطابقت ندارد')
         }
 
 
@@ -88,7 +89,7 @@ function Login() {
         data.append('password', loginPassword);
         let api = await axios.post('https://hitmug.ir/api/user/login', data)
             .then((response) => {
-                notify_success(response['data']['message']);
+                Notifier('success',response['data']['message']);
                 let token = response['data']['token'];
                 console.log(token)
                 setCookie('token' , token);
@@ -99,13 +100,13 @@ function Login() {
 
 
                     try {
-                        notify_danger(errors['password'][0])
+                        Notifier('danger',errors['password'][0])
                     }catch (e){}
                     try {
-                        notify_danger(errors['email'][0])
+                        Notifier('danger',errors['email'][0])
                     }catch (e){}
                     try {
-                        notify_danger(response['response']['data']['message'])
+                        Notifier('danger',response['response']['data']['message'])
                     }
                     catch (e){}
 
