@@ -12,6 +12,8 @@ import axios from "axios";
 import {useCookies} from "react-cookie";
 import AddUser from "./AdminForms/AddUser";
 import AddAddress from "./AdminForms/AddAddress";
+import {Simple_get} from "./Utils/RequstSender";
+import {Notifier} from "./Utils/Notifier";
 
 
 function AdminPanel() {
@@ -135,8 +137,8 @@ function AdminPanel() {
         mobile: '',
         city_id: '',
         birth_date: '',
-        status:false,
-        password:''
+        status: false,
+        password: ''
     });
 
 
@@ -157,92 +159,57 @@ function AdminPanel() {
     }
 
     const get_users = async () => {
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: 'https://hitmug.ir/api/user/index',
-            headers: {
-                'Authorization': 'Bearer ' + cookie.token
-            }
-        };
-
-        await axios.request(config)
-            .then((response) => {
-                setUsers(response.data.data)
-                // console.log('users',response.data.data)
+        const data = await Simple_get('https://hitmug.ir/api/user/index', true
+            , '', cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setUsers(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت لیست کاربران')
+                }
             })
-            .catch((error) => {
-                console.log(error);
-            });
-
     }
     const get_roles = async () => {
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: 'https://hitmug.ir/api/role/index',
-            headers: {
-                'Authorization': 'Bearer ' + cookie.token
-            }
-        };
-
-        await axios.request(config)
-            .then((response) => {
-                setRoles(response.data.data)
-            })
-            .catch((error) => {
-                console.log(error);
+        const data = await Simple_get('https://hitmug.ir/api/role/index', true
+            , '', cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setRoles(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت لیست نقش ها')
+                }
             });
-
     }
     const get_permissions = async () => {
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: 'https://hitmug.ir/api/permision/index',
-            headers: {
-                'Authorization': 'Bearer ' + cookie.token
-            }
-        };
 
-        await axios.request(config)
-            .then((response) => {
-                setPermissions(response.data.data)
-            })
-            .catch((error) => {
-                console.log(error);
+        const data = await Simple_get('https://hitmug.ir/api/permision/index', true
+            , '', cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setPermissions(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت لیست دسترسی ها')
+                }
             });
-
     }
 
     const get_user_addresses = async (user_id) => {
-        let data = {};
         if (user_id !== '') {
-            data = {
+            let mydata = {
                 'user_id': user_id
             }
+            const data = await Simple_get('https://hitmug.ir/api/user/get-addresses', true
+                , '', cookie.token, 'post', mydata)
+                .then((d) => {
+                    if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                        setUserAddresses(d[0])
+                    } else {
+                        Notifier('danger', 'خطا در دریافت لیست آدرس ها')
+                    }
+                });
         }
-
-        let config = {
-            method: 'post',
-            url: 'https://hitmug.ir/api/user/get-addresses',
-
-            data: data,
-            headers: {
-                'Authorization': 'Bearer ' + cookie.token
-            }
-        };
-
-        await axios.request(config)
-            .then((response) => {
-                setUserAddresses(response.data.data)
-            })
-            .catch((error) => {
-                console.log(error);
-            });
     }
-
-    const get_user=(id)=>{
+    const get_user = (id) => {
 
     }
 
@@ -260,24 +227,18 @@ function AdminPanel() {
     }, [refreshUserAddressData]);
 
     const change_user_status = async (user_id) => {
-        const config = {
-            method: 'post',
-            url: 'https://hitmug.ir/api/user/change-status',
-            data: {
-                user_id: user_id
-            },
-            headers: {
-                authorization: 'Bearer ' + cookie.token
-            }
-        }
-        await axios.request(config)
-            .then((res) => {
-                // console.log(res.data.message);
-                change_refresh();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+
+        const data = await Simple_get('https://hitmug.ir/api/user/change-status', true
+            , '', cookie.token, 'post', {user_id:user_id})
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    change_refresh()
+                    Notifier('success', 'وضعیت حساب بروزرسانی شد')
+                } else {
+                    Notifier('danger', 'خطا در بروزرسانی وضعیت حساب کاربری')
+                }
+            });
+
     }
     const register_user = () => {
 
@@ -440,9 +401,9 @@ function AdminPanel() {
                                 'id', 'email', 'password', 'username', 'mobile', 'state', 'city'
                             ]}
                             value={newUser}
-                            value_setter={(e)=>setNewUser(e)}
+                            value_setter={(e) => setNewUser(e)}
                             reload={change_refresh}
-                            change_menue ={(e)=>change_menu(e)}
+                            change_menue={(e) => change_menu(e)}
                         />
                     </>
                 }
