@@ -20,6 +20,8 @@ import NewProfile from "./components/NewProfile";
 import Footer from "./components/Footer";
 import {ToastContainer} from "react-toastify";
 import AdminPanel from "./components/AdminPanel";
+import AddUser from "./components/AdminForms/AddUser";
+import EditUser from "./components/AdminForms/EditUser";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -38,6 +40,8 @@ function App() {
                             <Route path={'/cart'} element={<BuyCard/>}/>
                             <Route path={'/product-detail/:id'} element={<ProductDetail/>}/>
                             <Route path={'/admin'} element={<AdminPanel/>}/>
+                            <Route path={'/admin/add-user'} element={<AddUser/>}/>
+                            <Route path={'/admin/edit-user/:id'} element={<EditUser/>}/>
                             <Route path={'*'} element={<NotFound/>}/>
                         </Routes>
                         <UserArea></UserArea>

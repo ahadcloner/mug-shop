@@ -14,9 +14,11 @@ import AddUser from "./AdminForms/AddUser";
 import AddAddress from "./AdminForms/AddAddress";
 import {Simple_get} from "./Utils/RequstSender";
 import {Notifier} from "./Utils/Notifier";
+import {useNavigate} from "react-router-dom";
 
 
 function AdminPanel() {
+    const navigate = useNavigate();
 
     const users_headers = [
         {id: 0, title: 'ردیف'},
@@ -46,8 +48,7 @@ function AdminPanel() {
             id: 0, title: 'تغییر وضعیت', func: (e) => change_user_status(e)
         },
         {
-            // id: 1, title: 'ویرایش اطلاعات', func: () => change_menu('edit-user')
-            id: 1, title: 'ویرایش اطلاعات', func: (e) => get_user(e)
+            id: 1, title: 'ویرایش اطلاعات', func:(e)=>{navigate('/admin/edit-user/'+e)}
         },
         {
             id: 2, title: 'مدیریت نقش ها', func: ''
@@ -58,6 +59,9 @@ function AdminPanel() {
                 get_user_addresses(e);
                 change_refresh_user_address();
             }
+        },
+        {
+            id: 4, title: 'حذف', func: (e)=>{delete_user(e);}
         },
 
     ]
@@ -209,8 +213,19 @@ function AdminPanel() {
                 });
         }
     }
-    const get_user = (id) => {
+    const delete_user = (id) => {
 
+        if(window.confirm('آیا برای حذف کاربر اطمینان دارید؟')){
+            Simple_get('https://hitmug.ir/api/user/delete',true,'/'+id,cookie.token,'delete',[])
+                .then((d)=>{
+                    if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                        Notifier('success' ,'اطلاعات کاربر با موفقیت حذف شد');
+                        change_refresh();
+                    } else {
+                        Notifier('danger', 'خطا در حذف حساب کاربری');
+                    }
+                })
+        }
     }
 
     useEffect(() => {
@@ -240,9 +255,7 @@ function AdminPanel() {
             });
 
     }
-    const register_user = () => {
 
-    }
     return (
         <div className={'ap-container'}>
 
@@ -332,7 +345,7 @@ function AdminPanel() {
                         <DataGrid
                             grid_title={'کاربران'}
                             action_title={'افزودن کاربر'}
-                            action_function={(e) => change_menu(e)}
+                            action_function={()=>navigate('/admin/add-user')}
                             action_function_argument={'add-user'}
                             have_action={true}
                             headers={users_headers}
@@ -395,16 +408,7 @@ function AdminPanel() {
                 {
                     (apActiveMenu === 'add-user' || apActiveMenu === 'edit-user') &&
                     <>
-                        <AddUser
-                            mode={apActiveMenu === 'add-user' ? 'create' : 'edit'}
-                            fields={[
-                                'id', 'email', 'password', 'username', 'mobile', 'state', 'city'
-                            ]}
-                            value={newUser}
-                            value_setter={(e) => setNewUser(e)}
-                            reload={change_refresh}
-                            change_menue={(e) => change_menu(e)}
-                        />
+
                     </>
                 }
                 {
