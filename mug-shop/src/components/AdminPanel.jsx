@@ -48,10 +48,12 @@ function AdminPanel() {
             id: 0, title: 'تغییر وضعیت', func: (e) => change_user_status(e)
         },
         {
-            id: 1, title: 'ویرایش اطلاعات', func:(e)=>{navigate('/admin/edit-user/'+e)}
+            id: 1, title: 'ویرایش اطلاعات', func: (e) => {
+                navigate('/admin/edit-user/' + e)
+            }
         },
         {
-            id: 2, title: 'مدیریت نقش ها', func:(e)=>{
+            id: 2, title: 'مدیریت نقش ها', func: (e) => {
                 change_menu('user-roles');
                 get_user_roles(e);
             }
@@ -64,11 +66,12 @@ function AdminPanel() {
             }
         },
         {
-            id: 4, title: 'حذف', func: (e)=>{delete_user(e);}
+            id: 4, title: 'حذف', func: (e) => {
+                delete_user(e);
+            }
         },
 
     ]
-
 
     const user_roles_headers = [
         {id: 0, title: 'ردیف'},
@@ -81,13 +84,12 @@ function AdminPanel() {
     ]
     const user_roles_buttons = [
         {
-            id: 0, title: 'حذف نقش', func: ''
+            id: 0, title: 'حذف نقش', func: (e) => {
+                delete_user_role(e);
+            }
         },
-        {
-            id: 1, title: 'افزودن نقش', func:''
-        }
-    ]
 
+    ]
 
 
     const roles_headers = [
@@ -161,6 +163,9 @@ function AdminPanel() {
     const [refreshPermissionData, setRefreshPermissionData] = useState(false);
     const [refreshUserAddressData, setRefreshUserAddressData] = useState(false);
     const [refreshUserRolesData, setRefreshUserRolesData] = useState(false);
+    const [lastUserId ,setLastUserId]=useState();
+
+
     const [newUser, setNewUser] = useState({
         email: '',
         full_name: '',
@@ -244,11 +249,11 @@ function AdminPanel() {
     }
     const delete_user = (id) => {
 
-        if(window.confirm('آیا برای حذف کاربر اطمینان دارید؟')){
-            Simple_get('https://hitmug.ir/api/user/delete',true,'/'+id,cookie.token,'delete',[])
-                .then((d)=>{
+        if (window.confirm('آیا برای حذف کاربر اطمینان دارید؟')) {
+            Simple_get('https://hitmug.ir/api/user/delete', true, '/' + id, cookie.token, 'delete', [])
+                .then((d) => {
                     if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
-                        Notifier('success' ,'اطلاعات کاربر با موفقیت حذف شد');
+                        Notifier('success', 'اطلاعات کاربر با موفقیت حذف شد');
                         change_refresh();
                     } else {
                         Notifier('danger', 'خطا در حذف حساب کاربری');
@@ -257,9 +262,30 @@ function AdminPanel() {
         }
     }
 
-    const get_user_roles=async (id)=>{
-        let data = await Simple_get('https://hitmug.ir/api/user/roles/',true,id ,cookie.token,'get',[])
-            .then((d)=>{
+    const delete_user_role = async (role_id) => {
+        const result = roles.filter((k) => {
+            return role_id == k.id
+        })
+        const role_name = result?.[0]?.name
+        let dataObj = {
+            'user_id': lastUserId,
+            'role': role_name,
+        }
+        await Simple_get('https://hitmug.ir/api/user/roles/revoke', true, '', cookie.token, 'post', {...dataObj})
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    Notifier('success', 'نقش کاربری موفقیت حذف شد');
+                    change_refresh_user_roles();
+                } else {
+                    Notifier('danger', 'خطا در حذف نقش کاربری');
+                }
+            })
+
+    }
+
+    const get_user_roles = async (id) => {
+        let data = await Simple_get('https://hitmug.ir/api/user/roles/', true, id, cookie.token, 'get', [])
+            .then((d) => {
                 if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
                     setUserRoles(d?.[0])
                 } else {
@@ -280,11 +306,14 @@ function AdminPanel() {
     useEffect(() => {
         get_user_addresses('')
     }, [refreshUserAddressData]);
+    useEffect(() => {
+        lastUserId && get_user_roles(lastUserId)
+    }, [refreshUserRolesData]);
 
     const change_user_status = async (user_id) => {
 
         const data = await Simple_get('https://hitmug.ir/api/user/change-status', true
-            , '', cookie.token, 'post', {user_id:user_id})
+            , '', cookie.token, 'post', {user_id: user_id})
             .then((d) => {
                 if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
                     change_refresh()
@@ -385,7 +414,7 @@ function AdminPanel() {
                         <DataGrid
                             grid_title={'کاربران'}
                             action_title={'افزودن کاربر'}
-                            action_function={()=>navigate('/admin/add-user')}
+                            action_function={() => navigate('/admin/add-user')}
                             action_function_argument={'add-user'}
                             have_action={true}
                             headers={users_headers}
@@ -393,6 +422,7 @@ function AdminPanel() {
                             reload={change_refresh}
                             field_names={users_field_names}
                             buttons={users_buttons}
+                            additional_id_setter={(e)=>{setLastUserId(e)}}
                         />
                     </>
                 }
@@ -401,17 +431,21 @@ function AdminPanel() {
 
                     apActiveMenu === 'user-roles' &&
                     <>
+
                         <DataGrid
                             grid_title={'نقش های کاربری'}
                             action_title={'افزودن نقش'}
-                            action_function={''}
+                            action_function={() => {
+                                lastUserId && navigate('/admin/add-user-role/' + lastUserId)
+                            }}
                             action_function_argument={''}
-                            have_action={false}
+                            have_action={true}
                             headers={user_roles_headers}
                             data={userRoles}
                             reload={change_refresh_user_roles}
                             field_names={user_roles_field_names}
                             buttons={user_roles_buttons}
+                            additional_id_setter=''
                         />
                     </>
                 }
@@ -423,11 +457,13 @@ function AdminPanel() {
                             grid_title={'نقش ها'}
                             action_title={'افزودن نقش'}
                             have_action={true}
+                            action_function={()=>navigate('/admin/add-role')}
                             headers={roles_headers}
                             data={roles}
                             reload={change_refresh_roles}
                             field_names={roles_field_names}
                             buttons={roles_buttons}
+                            additional_id_setter=''
                         />
                     </>
                 }
@@ -443,6 +479,7 @@ function AdminPanel() {
                             reload={change_refresh_permissions}
                             field_names={permission_field_names}
                             buttons={permission_buttons}
+                            additional_id_setter=''
                         />
                     </>
                 }
@@ -462,6 +499,7 @@ function AdminPanel() {
                             field_names={user_address_field_names}
                             buttons={user_address_buttons}
                             reload={change_refresh_user_address}
+                            additional_id_setter=''
                         />
                     </>
                 }

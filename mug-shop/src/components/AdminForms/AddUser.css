@@ -12,6 +12,21 @@
     left: 0;
     /*border: 1px solid #e7e4e4;*/
 }
+
+.add-role-form {
+    width: calc(98% - 60px);
+    height: 150px;
+    max-height: calc(100vh - 90px);
+    margin: 10px auto;
+    border-radius: 8px;
+    background-color: white;
+    position: absolute;
+    top: 65px;
+    right: 60px;
+    left: 0;
+    /*border: 1px solid #e7e4e4;*/
+}
+
 .add-user-form span{
     font-size: 16px;
     color: black;

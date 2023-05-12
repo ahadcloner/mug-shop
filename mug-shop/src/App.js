@@ -22,6 +22,8 @@ import {ToastContainer} from "react-toastify";
 import AdminPanel from "./components/AdminPanel";
 import AddUser from "./components/AdminForms/AddUser";
 import EditUser from "./components/AdminForms/EditUser";
+import AddUserRole from "./components/AdminForms/AddUserRole";
+import AddRole from "./components/AdminForms/AddRole";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -42,6 +44,8 @@ function App() {
                             <Route path={'/admin'} element={<AdminPanel/>}/>
                             <Route path={'/admin/add-user'} element={<AddUser/>}/>
                             <Route path={'/admin/edit-user/:id'} element={<EditUser/>}/>
+                            <Route path={'/admin/add-user-role/:id'} element={<AddUserRole/>}/>
+                            <Route path={'/admin/add-role'} element={<AddRole/>}/>
                             <Route path={'*'} element={<NotFound/>}/>
                         </Routes>
                         <UserArea></UserArea>
