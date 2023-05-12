@@ -51,7 +51,10 @@ function AdminPanel() {
             id: 1, title: 'ویرایش اطلاعات', func:(e)=>{navigate('/admin/edit-user/'+e)}
         },
         {
-            id: 2, title: 'مدیریت نقش ها', func: ''
+            id: 2, title: 'مدیریت نقش ها', func:(e)=>{
+                change_menu('user-roles');
+                get_user_roles(e);
+            }
         },
         {
             id: 3, title: 'آدرس ها', func: (e) => {
@@ -65,6 +68,27 @@ function AdminPanel() {
         },
 
     ]
+
+
+    const user_roles_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'نام نقش'},
+        {id: 2, title: 'عملیات'},
+    ];
+    const user_roles_field_names = [
+        {id: 0, title: 'name', is_date: false, is_boolean: false},
+        // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
+    ]
+    const user_roles_buttons = [
+        {
+            id: 0, title: 'حذف نقش', func: ''
+        },
+        {
+            id: 1, title: 'افزودن نقش', func:''
+        }
+    ]
+
+
 
     const roles_headers = [
         {id: 0, title: 'ردیف'},
@@ -131,10 +155,12 @@ function AdminPanel() {
     const [roles, setRoles] = useState([]);
     const [permissions, setPermissions] = useState([]);
     const [userAddresses, setUserAddresses] = useState([]);
+    const [userRoles, setUserRoles] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [refreshRoleData, setRefreshRoleData] = useState(false);
     const [refreshPermissionData, setRefreshPermissionData] = useState(false);
     const [refreshUserAddressData, setRefreshUserAddressData] = useState(false);
+    const [refreshUserRolesData, setRefreshUserRolesData] = useState(false);
     const [newUser, setNewUser] = useState({
         email: '',
         full_name: '',
@@ -157,6 +183,9 @@ function AdminPanel() {
     }
     const change_refresh_user_address = () => {
         setRefreshUserAddressData(!refreshUserAddressData);
+    }
+    const change_refresh_user_roles = () => {
+        setRefreshUserRolesData(!refreshUserRolesData);
     }
     const change_menu = (name) => {
         setApActiveMenu(name);
@@ -228,6 +257,17 @@ function AdminPanel() {
         }
     }
 
+    const get_user_roles=async (id)=>{
+        let data = await Simple_get('https://hitmug.ir/api/user/roles/',true,id ,cookie.token,'get',[])
+            .then((d)=>{
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setUserRoles(d?.[0])
+                } else {
+                    Notifier('danger', 'خطا در در یافت نقش های کاربری');
+                }
+            })
+    }
+
     useEffect(() => {
         get_users()
     }, [refreshData]);
@@ -270,7 +310,7 @@ function AdminPanel() {
                 || apActiveMenu === 'user-address'
                 || apActiveMenu === 'add-user'
                 || apActiveMenu === 'edit-address'
-                || apActiveMenu === 'edit-user'
+                || apActiveMenu === 'user-roles'
                 || apActiveMenu === 'add-address' ? 'apActive' : ''}`}>
                     <AiOutlineUser/>
                     <span>مدیریت کاربران</span>
@@ -356,6 +396,26 @@ function AdminPanel() {
                         />
                     </>
                 }
+
+                {
+
+                    apActiveMenu === 'user-roles' &&
+                    <>
+                        <DataGrid
+                            grid_title={'نقش های کاربری'}
+                            action_title={'افزودن نقش'}
+                            action_function={''}
+                            action_function_argument={''}
+                            have_action={false}
+                            headers={user_roles_headers}
+                            data={userRoles}
+                            reload={change_refresh_user_roles}
+                            field_names={user_roles_field_names}
+                            buttons={user_roles_buttons}
+                        />
+                    </>
+                }
+
                 {
                     apActiveMenu === 'roles' &&
                     <>

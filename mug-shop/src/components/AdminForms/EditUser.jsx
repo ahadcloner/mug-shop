@@ -16,7 +16,7 @@ function EditUser() {
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState();
     const [selectedStatus, setSelectedStatus] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('fa-IR'));
+    const [selectedDate, setSelectedDate] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [mobile, setMobile] = useState();
@@ -53,18 +53,19 @@ function EditUser() {
         let dataObj = {
             'email': email,
             'password': password,
-            'birth_date': selectedDate.format?.(),
+            'birth_date': selectedDate ? selectedDate.format?.():'',
             'mobile': mobile,
             'full_name': fullName,
-            'city_id': cities[selectedCity]['id'],
-            'status': !selectedStatus
+            'city_id': selectedCity,
+            'status': selectedStatus
         }
         let data =
-            await Simple_get('https://hitmug.ir/api/user/register', true, '', cookie.token, 'post', {...dataObj})
+            await Simple_get('https://hitmug.ir/api/user/update/', true, user?.id, cookie.token, 'patch', {...dataObj})
                 .then((d => {
-                        if (parseInt(d?.[2]) > 200 && parseInt(d?.[2]) < 300) {
-                            Notifier('success', d[1]);
-                            navigate('/admin');
+                        if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                            Notifier('success','تغییرات با موفقیت اانجام شد');
+                            navigate('/admin')
+
                         } else {
                             if (d[0].response.data.errors?.email) Notifier('danger', d[0].response.data.errors.email[0])
                             if (d[0].response.data.errors?.password) Notifier('danger', d[0].response.data.errors.password[0])
@@ -81,7 +82,7 @@ function EditUser() {
                     setUser(d?.[0]);
                     setSelectedCity(user.city_id);
                     setSelectedStatus(user.status);
-                    setSelectedDate(user.birth_date);
+                    setSelectedDate(new Date (user.birth_date).toLocaleDateString('fa-IR'));
                     setEmail(user.email);
                     setPassword(user.password);
                     setFullName(user.full_name);
@@ -143,7 +144,7 @@ function EditUser() {
                         <span>ایمیل</span>
                         <input name={'email'} type={"text"}
                                onChange={(e) => {
-                                   setEmail(e.target.value);
+                                   // setEmail(e.target.value);
                                }} value={email}
                         />
                     </div>
