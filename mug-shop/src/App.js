@@ -24,6 +24,10 @@ import AddUser from "./components/AdminForms/AddUser";
 import EditUser from "./components/AdminForms/EditUser";
 import AddUserRole from "./components/AdminForms/AddUserRole";
 import AddRole from "./components/AdminForms/AddRole";
+import EditRole from "./components/AdminForms/EditRole";
+import AddRolePermission from "./components/AdminForms/AddRolePermission";
+import AddPermission from "./components/AdminForms/AddPermission";
+import EditPermission from "./components/AdminForms/EditPermission";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -46,6 +50,10 @@ function App() {
                             <Route path={'/admin/edit-user/:id'} element={<EditUser/>}/>
                             <Route path={'/admin/add-user-role/:id'} element={<AddUserRole/>}/>
                             <Route path={'/admin/add-role'} element={<AddRole/>}/>
+                            <Route path={'/admin/add-permission'} element={<AddPermission/>}/>
+                            <Route path={'/admin/edit-role/:id'} element={<EditRole/>}/>
+                            <Route path={'/admin/edit-permission/:id'} element={<EditPermission/>}/>
+                            <Route path={'/admin/add-role-permission/:id'} element={<AddRolePermission/>}/>
                             <Route path={'*'} element={<NotFound/>}/>
                         </Routes>
                         <UserArea></UserArea>

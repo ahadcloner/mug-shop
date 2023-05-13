@@ -91,25 +91,52 @@ function AdminPanel() {
 
     ]
 
-
     const roles_headers = [
         {id: 0, title: 'ردیف'},
         {id: 1, title: 'نام'},
         {id: 2, title: 'نام گارد'},
         {id: 3, title: 'عملیات'},
-    ]
+    ];
     const roles_field_names = [
         {id: 0, title: 'name', is_date: false},
         {id: 1, title: 'guard_name', is_date: false},
-    ]
+    ];
     const roles_buttons = [
         {
-            id: 0, title: 'ویرایش نقش', func: ''
+            id: 0, title: 'ویرایش نقش', func: (e) => {
+                navigate('/admin/edit-role/' + e)
+            }
         },
         {
-            id: 1, title: 'ویرایش دسترسی ها', func: ''
+            id: 1, title: 'ویرایش دسترسی ها', func: (e) => {
+                change_menu('role-permissions');
+                change_refresh_role_permissions();
+            }
+        },
+        {
+            id: 2, title: 'حذف نقش', func: (e) => {
+                delete_role(e)
+            }
+        },
+    ];
+
+
+    const role_permissions_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'نام'},
+        {id: 3, title: 'عملیات'},
+    ];
+    const role_permissions_field_names = [
+        {id: 0, title: 'name', is_date: false},
+    ];
+    const role_permissions_buttons = [
+        {
+            id: 0, title: 'حذف دسترسی', func: (e) => {
+                delete_role_permission(e);
+            }
         }
-    ]
+
+    ];
 
     const permission_headers = [
         {id: 0, title: 'ردیف'},
@@ -123,7 +150,12 @@ function AdminPanel() {
     ]
     const permission_buttons = [
         {
-            id: 0, title: 'ویرایش دسترسی', func: ''
+            id: 0, title: 'ویرایش دسترسی', func: (e)=>{navigate('/admin/edit-permission/'+e)}
+        },
+        {
+            id: 1, title: 'حذف دسترسی', func:(e)=>{
+                delete_permission(e);
+            }
         }
     ]
 
@@ -158,12 +190,16 @@ function AdminPanel() {
     const [permissions, setPermissions] = useState([]);
     const [userAddresses, setUserAddresses] = useState([]);
     const [userRoles, setUserRoles] = useState([]);
+    const [rolePermissions, setRolePermissions] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [refreshRoleData, setRefreshRoleData] = useState(false);
     const [refreshPermissionData, setRefreshPermissionData] = useState(false);
     const [refreshUserAddressData, setRefreshUserAddressData] = useState(false);
     const [refreshUserRolesData, setRefreshUserRolesData] = useState(false);
-    const [lastUserId ,setLastUserId]=useState();
+    const [refreshRolePermissions, setRefreshRolePermissions] = useState(false);
+    const [lastUserId, setLastUserId] = useState();
+    const [lastRoleId, setLastRoleId] = useState();
+    const [lastPermissionId, setLastPermissionId] = useState();
 
 
     const [newUser, setNewUser] = useState({
@@ -191,6 +227,10 @@ function AdminPanel() {
     }
     const change_refresh_user_roles = () => {
         setRefreshUserRolesData(!refreshUserRolesData);
+    }
+
+    const change_refresh_role_permissions = () => {
+        setRefreshRolePermissions(!refreshRolePermissions);
     }
     const change_menu = (name) => {
         setApActiveMenu(name);
@@ -283,6 +323,20 @@ function AdminPanel() {
 
     }
 
+    const delete_role = (role_id) => {
+        if (window.confirm('آیا برای حذف کردن نقش مطمین هستید؟')) {
+            Simple_get('https://hitmug.ir/api/role/delete/', true, role_id, cookie.token, 'delete', [])
+                .then((d) => {
+                    if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                        Notifier('success', 'نقش با موفقیت حذف شد');
+                        change_refresh_roles();
+                    } else {
+                        Notifier('danger', 'خطا در حذف نقش');
+                    }
+                })
+        }
+    }
+
     const get_user_roles = async (id) => {
         let data = await Simple_get('https://hitmug.ir/api/user/roles/', true, id, cookie.token, 'get', [])
             .then((d) => {
@@ -293,6 +347,46 @@ function AdminPanel() {
                 }
             })
     }
+
+    const get_role_permissions = (role_id) => {
+        Simple_get('https://hitmug.ir/api/role/permissions/', true, role_id, cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setRolePermissions(d?.[0])
+                } else {
+                    Notifier('danger', 'خطا در در یافت دسترسی های نقش');
+                }
+            })
+    }
+
+    const delete_role_permission = (permission_id) => {
+        let dataObj = {
+            'role_id': lastRoleId,
+            'permission_id': permission_id,
+        }
+        Simple_get('https://hitmug.ir/api/role/revoke-permission', true, '', cookie.token, 'post', {...dataObj})
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    Notifier('success', 'دسترسی با موفقیت حذف شد');
+                    change_refresh_role_permissions();
+                } else {
+                    Notifier('danger', 'خطا در حذف دسترسی');
+                }
+            })
+    }
+
+    const delete_permission = (id)=>{
+            Simple_get('https://hitmug.ir/api/permision/delete/', true, id, cookie.token, 'delete', [])
+                .then((d) => {
+                    if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                        Notifier('success', 'دسترسی با موفقیت حذف شد');
+                        change_refresh_permissions();
+                    } else {
+                        Notifier('danger', 'خطا در حذف دسترسی');
+                    }
+                })
+    }
+
 
     useEffect(() => {
         get_users()
@@ -309,6 +403,10 @@ function AdminPanel() {
     useEffect(() => {
         lastUserId && get_user_roles(lastUserId)
     }, [refreshUserRolesData]);
+
+    useEffect(() => {
+        lastRoleId && get_role_permissions(lastRoleId)
+    }, [refreshRolePermissions]);
 
     const change_user_status = async (user_id) => {
 
@@ -345,19 +443,26 @@ function AdminPanel() {
                     <span>مدیریت کاربران</span>
                 </div>
                 <div onClick={() => {
-                    change_menu('roles')
-                }} className={`ap-menu-row ${apActiveMenu === 'roles' ? 'apActive' : ''}`}>
+                    change_menu('roles');
+                    change_refresh_roles();
+                }} className={`ap-menu-row 
+                    ${apActiveMenu === 'roles'
+                || apActiveMenu === 'role-permissions'
+
+                    ? 'apActive' : ''}`}>
                     <BsUniversalAccessCircle/>
                     <span>مدیریت نقش ها</span>
                 </div>
                 <div onClick={() => {
-                    change_menu('permissions')
+                    change_menu('permissions');
+
                 }} className={`ap-menu-row ${apActiveMenu === 'permissions' ? 'apActive' : ''}`}>
                     <SiOpenaccess/>
                     <span>مدیریت مجوز ها</span>
                 </div>
                 <div onClick={() => {
-                    change_menu('banners')
+                    change_menu('banners');
+                    change_refresh_permissions();
                 }} className={`ap-menu-row ${apActiveMenu === 'banners' ? 'apActive' : ''}`}>
                     <GiVerticalBanner/>
                     <span>مدیریت بنر ها</span>
@@ -408,7 +513,6 @@ function AdminPanel() {
             </div>
             <div className="ap-view">
                 {
-
                     apActiveMenu === 'users' &&
                     <>
                         <DataGrid
@@ -422,7 +526,9 @@ function AdminPanel() {
                             reload={change_refresh}
                             field_names={users_field_names}
                             buttons={users_buttons}
-                            additional_id_setter={(e)=>{setLastUserId(e)}}
+                            additional_id_setter={(e) => {
+                                setLastUserId(e)
+                            }}
                         />
                     </>
                 }
@@ -445,7 +551,9 @@ function AdminPanel() {
                             reload={change_refresh_user_roles}
                             field_names={user_roles_field_names}
                             buttons={user_roles_buttons}
-                            additional_id_setter=''
+                            additional_id_setter={(e) => {
+                                setLastRoleId(e)
+                            }}
                         />
                     </>
                 }
@@ -457,16 +565,40 @@ function AdminPanel() {
                             grid_title={'نقش ها'}
                             action_title={'افزودن نقش'}
                             have_action={true}
-                            action_function={()=>navigate('/admin/add-role')}
+                            action_function={() => navigate('/admin/add-role')}
                             headers={roles_headers}
                             data={roles}
                             reload={change_refresh_roles}
                             field_names={roles_field_names}
                             buttons={roles_buttons}
+                            additional_id_setter={(e) => {
+                                setLastRoleId(e)
+                            }}
+                        />
+                    </>
+                }
+                {
+                    apActiveMenu === 'role-permissions' &&
+                    <>
+
+                        <DataGrid
+                            grid_title={'دسترسی های نقش'}
+                            action_title={'افزودن دسترسی'}
+                            have_action={true}
+                            action_function={() => {
+                                lastRoleId && navigate('/admin/add-role-permission/' + lastRoleId)
+                            }}
+                            headers={role_permissions_headers}
+                            data={rolePermissions}
+                            reload={change_refresh_role_permissions}
+                            field_names={role_permissions_field_names}
+                            buttons={role_permissions_buttons}
                             additional_id_setter=''
                         />
                     </>
                 }
+
+
                 {
                     apActiveMenu === 'permissions' &&
                     <>
@@ -474,12 +606,15 @@ function AdminPanel() {
                             grid_title={'دسترسی ها'}
                             action_title={'افزودن دسترسی'}
                             have_action={true}
+                            action_function={() => {
+                                navigate('/admin/add-permission');
+                            }}
                             headers={permission_headers}
                             data={permissions}
                             reload={change_refresh_permissions}
                             field_names={permission_field_names}
                             buttons={permission_buttons}
-                            additional_id_setter=''
+                            additional_id_setter={(e)=>setLastPermissionId(e)}
                         />
                     </>
                 }
