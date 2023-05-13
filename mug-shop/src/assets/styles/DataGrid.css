@@ -109,3 +109,8 @@ td button:hover{
     color: red!important;
     font-weight: 600;
 }
+td > img{
+    width: 100px;
+    height: 50px;
+    align-self: center;
+}

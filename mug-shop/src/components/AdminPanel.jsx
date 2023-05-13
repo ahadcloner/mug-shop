@@ -33,14 +33,14 @@ function AdminPanel() {
         {id: 9, title: 'عملیات'},
     ];
     const users_field_names = [
-        {id: 0, title: 'email', is_date: false, is_boolean: false},
-        {id: 1, title: 'full_name', is_date: false, is_boolean: false},
-        {id: 2, title: 'created_at', is_date: true, is_boolean: false},
-        {id: 3, title: 'birth_date', is_date: false, is_boolean: false},
-        {id: 4, title: 'city.state.name', is_date: false, is_boolean: false},
-        {id: 5, title: 'city.name', is_date: false, is_boolean: false},
-        {id: 6, title: 'mobile', is_date: false, is_boolean: false},
-        {id: 7, title: 'status', is_date: false, is_boolean: true},
+        {id: 0, title: 'email', is_date: false, is_boolean: false,is_image:false},
+        {id: 1, title: 'full_name', is_date: false, is_boolean: false,is_image:false},
+        {id: 2, title: 'created_at', is_date: true, is_boolean: false,is_image:false},
+        {id: 3, title: 'birth_date', is_date: false, is_boolean: false,is_image:false},
+        {id: 4, title: 'city.state.name', is_date: false, is_boolean: false,is_image:false},
+        {id: 5, title: 'city.name', is_date: false, is_boolean: false,is_image:false},
+        {id: 6, title: 'mobile', is_date: false, is_boolean: false,is_image:false},
+        {id: 7, title: 'status', is_date: false, is_boolean: true,is_image:false},
         // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
     ]
     const users_buttons = [
@@ -79,7 +79,7 @@ function AdminPanel() {
         {id: 2, title: 'عملیات'},
     ];
     const user_roles_field_names = [
-        {id: 0, title: 'name', is_date: false, is_boolean: false},
+        {id: 0, title: 'name', is_date: false, is_boolean: false,is_image:false},
         // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
     ]
     const user_roles_buttons = [
@@ -98,8 +98,8 @@ function AdminPanel() {
         {id: 3, title: 'عملیات'},
     ];
     const roles_field_names = [
-        {id: 0, title: 'name', is_date: false},
-        {id: 1, title: 'guard_name', is_date: false},
+        {id: 0, title: 'name', is_date: false,is_image:false},
+        {id: 1, title: 'guard_name', is_date: false,is_image:false},
     ];
     const roles_buttons = [
         {
@@ -127,7 +127,7 @@ function AdminPanel() {
         {id: 3, title: 'عملیات'},
     ];
     const role_permissions_field_names = [
-        {id: 0, title: 'name', is_date: false},
+        {id: 0, title: 'name', is_date: false,is_image:false},
     ];
     const role_permissions_buttons = [
         {
@@ -145,8 +145,8 @@ function AdminPanel() {
         {id: 3, title: 'عملیات'},
     ]
     const permission_field_names = [
-        {id: 0, title: 'name', is_date: false},
-        {id: 1, title: 'guard_name', is_date: false},
+        {id: 0, title: 'name', is_date: false,is_image:false},
+        {id: 1, title: 'guard_name', is_date: false,is_image:false},
     ]
     const permission_buttons = [
         {
@@ -167,9 +167,9 @@ function AdminPanel() {
         {id: 4, title: 'عملیات'},
     ];
     const user_address_field_names = [
-        {id: 0, title: 'state_id', is_date: false, is_boolean: false},
-        {id: 1, title: 'city_id', is_date: false, is_boolean: false},
-        {id: 2, title: 'title', is_date: true, is_boolean: false},
+        {id: 0, title: 'state_id', is_date: false, is_boolean: false,is_image:false},
+        {id: 1, title: 'city_id', is_date: false, is_boolean: false,is_image:false},
+        {id: 2, title: 'title', is_date: true, is_boolean: false,is_image:false},
         // {id: 9, title: ['مدیریت نقش ها','ویرایش اطلاعات']},
     ]
     const user_address_buttons = [
@@ -182,6 +182,25 @@ function AdminPanel() {
 
     ]
 
+    const banners_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'بنر'},
+        {id: 2, title: 'الویت نمایش'},
+        {id: 9, title: 'عملیات'},
+    ];
+    const banners_field_names = [
+        {id: 0, title: 'address', is_date: false, is_boolean: false,is_image:true},
+        {id: 1, title: 'order', is_date: false, is_boolean: false,is_image:false},
+    ]
+    const banners_buttons = [
+        {
+            id: 1, title: 'ویرایش بنر', func: ''
+        },
+        {
+            id: 2, title: 'حذف بنر', func: ''
+        },
+    ]
+
 
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
@@ -190,6 +209,7 @@ function AdminPanel() {
     const [permissions, setPermissions] = useState([]);
     const [userAddresses, setUserAddresses] = useState([]);
     const [userRoles, setUserRoles] = useState([]);
+    const [banners, setBanners] = useState([]);
     const [rolePermissions, setRolePermissions] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [refreshRoleData, setRefreshRoleData] = useState(false);
@@ -197,6 +217,7 @@ function AdminPanel() {
     const [refreshUserAddressData, setRefreshUserAddressData] = useState(false);
     const [refreshUserRolesData, setRefreshUserRolesData] = useState(false);
     const [refreshRolePermissions, setRefreshRolePermissions] = useState(false);
+    const [refreshBanners, setRefreshBanners] = useState(false);
     const [lastUserId, setLastUserId] = useState();
     const [lastRoleId, setLastRoleId] = useState();
     const [lastPermissionId, setLastPermissionId] = useState();
@@ -232,9 +253,14 @@ function AdminPanel() {
     const change_refresh_role_permissions = () => {
         setRefreshRolePermissions(!refreshRolePermissions);
     }
+
+    const change_refresh_banners = () => {
+        setRefreshBanners(!refreshBanners);
+    }
     const change_menu = (name) => {
         setApActiveMenu(name);
     }
+
 
     const get_users = async () => {
         const data = await Simple_get('https://hitmug.ir/api/user/index', true
@@ -387,6 +413,17 @@ function AdminPanel() {
                 })
     }
 
+    const get_banners= async ()=>{
+        const data = await Simple_get('https://hitmug.ir/api/banner/index', true
+            , '', cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setBanners(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت بنر ها')
+                }
+            });
+    }
 
     useEffect(() => {
         get_users()
@@ -407,6 +444,10 @@ function AdminPanel() {
     useEffect(() => {
         lastRoleId && get_role_permissions(lastRoleId)
     }, [refreshRolePermissions]);
+
+    useEffect(() => {
+        get_banners();
+    }, [refreshBanners]);
 
     const change_user_status = async (user_id) => {
 
@@ -461,8 +502,9 @@ function AdminPanel() {
                     <span>مدیریت مجوز ها</span>
                 </div>
                 <div onClick={() => {
+
                     change_menu('banners');
-                    change_refresh_permissions();
+                    change_refresh_banners();
                 }} className={`ap-menu-row ${apActiveMenu === 'banners' ? 'apActive' : ''}`}>
                     <GiVerticalBanner/>
                     <span>مدیریت بنر ها</span>
@@ -652,6 +694,24 @@ function AdminPanel() {
                             fields={[
                                 'id', 'state', 'city', 'title'
                             ]}
+                        />
+                    </>
+                }
+                {
+                    apActiveMenu === 'banners' &&
+                    <>
+                        <DataGrid
+                            grid_title={'بنر های سایت'}
+                            data={banners}
+                            have_action={true}
+                            headers={banners_headers}
+                            action_title={'افزودن بنر'}
+                            action_function=''
+                            action_function_argument=''
+                            field_names={banners_field_names}
+                            buttons={banners_buttons}
+                            reload={change_refresh_banners}
+                            additional_id_setter=''
                         />
                     </>
                 }

@@ -60,7 +60,7 @@ function DataGrid({
 
                                     <td>{index + 1}</td>
                                     {
-                                        // eslint-disable-next-line array-callback-return
+
                                         field_names.map((f) => {
 
                                             if (f.is_date) {
@@ -81,7 +81,14 @@ function DataGrid({
                                                             className={`${d[f.title] === '1' ? 'account-active' : 'account-not-active'}`}
                                                             key={f.id}>{d[f.title] === '1' ? 'فعال' : 'غیر فعال'}</td>
                                                     } else {
-                                                        return <td key={f.id}>{d[f.title]}</td>
+                                                        if(f.is_image)
+                                                        {
+                                                            return <td key={f.id}><img src={'https://hitmug.ir/api.hitmug.ir/public/'+d[f.title]} alt={'site banner'}/></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            return <td key={f.id}>{d[f.title]}</td>
+                                                        }
                                                     }
                                                 }
 
