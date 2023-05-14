@@ -194,10 +194,13 @@ function AdminPanel() {
     ]
     const banners_buttons = [
         {
-            id: 1, title: 'ویرایش بنر', func: ''
+            id: 1, title: 'افزایش الویت', func: (e)=>{inc_order(e)}
         },
         {
-            id: 2, title: 'حذف بنر', func: ''
+            id: 2, title: 'کاهش الویت',  func: (e)=>{desc_order(e)}
+        },
+        {
+            id: 3, title: 'حذف بنر',func:(e)=>{delete_banner(e)}
         },
     ]
 
@@ -424,7 +427,39 @@ function AdminPanel() {
                 }
             });
     }
+    const inc_order = (id)=>{
+        Simple_get('https://hitmug.ir/api/banner/inc-order/' ,true ,id , cookie.token , 'post' ,[])
+            .then((d)=>{
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    change_refresh_banners()
+                } else {
+                    Notifier('danger', 'خطا در افزایش اولویت')
+                }
+            })
+    }
 
+    const desc_order = (id)=>{
+        Simple_get('https://hitmug.ir/api/banner/desc-order/' ,true ,id , cookie.token , 'post' ,[])
+            .then((d)=>{
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    change_refresh_banners()
+                } else {
+                    Notifier('danger', 'خطا در کاهش اولویت')
+                }
+            })
+    }
+
+    const delete_banner=(id)=>{
+        Simple_get('https://hitmug.ir/api/banner/delete/', true, id, cookie.token, 'delete', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    Notifier('success', 'بنر با موفقیت حذف شد');
+                    change_refresh_banners();
+                } else {
+                    Notifier('danger', 'خطا در حذف بنر');
+                }
+            })
+    }
     useEffect(() => {
         get_users()
     }, [refreshData]);
@@ -706,7 +741,7 @@ function AdminPanel() {
                             have_action={true}
                             headers={banners_headers}
                             action_title={'افزودن بنر'}
-                            action_function=''
+                            action_function={()=>{navigate('/admin/add-banner')}}
                             action_function_argument=''
                             field_names={banners_field_names}
                             buttons={banners_buttons}

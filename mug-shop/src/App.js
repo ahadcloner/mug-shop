@@ -28,6 +28,7 @@ import EditRole from "./components/AdminForms/EditRole";
 import AddRolePermission from "./components/AdminForms/AddRolePermission";
 import AddPermission from "./components/AdminForms/AddPermission";
 import EditPermission from "./components/AdminForms/EditPermission";
+import AddBanner from "./components/AdminForms/AddBanner";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -50,6 +51,7 @@ function App() {
                             <Route path={'/admin/edit-user/:id'} element={<EditUser/>}/>
                             <Route path={'/admin/add-user-role/:id'} element={<AddUserRole/>}/>
                             <Route path={'/admin/add-role'} element={<AddRole/>}/>
+                            <Route path={'/admin/add-banner'} element={<AddBanner/>}/>
                             <Route path={'/admin/add-permission'} element={<AddPermission/>}/>
                             <Route path={'/admin/edit-role/:id'} element={<EditRole/>}/>
                             <Route path={'/admin/edit-permission/:id'} element={<EditPermission/>}/>

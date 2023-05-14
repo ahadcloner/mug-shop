@@ -1,7 +1,7 @@
 
 .add-user-form {
     width: calc(98% - 60px);
-    height: 500px;
+    height: 60vh;
     max-height: calc(100vh - 90px);
     margin: 10px auto;
     border-radius: 8px;
@@ -30,6 +30,7 @@
 .add-user-form span{
     font-size: 16px;
     color: black;
+
 }
 
 .auf-top {
@@ -137,4 +138,49 @@
 .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover,
 .rmdp-day.rmdp-selected span:not(.highlight),.rmdp-day.rmdp-today span{
     margin: -2px !important;
+}
+#pic-button{
+    width: 200px;
+    height: 50px;
+    color: white;
+    font-family:'vazirmatn', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    /*outline: none;*/
+    border-radius: 8px;
+    background-color: black;
+    margin: 10px;
+}
+#pic-button :hover{
+    background-color: black;
+}
+#picture{
+    display: none;
+}
+
+
+
+.Ad-uploader{
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    margin-top: 3rem;
+    /*height: 400px;*/
+}
+
+
+.Ad-uploader :first-child{
+    /*width: 500px !important;*/
+    /*max-width: 600px;*/
+}
+.Ad-uploader :first-child :first-child label{
+    margin: auto;
+    height: 200px !important;
+    width: 500px !important;
+    max-width: 600px;
+}
+.Ad-uploader :first-child :first-child .Ad-span{
+    position: absolute;
+    right: 34%;
+    top: 20%;
 }
