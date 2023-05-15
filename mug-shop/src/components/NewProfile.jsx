@@ -16,6 +16,9 @@ import p6 from '../assets/images/6.jpg';
 import p7 from '../assets/images/7.png';
 
 import {useNavigate, useParams} from "react-router-dom";
+import {useCookies} from "react-cookie";
+import {Simple_get} from "./Utils/RequstSender";
+import {Notifier} from "./Utils/Notifier";
 let data = [
     {id: 1, title: 'ماگ حرارتی مدل اول', price: '410,000', picture: p1},
     {id: 2, title: 'ماگ حرارتی مدل دوم', price: '410,000', picture: p2},
@@ -42,15 +45,34 @@ function NewProfile() {
     const section = useParams();
     const [activeMenu, setActiveMenu] = useState(section.section);
     const navigate = useNavigate();
+    const [cookie, setCookie, removeCookie] = useCookies(['token']);
+    const [user , setUser] = useState();
+    const [refreshUserData ,setRefreshUserData] =useState(false);
+    const change_refresh_user_data=()=>{
+        setRefreshUserData(!refreshUserData);
+    }
+    const get_user_info = async ()=>{
+        await Simple_get('https://hitmug.ir/api/user/auth/find',true,'',cookie.token,'get',[])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setUser(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت اطلاعات کاربر')
+                }
+            })
+    }
     useEffect(()=>{
         setActiveMenu(section.section)
     },[section])
-
+    useEffect(() => {
+        cookie.token && get_user_info();
+    }, [refreshUserData]);
 
 
     const change_menu = (m) => {
         if(m==='info'){
             setActiveMenu('info');
+            change_refresh_user_data();
         }
         if(m==='address'){
             setActiveMenu('address');
@@ -92,23 +114,23 @@ function NewProfile() {
             </div>
             <div className="np-view">
                 {
-                    activeMenu ==='info' &&
+                    activeMenu ==='info' && cookie.token &&
                     <div className={'info-container'}>
                         <div className={"info-card align-right"}>
                             <span>ایمیل</span>
-                            <input type={"text"} value={'ahad.mirhabibi@gmail.com'}/>
+                            <input type={"text"} value={user?.email}/>
                         </div>
                         <div className={"info-card"}>
                             <span>نام کاربری</span>
-                            <input type={"text"} value={'احد میرحبیبی'}/>
+                            <input type={"text"} value={user?.full_name}/>
                         </div>
                         <div className={"info-card align-right"}>
                             <span>شماره تماس</span>
-                            <input type={"text"} value={'09387153611'}/>
+                            <input type={"text"} value={user?.mobile}/>
                         </div>
                         <div className={"info-card"}>
                             <span>تاریخ تولد</span>
-                            <input type={"text"} value={'1374/01/08'}/>
+                            <input type={"text"} value={user?.birth_date}/>
                         </div>
                         <div className={"info-card align-right"}>
                             <span>استان</span>

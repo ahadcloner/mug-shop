@@ -22,8 +22,8 @@
     margin: 10px;
 }
 .ap-menu{
-    width: 300px;
-    height: calc(98% - 65px);
+    width: 220px;
+    height: calc(98% - 105px);
     margin-right: 5px;
     border-radius: 8px;
     display: flex;
@@ -35,9 +35,47 @@
     right: 60px;
     top:70px;
     overflow: scroll;
-
+    padding-top: 40px;
+    padding-bottom: 20px;
+    z-index: 1;
+}
+.toggle-btn{
+ position: absolute;
+    right: 2px;
+    top :2px;
+    width: 150px;
+    height: 50px;
+    background-color: black;
+    color: white!important;
+    border-radius: 8px;
+    font-size: 16px!important;
+    font-family: 'vazirmatn', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
+@media screen and (max-width: 700px) {
+    .toggle-btn{
+        background-color: white;
+        color: black!important;
+        justify-content: end;
+        margin-right: 30px!important;
+    }
+}
+@media screen and (max-width: 577px) {
+    .ap-container {
+        width: calc(100%);
+    }
+    .ap-menu{
+        right: 0!important;
+    }
+    .toggle-btn{
+        width: 50px!important;
+
+    }
+}
+
 .ap-menu-row{
     display: flex;
     flex-direction: row-reverse;
@@ -56,8 +94,7 @@
 }
 
 .ap-view{
-    width:calc( 100% - 310px);
-
+    width:calc( 100%);
     margin: auto auto;
     border-radius: 8px;
     background-color: white;
@@ -67,3 +104,17 @@
 
 }
 /*users section*/
+
+.close{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin :5px auto;
+    /*background-color: red;*/
+    cursor: pointer;
+
+}
+.close span{
+    font-size: 16px!important;
+}

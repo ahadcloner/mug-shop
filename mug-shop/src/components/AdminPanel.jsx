@@ -204,7 +204,7 @@ function AdminPanel() {
         },
     ]
 
-
+    const [showToggleMenu , setShowToggleMenu] = useState(true);
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
     const [users, setUsers] = useState([]);
@@ -504,91 +504,97 @@ function AdminPanel() {
 
             {/*define modals*/}
 
+            {
+                showToggleMenu &&
+                <div className="ap-menu">
 
-            <div className="ap-menu">
-                <div onClick={() => {
-                    change_menu('users');
-                    change_refresh();
-                }} className={`ap-menu-row ${apActiveMenu === 'users'
-                || apActiveMenu === 'user-address'
-                || apActiveMenu === 'add-user'
-                || apActiveMenu === 'edit-address'
-                || apActiveMenu === 'user-roles'
-                || apActiveMenu === 'add-address' ? 'apActive' : ''}`}>
-                    <AiOutlineUser/>
-                    <span>مدیریت کاربران</span>
-                </div>
-                <div onClick={() => {
-                    change_menu('roles');
-                    change_refresh_roles();
-                }} className={`ap-menu-row 
+                    <div onClick={()=>setShowToggleMenu(false)} className={'ap-menu-row close'}><span>X</span></div>
+                    <div onClick={() => {
+                        change_menu('users');
+                        change_refresh();
+                    }} className={`ap-menu-row ${apActiveMenu === 'users'
+                    || apActiveMenu === 'user-address'
+                    || apActiveMenu === 'add-user'
+                    || apActiveMenu === 'edit-address'
+                    || apActiveMenu === 'user-roles'
+                    || apActiveMenu === 'add-address' ? 'apActive' : ''}`}>
+                        <AiOutlineUser/>
+                        <span>مدیریت کاربران</span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('roles');
+                        change_refresh_roles();
+                    }} className={`ap-menu-row 
                     ${apActiveMenu === 'roles'
-                || apActiveMenu === 'role-permissions'
+                    || apActiveMenu === 'role-permissions'
 
-                    ? 'apActive' : ''}`}>
-                    <BsUniversalAccessCircle/>
-                    <span>مدیریت نقش ها</span>
-                </div>
-                <div onClick={() => {
-                    change_menu('permissions');
+                        ? 'apActive' : ''}`}>
+                        <BsUniversalAccessCircle/>
+                        <span>مدیریت نقش ها</span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('permissions');
 
-                }} className={`ap-menu-row ${apActiveMenu === 'permissions' ? 'apActive' : ''}`}>
-                    <SiOpenaccess/>
-                    <span>مدیریت مجوز ها</span>
-                </div>
-                <div onClick={() => {
+                    }} className={`ap-menu-row ${apActiveMenu === 'permissions' ? 'apActive' : ''}`}>
+                        <SiOpenaccess/>
+                        <span>مدیریت مجوز ها</span>
+                    </div>
+                    <div onClick={() => {
 
-                    change_menu('banners');
-                    change_refresh_banners();
-                }} className={`ap-menu-row ${apActiveMenu === 'banners' ? 'apActive' : ''}`}>
-                    <GiVerticalBanner/>
-                    <span>مدیریت بنر ها</span>
-                </div>
-                <div onClick={() => {
-                    change_menu('categories')
-                }} className={`ap-menu-row ${apActiveMenu === 'categories' ? 'apActive' : ''}`}>
-                    <TbCategory/>
-                    <span>دسته بندی ها</span>
-                </div>
-                <div onClick={() => {
-                    change_menu('products')
-                }} className={`ap-menu-row ${apActiveMenu === 'products' ? 'apActive' : ''}`}>
-                    <RiProductHuntFill/>
-                    <span>مدیریت محصولات </span>
-                </div>
-                <div onClick={() => {
-                    change_menu('discounts')
-                }} className={`ap-menu-row ${apActiveMenu === 'discounts' ? 'apActive' : ''}`}>
-                    <TbDiscount2/>
-                    <span>مدیریت تخفیف ها </span>
-                </div>
-                <div onClick={() => {
-                    change_menu('orders')
-                }} className={`ap-menu-row ${apActiveMenu === 'orders' ? 'apActive' : ''}`}>
-                    <BsBorderWidth/>
-                    <span>مدیریت سفارشات ها</span>
-                </div>
-                <div onClick={() => {
-                    change_menu('comments')
-                }} className={`ap-menu-row ${apActiveMenu === 'comments' ? 'apActive' : ''}`}>
-                    <AiOutlineComment/>
-                    <span>مدیریت کامنت ها</span>
-                </div>
-                <div onClick={() => {
-                    change_menu('finance')
-                }} className={`ap-menu-row ${apActiveMenu === 'finance' ? 'apActive' : ''}`}>
-                    <GiMoneyStack/>
-                    <span>مدیریت مالی</span>
-                </div>
-                <div onClick={() => {
-                    change_menu('reports')
-                }} className={`ap-menu-row ${apActiveMenu === 'reports' ? 'apActive' : ''}`}>
-                    <HiOutlineDocumentReport/>
-                    <span>گزارشات</span>
-                </div>
+                        change_menu('banners');
+                        change_refresh_banners();
+                    }} className={`ap-menu-row ${apActiveMenu === 'banners' ? 'apActive' : ''}`}>
+                        <GiVerticalBanner/>
+                        <span>مدیریت بنر ها</span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('categories')
+                    }} className={`ap-menu-row ${apActiveMenu === 'categories' ? 'apActive' : ''}`}>
+                        <TbCategory/>
+                        <span>دسته بندی ها</span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('products')
+                    }} className={`ap-menu-row ${apActiveMenu === 'products' ? 'apActive' : ''}`}>
+                        <RiProductHuntFill/>
+                        <span>مدیریت محصولات </span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('discounts')
+                    }} className={`ap-menu-row ${apActiveMenu === 'discounts' ? 'apActive' : ''}`}>
+                        <TbDiscount2/>
+                        <span>مدیریت تخفیف ها </span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('orders')
+                    }} className={`ap-menu-row ${apActiveMenu === 'orders' ? 'apActive' : ''}`}>
+                        <BsBorderWidth/>
+                        <span>مدیریت سفارشات</span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('comments')
+                    }} className={`ap-menu-row ${apActiveMenu === 'comments' ? 'apActive' : ''}`}>
+                        <AiOutlineComment/>
+                        <span>مدیریت کامنت ها</span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('finance')
+                    }} className={`ap-menu-row ${apActiveMenu === 'finance' ? 'apActive' : ''}`}>
+                        <GiMoneyStack/>
+                        <span>مدیریت مالی</span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('reports')
+                    }} className={`ap-menu-row ${apActiveMenu === 'reports' ? 'apActive' : ''}`}>
+                        <HiOutlineDocumentReport/>
+                        <span>گزارشات</span>
+                    </div>
 
-            </div>
+                </div>
+            }
+
             <div className="ap-view">
+                <span onClick={()=>setShowToggleMenu(true)} className={'toggle-btn'}>منو</span>
                 {
                     apActiveMenu === 'users' &&
                     <>

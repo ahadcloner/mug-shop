@@ -12,21 +12,53 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+    justify-content: start;
 }
 .grid-title{
-    width: 100%;
-    min-width: 80%;
+    width: calc(100% - 350px);
+    min-width: calc(80% - 350px);
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 .grid-title span{
     color: black;
-    font-size: 18px;
+    font-size: 18px!important;
     font-weight: 600;
 }
+@media screen and (max-width: 1100px) {
+    .grid-title {
+        width: calc(100% - 300px)!important;
+        min-width: calc(80% - 300px)!important;
+    }
+    .grid-action{
+        width: 150px!important;
+        height: 100%!important;
+    }
+}
 
+@media screen and (max-width: 700px) {
+    .grid-action button{
+        background-color: white!important;
+        color: darkorange!important;
+    }
+}
+@media screen and (max-width: 520px) {
+    .grid-title span{
+        font-size: 16px!important;
+    }
+}
+@media screen and (max-width: 450px) {
+    .grid-action{
+        width: 100px!important;
+    }
+    .grid-title {
+        width: calc(100% - 200px)!important;
+        min-width: calc(80% - 200px)!important;
+    }
+}
 .grid-action{
     width: 200px;
     height: 100%;
