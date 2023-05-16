@@ -1,3 +1,6 @@
+.card-mode{
+    display: none!important;
+}
 .grid-container{
     width: 98%;
     border-radius: 8px;
@@ -37,6 +40,21 @@
         width: 150px!important;
         height: 100%!important;
     }
+    .header th {
+        padding: 14px!important;
+        font-size: 14px!important;
+    }
+    .table-data td {
+        padding: 14px!important;
+        font-size: 14px!important;
+        min-width: 60px!important;
+    }
+    td button{
+        height: 38px!important;
+        font-size: 14px!important;
+        padding-left: 8px!important;
+        padding-right: 8px!important;
+    }
 }
 
 @media screen and (max-width: 700px) {
@@ -44,12 +62,35 @@
         background-color: white!important;
         color: darkorange!important;
     }
-}
-@media screen and (max-width: 520px) {
-    .grid-title span{
-        font-size: 16px!important;
+    .header th {
+        padding: 12px!important;
+        font-size: 12px!important;
+    }
+    .table-data td {
+        padding: 12px!important;
+        font-size: 12px!important;
+        min-width: 40px!important;
+    }
+    td button{
+        height: 38px!important;
+        font-size: 12px!important;
+        padding-left: 6px!important;
+        padding-right: 6px!important;
     }
 }
+@media screen and (max-width: 577px) {
+    .grid-mode{
+        display: none!important;
+    }
+    .card-mode{
+        display: flex!important;
+    }
+    .grid-title span{
+        font-size: 14px!important;
+    }
+
+}
+
 @media screen and (max-width: 450px) {
     .grid-action{
         width: 100px!important;
@@ -145,4 +186,72 @@ td > img{
     width: 100px;
     height: 50px;
     align-self: center;
+}
+.grid-card-container{
+    width: 99%;
+    margin:auto;
+}
+.grid-card{
+    width: 98%;
+    border-radius: 8px;
+    border: 1px solid #e3e3e3;
+    margin: 10px auto;
+
+}
+.grid-card-row{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+    box-shadow: 0 0 1px #efefef;
+    border-radius: 8px;
+
+}
+.grid-card-row-child{
+    width: 99%;
+    margin: auto auto 1px auto;
+    display: flex;
+    flex-direction: row-reverse;
+    box-shadow: 0 0 1px #efefef;
+    border-radius: 8px;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.grid-card-actions{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+    align-items: center;
+
+
+}
+.grid-card-actions button{
+    height: 38px;
+    min-width: 50px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin: 3px 1px;
+    background-color: black;
+    color: white;
+    font-family: 'vazirmatn', sans-serif;
+    font-size: 12px!important;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+.card-img{
+    width: 70px!important;
+    height: 70px!important;
+    border-radius: 8px;
+}
+.span-img{
+    display: flex;
+    width: 50%;
+    justify-content: end;
+    align-items: center;
 }
