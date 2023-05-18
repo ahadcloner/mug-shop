@@ -76,15 +76,15 @@ function DataGrid({
                                                                     !field_names[hindex - 1].is_image &&
                                                                     !field_names[hindex - 1].is_boolean &&
                                                                     field_names[hindex - 1].title.split('.').length === 2 &&
-                                                                    <span>{d[field_names[hindex - 1].title.split('.')[0].toString()][field_names[hindex - 1].title.split('.')[1].toString()]}</span>
+                                                                    <span>{d?.[field_names?.[hindex - 1]?.title?.split('.')?.[0]?.toString()]?.[field_names?.[hindex - 1]?.title?.split('.')?.[1]?.toString()]}</span>
                                                                 }
                                                                 {
-                                                                    hindex > 0 && hindex < headers.length - 1 &&
+                                                                    hindex > 0 && hindex < headers.length - 1 &&  field_names[hindex - 1]?.title &&
                                                                     !field_names[hindex - 1].is_date &&
                                                                     !field_names[hindex - 1].is_image &&
                                                                     !field_names[hindex - 1].is_boolean &&
-                                                                    field_names[hindex - 1].title.split('.').length === 3 &&
-                                                                    <span>{d[field_names[hindex - 1].title.split('.')[0].toString()][field_names[hindex - 1].title.split('.')[1].toString()][field_names[hindex - 1].title.split('.')[2].toString()]}</span>
+                                                                    field_names[hindex - 1]?.title?.split('.')?.length === 3 &&
+                                                                    <span>{d?.[field_names?.[hindex - 1]?.title?.split('.')?.[0]?.toString()]?.[field_names?.[hindex - 1]?.title?.split('.')?.[1]?.toString()]?.[field_names?.[hindex - 1]?.title?.split('.')?.[2]?.toString()]}</span>
                                                                 }
                                                                 {
                                                                     hindex > 0 && hindex < headers.length - 1 &&

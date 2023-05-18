@@ -106,7 +106,7 @@ function EditUser() {
     },[user]);
 
     useEffect(() => {
-        get_cities(user?.city.state?.id).then(()=>{
+        get_cities(user?.city?.state?.id).then(()=>{
             setSelectedCity(user?.city?.id);
         })
     }, [selectedState])

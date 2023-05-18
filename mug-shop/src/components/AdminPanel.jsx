@@ -551,7 +551,7 @@ function AdminPanel() {
                         change_menu('categories')
                     }} className={`ap-menu-row ${apActiveMenu === 'categories' ? 'apActive' : ''}`}>
                         <TbCategory/>
-                        <span>دسته بندی ها</span>
+                        <span>گروه محصولات</span>
                     </div>
                     <div onClick={() => {
                         change_menu('products')
