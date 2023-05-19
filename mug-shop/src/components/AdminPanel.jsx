@@ -204,6 +204,28 @@ function AdminPanel() {
         },
     ]
 
+    const product_group_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'نام'},
+        {id: 2, title: 'الویت نمایش'},
+        {id: 9, title: 'عملیات'},
+    ];
+    const product_group_field_names = [
+        {id: 0, title: 'name', is_date: false, is_boolean: false,is_image:false},
+        {id: 1, title: 'order', is_date: false, is_boolean: false,is_image:false},
+    ]
+    const product_group_buttons = [
+        {
+            id: 1, title: 'افزایش الویت', func: (e)=>{inc_product_group(e)}
+        },
+        {
+            id: 2, title: 'کاهش الویت',  func: (e)=>{desc_product_group(e)}
+        },
+        {
+            id: 3, title: 'حذف گروه محصول',func:(e)=>{delete_product_group(e)}
+        },
+    ]
+
     const [showToggleMenu , setShowToggleMenu] = useState(true);
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
@@ -213,6 +235,7 @@ function AdminPanel() {
     const [userAddresses, setUserAddresses] = useState([]);
     const [userRoles, setUserRoles] = useState([]);
     const [banners, setBanners] = useState([]);
+    const [productGroups, setProductGroups] = useState([]);
     const [rolePermissions, setRolePermissions] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [refreshRoleData, setRefreshRoleData] = useState(false);
@@ -221,6 +244,7 @@ function AdminPanel() {
     const [refreshUserRolesData, setRefreshUserRolesData] = useState(false);
     const [refreshRolePermissions, setRefreshRolePermissions] = useState(false);
     const [refreshBanners, setRefreshBanners] = useState(false);
+    const [refreshProductGroups, setRefreshProductGroups] = useState(false);
     const [lastUserId, setLastUserId] = useState();
     const [lastRoleId, setLastRoleId] = useState();
     const [lastPermissionId, setLastPermissionId] = useState();
@@ -259,6 +283,9 @@ function AdminPanel() {
 
     const change_refresh_banners = () => {
         setRefreshBanners(!refreshBanners);
+    }
+    const change_refresh_product_groups = () => {
+        setRefreshProductGroups(!refreshProductGroups);
     }
     const change_menu = (name) => {
         setApActiveMenu(name);
@@ -427,6 +454,20 @@ function AdminPanel() {
                 }
             });
     }
+
+    const get_product_groups= async ()=>{
+        const data = await Simple_get('https://hitmug.ir/api/product-group/index', true
+            , '', cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setProductGroups(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت گروه محصولات')
+                }
+            });
+    }
+
+
     const inc_order = (id)=>{
         Simple_get('https://hitmug.ir/api/banner/inc-order/' ,true ,id , cookie.token , 'post' ,[])
             .then((d)=>{
@@ -438,11 +479,32 @@ function AdminPanel() {
             })
     }
 
+    const inc_product_group = (id)=>{
+        Simple_get('https://hitmug.ir/api/product-group/inc/' ,true ,id , cookie.token , 'post' ,[])
+            .then((d)=>{
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    change_refresh_product_groups()
+                } else {
+                    Notifier('danger', 'خطا در افزایش اولویت')
+                }
+            })
+    }
     const desc_order = (id)=>{
         Simple_get('https://hitmug.ir/api/banner/desc-order/' ,true ,id , cookie.token , 'post' ,[])
             .then((d)=>{
                 if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
                     change_refresh_banners()
+                } else {
+                    Notifier('danger', 'خطا در کاهش اولویت')
+                }
+            })
+    }
+
+    const desc_product_group = (id)=>{
+        Simple_get('https://hitmug.ir/api/product-group/desc/' ,true ,id , cookie.token , 'post' ,[])
+            .then((d)=>{
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    change_refresh_product_groups()
                 } else {
                     Notifier('danger', 'خطا در کاهش اولویت')
                 }
@@ -457,6 +519,18 @@ function AdminPanel() {
                     change_refresh_banners();
                 } else {
                     Notifier('danger', 'خطا در حذف بنر');
+                }
+            })
+    }
+
+    const delete_product_group=(id)=>{
+        Simple_get('https://hitmug.ir/api/product-group/delete/', true, id, cookie.token, 'delete', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    Notifier('success', 'گروه محصول با موفقیت حذف شد');
+                    change_refresh_product_groups()
+                } else {
+                    Notifier('danger', 'خطا در حذف گروه محصول');
                 }
             })
     }
@@ -483,6 +557,10 @@ function AdminPanel() {
     useEffect(() => {
         get_banners();
     }, [refreshBanners]);
+
+    useEffect(() => {
+        get_product_groups();
+    }, [refreshProductGroups]);
 
     const change_user_status = async (user_id) => {
 
@@ -548,7 +626,8 @@ function AdminPanel() {
                         <span>مدیریت بنر ها</span>
                     </div>
                     <div onClick={() => {
-                        change_menu('categories')
+                        change_menu('categories');
+                        change_refresh_product_groups();
                     }} className={`ap-menu-row ${apActiveMenu === 'categories' ? 'apActive' : ''}`}>
                         <TbCategory/>
                         <span>گروه محصولات</span>
@@ -752,6 +831,24 @@ function AdminPanel() {
                             field_names={banners_field_names}
                             buttons={banners_buttons}
                             reload={change_refresh_banners}
+                            additional_id_setter=''
+                        />
+                    </>
+                }
+                {
+                    apActiveMenu === 'categories' &&
+                    <>
+                        <DataGrid
+                            grid_title={'گروه های محصول'}
+                            data={productGroups}
+                            have_action={true}
+                            headers={product_group_headers}
+                            action_title={'افزودن گروه محصول'}
+                            action_function={()=>{navigate('/admin/add-product-group')}}
+                            action_function_argument=''
+                            field_names={product_group_field_names}
+                            buttons={product_group_buttons}
+                            reload={change_refresh_product_groups}
                             additional_id_setter=''
                         />
                     </>
