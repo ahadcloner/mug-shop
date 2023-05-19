@@ -5,18 +5,17 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Simple_get} from '../Utils/RequstSender';
 import {Notifier} from "../Utils/Notifier";
 
-function AddProductGroup() {
+function AddProductCategory() {
     const navigate = useNavigate();
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
-    const [selectedProductGroup , setSelectedProductGroup]=useState();
+    const [selectedProductCategory , setSelectedProductCategory]=useState();
 
     const submitForm = async () => {
         let dataObj = {
-            'name': selectedProductGroup,
-            'order':0
+            'name': selectedProductCategory,
         }
         let data =
-            await Simple_get('https://hitmug.ir/api/product-group/create', true, '', cookie.token, 'post', {...dataObj})
+            await Simple_get('https://hitmug.ir/api/product-category/create', true, '', cookie.token, 'post', {...dataObj})
                 .then((d => {
                         if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
                             Notifier('success', d[1]);
@@ -32,24 +31,24 @@ function AddProductGroup() {
     return (
         <div className={'add-user-form add-role-form'}>
             <div className="auf-top">
-                <span>افزودن گروه محصول </span>
+                <span>افزودن دسته بندی </span>
             </div>
             <div className="auf-bottom">
                 <div className="aufb-row align-right">
                     <div className="aufbr-child align-right">
-                        <span>نام گروه محصول</span>
+                        <span>نام دسته بندی</span>
                         <input name={'email'} type={"text"}
                                onChange={(e) => {
-                                   setSelectedProductGroup(e.target.value);
-                               }} value={selectedProductGroup}
+                                   setSelectedProductCategory(e.target.value);
+                               }} value={selectedProductCategory}
                         />
                     </div>
                 </div>
 
-                <button onClick={() => submitForm()} className={'add-user-button'}>ثبت گروه محصول </button>
+                <button onClick={() => submitForm()} className={'add-user-button'}>ثبت دسته بندی </button>
             </div>
         </div>
     )
 }
 
-export default AddProductGroup;
+export default AddProductCategory;

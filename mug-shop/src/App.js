@@ -30,6 +30,10 @@ import AddPermission from "./components/AdminForms/AddPermission";
 import EditPermission from "./components/AdminForms/EditPermission";
 import AddBanner from "./components/AdminForms/AddBanner";
 import AddProductGroup from "./components/AdminForms/AddProductGroup";
+import AddProductCategory from "./components/AdminForms/AddProductCategory";
+import AddProductBrand from "./components/AdminForms/AddProductBrand";
+import EditProductGroup from "./components/AdminForms/EditProductGroup";
+import EditProductCategory from "./components/AdminForms/EditProductCategory";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -54,8 +58,12 @@ function App() {
                             <Route path={'/admin/add-role'} element={<AddRole/>}/>
                             <Route path={'/admin/add-banner'} element={<AddBanner/>}/>
                             <Route path={'/admin/add-product-group'} element={<AddProductGroup/>}/>
+                            <Route path={'/admin/add-product-category'} element={<AddProductCategory/>}/>
+                            <Route path={'/admin/add-product-brand'} element={<AddProductBrand/>}/>
                             <Route path={'/admin/add-permission'} element={<AddPermission/>}/>
                             <Route path={'/admin/edit-role/:id'} element={<EditRole/>}/>
+                            <Route path={'/admin/edit-product-group/:id'} element={<EditProductGroup/>}/>
+                            <Route path={'/admin/edit-product-category/:id'} element={<EditProductCategory/>}/>
                             <Route path={'/admin/edit-permission/:id'} element={<EditPermission/>}/>
                             <Route path={'/admin/add-role-permission/:id'} element={<AddRolePermission/>}/>
                             <Route path={'*'} element={<NotFound/>}/>

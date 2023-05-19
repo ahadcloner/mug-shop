@@ -5,18 +5,28 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Simple_get} from '../Utils/RequstSender';
 import {Notifier} from "../Utils/Notifier";
 
-function AddProductGroup() {
+function EditProductGroup() {
     const navigate = useNavigate();
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
     const [selectedProductGroup , setSelectedProductGroup]=useState();
+    const product_group_id  = useParams();
 
+    const get_product_group = ()=>{
+        Simple_get('https://hitmug.ir/api/product-group/find/',true ,product_group_id.id ,cookie.token ,'get' ,[])
+            .then((d)=>{
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setSelectedProductGroup(d[0]?.name)
+                } else {
+                    Notifier('danger', 'خطا در دریافت گروه محصول')
+                }
+            })
+    }
     const submitForm = async () => {
         let dataObj = {
             'name': selectedProductGroup,
-            'order':0
         }
         let data =
-            await Simple_get('https://hitmug.ir/api/product-group/create', true, '', cookie.token, 'post', {...dataObj})
+            await Simple_get('https://hitmug.ir/api/product-group/update/', true, product_group_id.id, cookie.token, 'patch', {...dataObj})
                 .then((d => {
                         if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
                             Notifier('success', d[1]);
@@ -28,11 +38,13 @@ function AddProductGroup() {
                 )
     }
 
-
+    useEffect(() => {
+        get_product_group()
+    }, []);
     return (
         <div className={'add-user-form add-role-form'}>
             <div className="auf-top">
-                <span>افزودن گروه محصول </span>
+                <span>ویرایش گروه محصول  </span>
             </div>
             <div className="auf-bottom">
                 <div className="aufb-row align-right">
@@ -52,4 +64,4 @@ function AddProductGroup() {
     )
 }
 
-export default AddProductGroup;
+export default EditProductGroup;
