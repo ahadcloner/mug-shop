@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../assets/styles/MainPage.css';
 import Carosel from "./Carosel";
 import ProductGallery from "./ProductGallery";
@@ -10,6 +10,9 @@ import p2 from "../assets/images/2.jpg";
 import p3 from "../assets/images/3.jpg";
 import p4 from "../assets/images/4.jpg";
 import p5 from "../assets/images/5.jpg";
+import {Simple_get} from "./Utils/RequstSender";
+import {Notifier} from "./Utils/Notifier";
+import {useCookies} from "react-cookie";
 
 let data = [
     {id: 1, title: 'ماگ حرارتی مدل اول', price: '27,000', picture: p1},
@@ -32,26 +35,51 @@ let data = [
 ];
 
 function MainPage() {
-    const [viewMode , setViewMode] = useState('category');
-    const view_products = ()=>{
+    const [viewMode, setViewMode] = useState('category');
+    const [productCategories, setProductCategories] = useState([]);
+    const [refreshProductCategory, setRefreshProductCategory] = useState(false);
+    const [cookie, setCookie, removeCookie] = useCookies(['token']);
+
+    const change_refresh_product_category_data = () => {
+        setRefreshProductCategory(!refreshProductCategory);
+    }
+
+    const get_product_categories = async () => {
+        const data = await Simple_get('https://hitmug.ir/api/product-category/index', false
+            , '', '', 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setProductCategories(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت دسته بندی ها')
+                }
+            });
+    }
+    const view_products = () => {
         setViewMode('product');
     }
-    const view_categories = ()=>{
+    const view_categories = () => {
         setViewMode('category');
     }
+
+    useEffect(() => {
+        get_product_categories();
+    }, [refreshProductCategory])
 
     return (
         <>
             <div className={'mp-container'}>
                 {
-                    viewMode ==='category' &&
+                    viewMode === 'category' &&
                     <>
                         <Carosel></Carosel>
-                        <Category data={[...data]} title={'ماگ حرارتی'} changeView={view_products}></Category>
-                        <Category data={[...data]} title={'ماگ شیشه ای'} changeView={view_products}></Category>
-                        <Category data={[...data]} title={'ماگ رنگی'} changeView={view_products}></Category>
-                        <Category data={[...data]} title={'ماگ سفالی'} changeView={view_products}></Category>
-                        <Category data={[...data]} title={'ماگ سرامیکی'} changeView={view_products}></Category>
+                        {
+                            productCategories.map((pg) => {
+                                return (
+                                    <Category data={[...data]} title={pg.name} changeView={view_products}></Category>
+                                )
+                            })
+                        }
                     </>
                 }
                 {

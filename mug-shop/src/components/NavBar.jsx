@@ -14,6 +14,8 @@ import {FaUserTie} from "react-icons/fa";
 import {IoMdLogIn} from "react-icons/io";
 import axios from "axios";
 import {toast} from "react-toastify";
+import {Simple_get} from "./Utils/RequstSender";
+import {Notifier} from "./Utils/Notifier";
 
 
 function NavBar() {
@@ -21,8 +23,23 @@ function NavBar() {
     const {sideBarStatus, setSideBarStatus} = useContext(SbContext);
     const {UaClass, setUaClass} = useContext(UaContext);
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
-
     const [inputOp, setInputOp] = useState(0);
+    const [user , setUser] =useState();
+    const get_user =()=>{
+        if(cookie.token)
+        {
+            const data = Simple_get('https://hitmug.ir/api/user/auth/find',true ,'',cookie.token ,'get',[])
+                .then((d)=>{
+                    if (d?.[2] >=200 && d?.[2]<=300)
+                    {
+                        setUser(d?.[0])
+                    }
+                    else {
+                        Notifier('danger' ,'خطا در دریافت اطلاعات کاربر');
+                    }
+                })
+        }
+    }
     const notify_success = (message) => toast.success(message, {
         position: "top-center",
         autoClose: 5000,
@@ -42,6 +59,9 @@ function NavBar() {
     const handleUserArea = () => {
         setUaClass(UaClass === 'ua-hide' ? 'ua-show' : 'ua-hide');
     }
+    useEffect(() => {
+        get_user()
+    }, [cookie.token]);
     const call_logout = () => {
         let data = new FormData();
         data.append('token', cookie.token);
@@ -54,7 +74,6 @@ function NavBar() {
             data: data
         };
         axios(config).then((res) => {
-            console.log(res);
             notify_success(res['data']['message']);
             removeCookie('token');
             navigate('/');
@@ -77,14 +96,17 @@ function NavBar() {
                 </div>
             </div>
             <div className={'nb-center'}>
-                <h2 onClick={() => navigate('/')}>فروشگاه ماگ شاپ</h2>
+                <h2 onClick={() => {
+                    navigate('/');
+                    get_user();
+                }}>فروشگاه ماگ شاپ</h2>
             </div>
             <div className={'nb-left'}>
                 <div onClick={handleUserArea} className={'nb-user-area'}>
                     {
                         cookie.token &&
                         <>
-                            <span className={'large-screen'}>احد میرحبیبی</span>
+                            <span className={'large-screen'}>{user?.full_name?user?.full_name:user?.email}</span>
                             <VscTriangleDown className={'large-screen'}/>
                         </>
 

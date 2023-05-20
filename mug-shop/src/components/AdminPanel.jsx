@@ -267,7 +267,7 @@ function AdminPanel() {
 
     ]
 
-    const [showToggleMenu , setShowToggleMenu] = useState(true);
+    const [showToggleMenu , setShowToggleMenu] = useState(false);
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
     const [users, setUsers] = useState([]);
