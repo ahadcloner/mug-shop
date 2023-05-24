@@ -7,6 +7,7 @@ import {RiProductHuntFill} from "react-icons/ri";
 import {AiOutlineComment, AiOutlineUser} from "react-icons/ai";
 import {TbCategory, TbDiscount2} from "react-icons/tb";
 import {HiOutlineDocumentReport} from "react-icons/hi";
+import {IoOptions} from "react-icons/io5";
 import DataGrid from "./DataGrid";
 import axios from "axios";
 import {useCookies} from "react-cookie";
@@ -259,12 +260,33 @@ function AdminPanel() {
     ]
     const product_brands_buttons = [
         {
-            id: 1, title: 'ویرایش', func: (e)=>{''}
+            id: 1, title: 'ویرایش', func: (e)=>{navigate('/admin/edit-brand/'+e)}
         },
         {
             id: 2, title: 'حذف',  func: (e)=>{delete_product_brand(e)}
         },
 
+    ]
+
+    const product_options_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'نام'},
+        {id: 2, title: 'توضیحات'},
+        {id: 3, title: 'هزینه'},
+        {id: 9, title: 'عملیات'},
+    ];
+    const product_options_field_names = [
+        {id: 0, title: 'name', is_date: false, is_boolean: false,is_image:false},
+        {id: 1, title: 'description', is_date: false, is_boolean: false,is_image:false},
+        {id: 2, title: 'price', is_date: false, is_boolean: false,is_image:false},
+    ]
+    const product_options_buttons = [
+        {
+            id: 1, title: 'ویرایش', func:(e)=>navigate('/admin/edit-option/'+e)
+        },
+        {
+            id: 2, title: 'حذف',  func:(e)=>{delete_option(e)}
+        }
     ]
 
     const [showToggleMenu , setShowToggleMenu] = useState(false);
@@ -279,6 +301,7 @@ function AdminPanel() {
     const [productGroups, setProductGroups] = useState([]);
     const [productCategories, setProductCategories] = useState([]);
     const [productBrands, setProductBrands] = useState([]);
+    const [productOptions, setProductOptions] = useState([]);
     const [rolePermissions, setRolePermissions] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [refreshRoleData, setRefreshRoleData] = useState(false);
@@ -290,11 +313,14 @@ function AdminPanel() {
     const [refreshProductGroups, setRefreshProductGroups] = useState(false);
     const [refreshProductCategories, setRefreshProductCategories] = useState(false);
     const [refreshProductBrands, setRefreshProductBrands] = useState(false);
+    const [refreshProductOptions, setRefreshProductOptions] = useState(false);
     const [lastUserId, setLastUserId] = useState();
     const [lastRoleId, setLastRoleId] = useState();
     const [lastPermissionId, setLastPermissionId] = useState();
     const [LastProductGroupId, setLastProductGroupId] = useState();
     const [LastProductCategoryId, setLastProductCategoryId] = useState();
+    const [LastBrandId, setLastBrandId] = useState();
+    const [lastOptionId, setLastOptionId] = useState();
 
 
     const [newUser, setNewUser] = useState({
@@ -341,6 +367,10 @@ function AdminPanel() {
 
     const change_refresh_product_brands = () => {
         setRefreshProductBrands(!refreshProductBrands)
+    }
+
+    const change_refresh_product_options = () => {
+        setRefreshProductOptions(!refreshProductOptions)
     }
     const change_menu = (name) => {
         setApActiveMenu(name);
@@ -546,6 +576,18 @@ function AdminPanel() {
             });
     }
 
+    const get_product_options= async ()=>{
+        const data = await Simple_get('https://hitmug.ir/api/option/index', true
+            , '', cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setProductOptions(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت آپشن ها')
+                }
+            });
+    }
+
 
     const inc_order = (id)=>{
         Simple_get('https://hitmug.ir/api/banner/inc-order/' ,true ,id , cookie.token , 'post' ,[])
@@ -598,6 +640,18 @@ function AdminPanel() {
                     change_refresh_banners();
                 } else {
                     Notifier('danger', 'خطا در حذف بنر');
+                }
+            })
+    }
+
+    const delete_option=(id)=>{
+        Simple_get('https://hitmug.ir/api/option/delete/', true, id, cookie.token, 'delete', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    Notifier('success', 'آپشن با موفقیت حذف شد');
+                    change_refresh_product_options();
+                } else {
+                    Notifier('danger', 'خطا در حذف آپشن');
                 }
             })
     }
@@ -668,6 +722,9 @@ function AdminPanel() {
     useEffect(() => {
         get_product_brands();
     }, [refreshProductBrands]);
+    useEffect(() => {
+        get_product_options();
+    }, [refreshProductOptions]);
 
     const change_user_status = async (user_id) => {
 
@@ -736,23 +793,45 @@ function AdminPanel() {
                         change_menu('categories');
                         change_refresh_product_groups();
                     }} className={`ap-menu-row ${apActiveMenu === 'categories' ? 'apActive' : ''}`}>
-                        <TbCategory/>
+                        <IoOptions/>
                         <span>گروه محصولات</span>
                     </div>
                     <div onClick={() => {
                         change_menu('product-categories');
                         change_refresh_product_categories();
                     }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
-                        <TbCategory/>
+                        <IoOptions/>
                         <span>دسته بندی ها</span>
                     </div>
                     <div onClick={() => {
                         change_menu('product-brands');
                         change_refresh_product_brands();
                     }} className={`ap-menu-row ${apActiveMenu === 'product-brands' ? 'apActive' : ''}`}>
-                        <TbCategory/>
+                        <IoOptions/>
                         <span>برند ها</span>
                     </div>
+
+                    <div onClick={() => {
+                        change_menu('product-options');
+                        change_refresh_product_options();
+                    }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
+                        <IoOptions/>
+                        <span>آپشن ها</span>
+                    </div>
+                    <div onClick={() => {
+                        change_menu('product-tags');
+                    }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
+                        <IoOptions/>
+                        <span>تگ ها</span>
+                    </div>
+
+                    <div onClick={() => {
+                        change_menu('product-attributes');
+                    }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
+                        <IoOptions/>
+                        <span>ویژگی ها</span>
+                    </div>
+
                     <div onClick={() => {
                         change_menu('products')
                     }} className={`ap-menu-row ${apActiveMenu === 'products' ? 'apActive' : ''}`}>
@@ -1008,7 +1087,25 @@ function AdminPanel() {
                             field_names={product_brands_field_names}
                             buttons={product_brands_buttons}
                             reload={change_refresh_product_brands}
-                            additional_id_setter=''
+                            additional_id_setter={(e)=>{setLastBrandId(e)}}
+                        />
+                    </>
+                }
+                {
+                    apActiveMenu === 'product-options' &&
+                    <>
+                        <DataGrid
+                            grid_title={'آپشن ها'}
+                            data={productOptions}
+                            have_action={true}
+                            headers={product_options_headers}
+                            action_title={'افزودن آپشن'}
+                            action_function={()=>{navigate('/admin/add-option')}}
+                            action_function_argument=''
+                            field_names={product_options_field_names}
+                            buttons={product_options_buttons}
+                            reload={change_refresh_product_options}
+                            additional_id_setter={(e)=>{setLastOptionId(e)}}
                         />
                     </>
                 }
