@@ -289,6 +289,23 @@ function AdminPanel() {
         }
     ]
 
+    const tag_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'نام'},
+        {id: 9, title: 'عملیات'},
+    ];
+    const tag_field_names = [
+        {id: 0, title: 'name', is_date: false, is_boolean: false,is_image:false},
+    ]
+    const tag_buttons = [
+        {
+            id: 1, title: 'ویرایش', func:(e)=>navigate('/admin/edit-tag/'+e)
+        },
+        {
+            id: 2, title: 'حذف',  func:(e)=>{delete_tag(e)}
+        }
+    ]
+
     const [showToggleMenu , setShowToggleMenu] = useState(false);
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
@@ -302,6 +319,7 @@ function AdminPanel() {
     const [productCategories, setProductCategories] = useState([]);
     const [productBrands, setProductBrands] = useState([]);
     const [productOptions, setProductOptions] = useState([]);
+    const [tags, setTags] = useState([]);
     const [rolePermissions, setRolePermissions] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [refreshRoleData, setRefreshRoleData] = useState(false);
@@ -314,6 +332,7 @@ function AdminPanel() {
     const [refreshProductCategories, setRefreshProductCategories] = useState(false);
     const [refreshProductBrands, setRefreshProductBrands] = useState(false);
     const [refreshProductOptions, setRefreshProductOptions] = useState(false);
+    const [refreshTags, setRefreshTags] = useState(false);
     const [lastUserId, setLastUserId] = useState();
     const [lastRoleId, setLastRoleId] = useState();
     const [lastPermissionId, setLastPermissionId] = useState();
@@ -321,6 +340,7 @@ function AdminPanel() {
     const [LastProductCategoryId, setLastProductCategoryId] = useState();
     const [LastBrandId, setLastBrandId] = useState();
     const [lastOptionId, setLastOptionId] = useState();
+    const [lastTagId, setLastTagId] = useState();
 
 
     const [newUser, setNewUser] = useState({
@@ -372,6 +392,9 @@ function AdminPanel() {
     const change_refresh_product_options = () => {
         setRefreshProductOptions(!refreshProductOptions)
     }
+    const change_refresh_tags = () => {
+        setRefreshTags(!refreshTags)
+    }
     const change_menu = (name) => {
         setApActiveMenu(name);
     }
@@ -396,6 +419,18 @@ function AdminPanel() {
                     setRoles(d[0])
                 } else {
                     Notifier('danger', 'خطا در دریافت لیست نقش ها')
+                }
+            });
+    }
+
+    const get_tags = async () => {
+        const data = await Simple_get('https://hitmug.ir/api/tag/index', true
+            , '', cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setTags(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت لیست تگ ها')
                 }
             });
     }
@@ -656,6 +691,18 @@ function AdminPanel() {
             })
     }
 
+    const delete_tag=(id)=>{
+        Simple_get('https://hitmug.ir/api/tag/delete/', true, id, cookie.token, 'delete', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    Notifier('success', 'تگ با موفقیت حذف شد');
+                    change_refresh_tags();
+                } else {
+                    Notifier('danger', 'خطا در حذف تگ');
+                }
+            })
+    }
+
     const delete_product_group=(id)=>{
         Simple_get('https://hitmug.ir/api/product-group/delete/', true, id, cookie.token, 'delete', [])
             .then((d) => {
@@ -726,6 +773,10 @@ function AdminPanel() {
         get_product_options();
     }, [refreshProductOptions]);
 
+    useEffect(() => {
+        get_tags();
+    }, [refreshTags]);
+
     const change_user_status = async (user_id) => {
 
         const data = await Simple_get('https://hitmug.ir/api/user/change-status', true
@@ -753,6 +804,7 @@ function AdminPanel() {
                     <div onClick={()=>setShowToggleMenu(false)} className={'ap-menu-row close'}><span>X</span></div>
                     <div onClick={() => {
                         change_menu('users');
+                        setShowToggleMenu(false);
                         change_refresh();
                     }} className={`ap-menu-row ${apActiveMenu === 'users'
                     || apActiveMenu === 'user-address'
@@ -766,6 +818,7 @@ function AdminPanel() {
                     <div onClick={() => {
                         change_menu('roles');
                         change_refresh_roles();
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row 
                     ${apActiveMenu === 'roles'
                     || apActiveMenu === 'role-permissions'
@@ -776,6 +829,7 @@ function AdminPanel() {
                     </div>
                     <div onClick={() => {
                         change_menu('permissions');
+                        setShowToggleMenu(false);
 
                     }} className={`ap-menu-row ${apActiveMenu === 'permissions' ? 'apActive' : ''}`}>
                         <SiOpenaccess/>
@@ -785,6 +839,7 @@ function AdminPanel() {
 
                         change_menu('banners');
                         change_refresh_banners();
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'banners' ? 'apActive' : ''}`}>
                         <GiVerticalBanner/>
                         <span>مدیریت بنر ها</span>
@@ -792,6 +847,7 @@ function AdminPanel() {
                     <div onClick={() => {
                         change_menu('categories');
                         change_refresh_product_groups();
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'categories' ? 'apActive' : ''}`}>
                         <IoOptions/>
                         <span>گروه محصولات</span>
@@ -799,6 +855,7 @@ function AdminPanel() {
                     <div onClick={() => {
                         change_menu('product-categories');
                         change_refresh_product_categories();
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
                         <IoOptions/>
                         <span>دسته بندی ها</span>
@@ -806,6 +863,7 @@ function AdminPanel() {
                     <div onClick={() => {
                         change_menu('product-brands');
                         change_refresh_product_brands();
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'product-brands' ? 'apActive' : ''}`}>
                         <IoOptions/>
                         <span>برند ها</span>
@@ -814,56 +872,66 @@ function AdminPanel() {
                     <div onClick={() => {
                         change_menu('product-options');
                         change_refresh_product_options();
-                    }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
+                        setShowToggleMenu(false);
+                    }} className={`ap-menu-row ${apActiveMenu === 'product-options' ? 'apActive' : ''}`}>
                         <IoOptions/>
                         <span>آپشن ها</span>
                     </div>
                     <div onClick={() => {
                         change_menu('product-tags');
-                    }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
+                        change_refresh_tags();
+                        setShowToggleMenu(false);
+                    }} className={`ap-menu-row ${apActiveMenu === 'product-tags' ? 'apActive' : ''}`}>
                         <IoOptions/>
                         <span>تگ ها</span>
                     </div>
 
                     <div onClick={() => {
                         change_menu('product-attributes');
-                    }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
+                        setShowToggleMenu(false);
+                    }} className={`ap-menu-row ${apActiveMenu === 'product-attributes' ? 'apActive' : ''}`}>
                         <IoOptions/>
                         <span>ویژگی ها</span>
                     </div>
 
                     <div onClick={() => {
                         change_menu('products')
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'products' ? 'apActive' : ''}`}>
                         <RiProductHuntFill/>
                         <span>مدیریت محصولات </span>
                     </div>
                     <div onClick={() => {
                         change_menu('discounts')
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'discounts' ? 'apActive' : ''}`}>
                         <TbDiscount2/>
                         <span>مدیریت تخفیف ها </span>
                     </div>
                     <div onClick={() => {
                         change_menu('orders')
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'orders' ? 'apActive' : ''}`}>
                         <BsBorderWidth/>
                         <span>مدیریت سفارشات</span>
                     </div>
                     <div onClick={() => {
                         change_menu('comments')
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'comments' ? 'apActive' : ''}`}>
                         <AiOutlineComment/>
                         <span>مدیریت کامنت ها</span>
                     </div>
                     <div onClick={() => {
                         change_menu('finance')
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'finance' ? 'apActive' : ''}`}>
                         <GiMoneyStack/>
                         <span>مدیریت مالی</span>
                     </div>
                     <div onClick={() => {
                         change_menu('reports')
+                        setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'reports' ? 'apActive' : ''}`}>
                         <HiOutlineDocumentReport/>
                         <span>گزارشات</span>
@@ -1106,6 +1174,25 @@ function AdminPanel() {
                             buttons={product_options_buttons}
                             reload={change_refresh_product_options}
                             additional_id_setter={(e)=>{setLastOptionId(e)}}
+                        />
+                    </>
+                }
+
+                {
+                    apActiveMenu === 'product-tags' &&
+                    <>
+                        <DataGrid
+                            grid_title={'تگ ها'}
+                            data={tags}
+                            have_action={true}
+                            headers={tag_headers}
+                            action_title={'افزودن تگ'}
+                            action_function={()=>{navigate('/admin/add-tag')}}
+                            action_function_argument=''
+                            field_names={tag_field_names}
+                            buttons={tag_buttons}
+                            reload={change_refresh_tags}
+                            additional_id_setter={(e)=>{setLastTagId(e)}}
                         />
                     </>
                 }

@@ -38,6 +38,8 @@ import ProductManager from "./components/AdminForms/ProductManager";
 import EditBrand from "./components/AdminForms/EditBrand";
 import AddOption from "./components/AdminForms/AddOption";
 import EditOption from "./components/AdminForms/EditOption";
+import AddTag from "./components/AdminForms/AddTag";
+import EditTag from "./components/AdminForms/EditTag";
 
 function App() {
     const [sideBarStatus, setSideBarStatus] = useState('sb-hide');
@@ -73,7 +75,9 @@ function App() {
                             <Route path={'/admin/add-role-permission/:id'} element={<AddRolePermission/>}/>
                             <Route path={'/admin/product-manager'} element={<ProductManager/>}/>
                             <Route path={'/admin/add-option'} element={<AddOption/>}/>
+                            <Route path={'/admin/add-tag'} element={<AddTag/>}/>
                             <Route path={'/admin/edit-option/:id'} element={<EditOption/>}/>
+                            <Route path={'/admin/edit-tag/:id'} element={<EditTag/>}/>
                             <Route path={'*'} element={<NotFound/>}/>
                         </Routes>
                         <UserArea></UserArea>
