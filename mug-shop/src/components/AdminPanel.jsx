@@ -5,9 +5,13 @@ import {SiOpenaccess} from "react-icons/si";
 import {GiVerticalBanner, GiMoneyStack} from "react-icons/gi";
 import {RiProductHuntFill} from "react-icons/ri";
 import {AiOutlineComment, AiOutlineUser} from "react-icons/ai";
-import {TbCategory, TbDiscount2} from "react-icons/tb";
+import {TbCategory, TbDiscount2,TbBrandApple} from "react-icons/tb";
 import {HiOutlineDocumentReport} from "react-icons/hi";
 import {IoOptions} from "react-icons/io5";
+import {AiOutlineUngroup} from "react-icons/ai";
+import {BiTagAlt} from "react-icons/bi";
+import {MdEditAttributes} from "react-icons/md";
+
 import DataGrid from "./DataGrid";
 import axios from "axios";
 import {useCookies} from "react-cookie";
@@ -306,6 +310,23 @@ function AdminPanel() {
         }
     ]
 
+    const attribute_headers = [
+        {id: 0, title: 'ردیف'},
+        {id: 1, title: 'نام'},
+        {id: 9, title: 'عملیات'},
+    ];
+    const attribute_field_names = [
+        {id: 0, title: 'name', is_date: false, is_boolean: false,is_image:false},
+    ]
+    const attribute_buttons = [
+        {
+            id: 1, title: 'ویرایش', func:(e)=>navigate('/admin/edit-attribute/'+e)
+        },
+        {
+            id: 2, title: 'حذف',  func:(e)=>{delete_attribute(e)}
+        }
+    ]
+
     const [showToggleMenu , setShowToggleMenu] = useState(false);
     const [apActiveMenu, setApActiveMenu] = useState('users');
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
@@ -320,6 +341,7 @@ function AdminPanel() {
     const [productBrands, setProductBrands] = useState([]);
     const [productOptions, setProductOptions] = useState([]);
     const [tags, setTags] = useState([]);
+    const [attributes, setAttributes] = useState([]);
     const [rolePermissions, setRolePermissions] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [refreshRoleData, setRefreshRoleData] = useState(false);
@@ -333,6 +355,7 @@ function AdminPanel() {
     const [refreshProductBrands, setRefreshProductBrands] = useState(false);
     const [refreshProductOptions, setRefreshProductOptions] = useState(false);
     const [refreshTags, setRefreshTags] = useState(false);
+    const [refreshAttributes, setRefreshAttributes] = useState(false);
     const [lastUserId, setLastUserId] = useState();
     const [lastRoleId, setLastRoleId] = useState();
     const [lastPermissionId, setLastPermissionId] = useState();
@@ -341,6 +364,7 @@ function AdminPanel() {
     const [LastBrandId, setLastBrandId] = useState();
     const [lastOptionId, setLastOptionId] = useState();
     const [lastTagId, setLastTagId] = useState();
+    const [lastAttributeId, setLastAttributeId] = useState();
 
 
     const [newUser, setNewUser] = useState({
@@ -395,6 +419,10 @@ function AdminPanel() {
     const change_refresh_tags = () => {
         setRefreshTags(!refreshTags)
     }
+
+    const change_refresh_attributes = () => {
+        setRefreshAttributes(!refreshAttributes)
+    }
     const change_menu = (name) => {
         setApActiveMenu(name);
     }
@@ -431,6 +459,18 @@ function AdminPanel() {
                     setTags(d[0])
                 } else {
                     Notifier('danger', 'خطا در دریافت لیست تگ ها')
+                }
+            });
+    }
+
+    const get_attributes = async () => {
+        const data = await Simple_get('https://hitmug.ir/api/attribute/index', true
+            , '', cookie.token, 'get', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    setAttributes(d[0])
+                } else {
+                    Notifier('danger', 'خطا در دریافت لیست ویژگی ها')
                 }
             });
     }
@@ -703,6 +743,18 @@ function AdminPanel() {
             })
     }
 
+    const delete_attribute=(id)=>{
+        Simple_get('https://hitmug.ir/api/attribute/delete/', true, id, cookie.token, 'delete', [])
+            .then((d) => {
+                if (parseInt(d?.[2]) >= 200 && parseInt(d?.[2]) < 300) {
+                    Notifier('success', 'ویژگی با موفقیت حذف شد');
+                    change_refresh_attributes();
+                } else {
+                    Notifier('danger', 'خطا در حذف ویژگی');
+                }
+            })
+    }
+
     const delete_product_group=(id)=>{
         Simple_get('https://hitmug.ir/api/product-group/delete/', true, id, cookie.token, 'delete', [])
             .then((d) => {
@@ -772,10 +824,12 @@ function AdminPanel() {
     useEffect(() => {
         get_product_options();
     }, [refreshProductOptions]);
-
     useEffect(() => {
         get_tags();
     }, [refreshTags]);
+    useEffect(() => {
+        get_attributes();
+    }, [refreshAttributes]);
 
     const change_user_status = async (user_id) => {
 
@@ -849,7 +903,7 @@ function AdminPanel() {
                         change_refresh_product_groups();
                         setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'categories' ? 'apActive' : ''}`}>
-                        <IoOptions/>
+                        <AiOutlineUngroup/>
                         <span>گروه محصولات</span>
                     </div>
                     <div onClick={() => {
@@ -857,7 +911,7 @@ function AdminPanel() {
                         change_refresh_product_categories();
                         setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'product-categories' ? 'apActive' : ''}`}>
-                        <IoOptions/>
+                        <TbCategory/>
                         <span>دسته بندی ها</span>
                     </div>
                     <div onClick={() => {
@@ -865,7 +919,7 @@ function AdminPanel() {
                         change_refresh_product_brands();
                         setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'product-brands' ? 'apActive' : ''}`}>
-                        <IoOptions/>
+                        <TbBrandApple/>
                         <span>برند ها</span>
                     </div>
 
@@ -882,21 +936,23 @@ function AdminPanel() {
                         change_refresh_tags();
                         setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'product-tags' ? 'apActive' : ''}`}>
-                        <IoOptions/>
+                        <BiTagAlt/>
                         <span>تگ ها</span>
                     </div>
 
                     <div onClick={() => {
                         change_menu('product-attributes');
+                        change_refresh_attributes();
                         setShowToggleMenu(false);
                     }} className={`ap-menu-row ${apActiveMenu === 'product-attributes' ? 'apActive' : ''}`}>
-                        <IoOptions/>
+                        <MdEditAttributes/>
                         <span>ویژگی ها</span>
                     </div>
 
                     <div onClick={() => {
                         change_menu('products')
                         setShowToggleMenu(false);
+                        navigate('/admin/product-manager');
                     }} className={`ap-menu-row ${apActiveMenu === 'products' ? 'apActive' : ''}`}>
                         <RiProductHuntFill/>
                         <span>مدیریت محصولات </span>
@@ -1193,6 +1249,24 @@ function AdminPanel() {
                             buttons={tag_buttons}
                             reload={change_refresh_tags}
                             additional_id_setter={(e)=>{setLastTagId(e)}}
+                        />
+                    </>
+                }
+                {
+                    apActiveMenu === 'product-attributes' &&
+                    <>
+                        <DataGrid
+                            grid_title={'ویژگی ها'}
+                            data={attributes}
+                            have_action={true}
+                            headers={attribute_headers}
+                            action_title={'افزودن ویژگی'}
+                            action_function={()=>{navigate('/admin/add-attribute')}}
+                            action_function_argument=''
+                            field_names={attribute_field_names}
+                            buttons={attribute_buttons}
+                            reload={change_refresh_attributes}
+                            additional_id_setter={(e)=>{setLastAttributeId(e)}}
                         />
                     </>
                 }

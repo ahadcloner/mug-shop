@@ -4,6 +4,10 @@
     position: absolute;
     top: 65px;
     right: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .pm-top{
     width: 100%;
@@ -16,4 +20,103 @@
     color: black;
     font-family: 'vazirmatn', sans-serif;
     font-size: 18px;
+}
+.pm-bottom{
+    width: 99%;
+    height: calc(100% - 110px);
+    margin: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+.pm-card{
+    width: calc(100% /4 - 10px);
+    border-radius: 8px;
+    box-shadow: 0 0 10px #eaeaea;
+    margin: 5px;
+}
+.pm-card-pic{
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pm-card-pic img{
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+}
+.pm-card-attributes{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.pm-card-row
+{
+    width: 90%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 1px #ece8e8;
+    margin-top: 5px;
+}
+.pm-card-row span{
+    color: black;
+    font-size: 16px;
+    margin: 10px;
+}
+.pm-card-actions
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.pm-card-actions button{
+    width:95%;
+    border-radius: 8px;
+    background-color: black;
+    font-family: 'vazirmatn', sans-serif;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right:10px;
+    height: 50px;
+    outline: none;
+    border: none;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 0 0 3px #eaeaea ;
+}
+.pm-card-actions button:hover{
+    transform: scale(1);
+    background-color: darkorange;
+    color: white;
+    outline: none;
+}
+.float-button{
+    height: 50px;
+    border-radius: 8px;
+    background-color: darkorange;
+    font-family: 'vazirmatn', sans-serif;
+    font-size: 16px;
+    color: black;
+    cursor: pointer;
+    padding-left: 15px;
+    padding-right:15px;
+    outline: none;
+    border: none;
+    position: absolute;
+    left: 20px;
+    top:20px;
+
 }
