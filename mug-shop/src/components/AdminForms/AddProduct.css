@@ -7,7 +7,6 @@
 }
 .add-p-inputs{
     width: 99%;
-    height: 200px;
     border-radius: 8px;
     box-shadow: 0 0 10px #eaeaea;
     margin:auto;
@@ -16,6 +15,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    padding-bottom: 20px;
 }
 .inputs-row
 {
@@ -26,7 +26,7 @@
     align-items: center;
 }
 .inputs-child{
-    width: 49%;
+    width: 24%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -79,7 +79,7 @@
     width: 95%!important;
     max-width: 95%!important;
     height: 150px!important;
-    border: 2px dashed darkorange!important;
+    border: 2px dashed #d0d0d0 !important;
 }
 .gallery-album{
     width: 97%;

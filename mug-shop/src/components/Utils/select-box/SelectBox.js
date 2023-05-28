@@ -24,22 +24,25 @@ import CreatableSelect from 'react-select/creatable';
 
 
 
- export function  CreatableSelect_multi({options,value,Focus,CreateOption  }) {
+ export function  CreatableSelect_multi({options,value,Focus,CreateOption,...props  }) {
     const [selectedOption, setSelectedOption] = useState(null);
 
     return (
         <div className="custom-select">
             <CreatableSelect
+
                 isMulti={true}
                 isClearable={true}
                 onFocus={Focus}
                 onCreateOption={CreateOption}
+                onChange={props?.selectedOption}
                 // defaultValue={selectedOption}
                 // onChange={setSelectedOption}
                 isRtl={true}
                 options={options}
                 className={"custom-select-div"}
                 placeholder={""}
+                selectOpt
             />
         </div>
     );

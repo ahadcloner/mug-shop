@@ -18,10 +18,15 @@ function AddProduct() {
     const [selectedBanner, setSelectedBanner] = useState();
     const [categories, setCategories] = useState([]);
     const [refreshCategories , setRefreshCategories] = useState(false);
-    const [brands , setBrands] = useState();
-    const [tags , setTags] = useState();
-    const[ refreshBrands ,setRefreshBrands] = useState(false)
+    const [brands , setBrands] = useState([]);
+    const [tags , setTags] = useState([]);
+    const [attributes , setAttributes] = useState([]);
+    const[ refreshBrands ,setRefreshBrands] = useState(false);
+    const [refreshArrtirbutes , setRefreshAttrributes] = useState(false);
     const[ refreshTags ,setRefreshTags] = useState(false)
+    const [selectedAttributes , setSelectedAttributes] = useState([]);
+    const [selectedTags , setSelectedTags] = useState([]);
+    const [dynamicInputs ,setDynamicInputs] = useState([]);
     const chanage_refresh_brands = ()=>{
         setRefreshBrands(!refreshBrands);
     }
@@ -30,6 +35,9 @@ function AddProduct() {
     }
     const change_refresh_categories = ()=>{
         setRefreshCategories(!refreshCategories);
+    }
+    const change_refresh_arrtibutes = ()=>{
+        setRefreshAttrributes(!refreshArrtirbutes);
     }
     const get_categories =async () => {
         const data = await
@@ -75,7 +83,25 @@ function AddProduct() {
                 })
     }
 
+    const get_attributes =async () => {
+        const data = await
+            Simple_get('https://hitmug.ir/api/attribute/index',true ,'',cookie.token,'get',[])
+                .then((d)=>{
+                    if(d?.[2]>=200 && d?.[2]<=300)
+                    {
+                        setAttributes(d?.[0]);
+                    }
+                    else
+                    {
+                        Notifier('danger' ,'خطا در ویژگی برند ها');
+                    }
+                })
+    }
 
+
+    const create_input = (attributes)=>{
+        setDynamicInputs(...attributes);
+    }
     useEffect(() => {
         get_categories();
     }, [refreshCategories]);
@@ -87,6 +113,16 @@ function AddProduct() {
         get_tags();
     }, [refreshTags]);
 
+    useEffect(() => {
+        get_attributes();
+    }, [refreshArrtirbutes]);
+
+    useEffect(() => {
+        if(selectedAttributes.length>0)
+        {
+            create_input(selectedAttributes)
+        }
+    }, [selectedAttributes]);
     const handleCreate = (e) => {
         if(e)
         {
@@ -146,6 +182,26 @@ function AddProduct() {
                 })
         }
     }
+
+    const handleCreate_attribute = (e) => {
+        if(e)
+        {
+            let dataobj = {
+                'name':e
+            }
+            const data = Simple_get('https://hitmug.ir/api/attribute/create' , true , '',cookie.token ,'post',{...dataobj})
+                .then((d)=>{
+                    if(d?.[2]>=200 && d?.[2]<=300)
+                    {
+                        change_refresh_arrtibutes()
+                    }
+                    else
+                    {
+                        Notifier('danger' ,'خطا در ایجاد ویژگی');
+                    }
+                })
+        }
+    }
     return (
         <div className={'add-p-container'}>
             <div className="add-p-inputs">
@@ -158,8 +214,7 @@ function AddProduct() {
                         <span>قیمت واحد</span>
                         <input type={'text'}/>
                     </div>
-                </div>
-                <div className="inputs-row">
+
                     <div className="inputs-child">
                         <span>موجودی</span>
                         <input type={'text'}/>
@@ -168,6 +223,54 @@ function AddProduct() {
                         <span>تخفیف</span>
                         <input type={'text'}/>
                     </div>
+                </div>
+                <div className="inputs-row">
+                    <div className="inputs-child">
+                        <span>دسته بندی محصول</span>
+                        <CreatableSelect_single
+                            // isClearable
+                            Focus={change_refresh_categories}
+                            CreateOption={handleCreate}
+                            options={categories.map((d)=>{return {value:d.id , label:d.name}})}/>
+                    </div>
+                    <div className="inputs-child">
+                        <span>برند</span>
+                        <CreatableSelect_single
+                            // isClearable
+                            Focus={chanage_refresh_brands}
+                            CreateOption={handleCreate_brand}
+                            options={brands?.map((d)=>{return {value:d.id , label:d.name}})}/>
+                    </div>
+
+                    <div className="inputs-child">
+                        <span>تگ های محصول</span>
+                        <CreatableSelect_multi
+                            selectedOption = {(value)=>setSelectedTags(value)}
+                            Focus={chanage_refresh_tags}
+                            CreateOption={handleCreate_tag}
+                            options={tags?.map((d)=>{return {value:d.id , label:d.name}})}/>
+                    </div>
+                    <div className="inputs-child">
+                        <span>ویژگی ها</span>
+                        <CreatableSelect_multi
+                            selectedOption={(value)=>setSelectedAttributes(value)}
+                            Focus={change_refresh_arrtibutes}
+                            CreateOption={handleCreate_attribute}
+                            options={attributes?.map((d)=>{return {value:d.id , label:d.name}})}/>
+                        {/*<input type={'text'}/>*/}
+                    </div>
+                </div>
+                <div className="inputs-row">
+                    {
+                       dynamicInputs?.map((di)=>{
+                           return(
+                               <div className={'inputs-child'}>
+                                   <span>{di.label}</span>
+                                   <input type={'text'}/>
+                               </div>
+                           )
+                       })
+                    }
                 </div>
             </div>
             <div className="add-p-galley">
@@ -185,41 +288,6 @@ function AddProduct() {
                     <img src={data[0].picture}/>
 
 
-                </div>
-            </div>
-            <div className="add-p-inputs">
-                <div className="inputs-row">
-                    <div className="inputs-child">
-                        <span>دسته بندی محصول</span>
-                              <CreatableSelect_single
-                                        // isClearable
-                                         Focus={change_refresh_categories}
-                                         CreateOption={handleCreate}
-                                          options={categories.map((d)=>{return {value:d.id , label:d.name}})}/>
-                    </div>
-                    <div className="inputs-child">
-                        <span>برند</span>
-                        <CreatableSelect_single
-                             // isClearable
-                            Focus={chanage_refresh_brands}
-                            CreateOption={handleCreate_brand}
-                            options={brands?.map((d)=>{return {value:d.id , label:d.name}})}/>
-                    </div>
-                </div>
-                <div className="inputs-row">
-                    <div className="inputs-child">
-                        <span>موجودی</span>
-                        <CreatableSelect_multi
-
-                            Focus={chanage_refresh_tags}
-                            CreateOption={handleCreate_tag}
-                            options={tags?.map((d)=>{return {value:d.id , label:d.name}})}/>
-                        {/*<input type={'text'}/>*/}
-                    </div>
-                    <div className="inputs-child">
-                        <span>تخفیف</span>
-                        <input type={'text'}/>
-                    </div>
                 </div>
             </div>
         </div>
