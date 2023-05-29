@@ -30,3 +30,19 @@
      margin-top: 10px;
      border-radius: 8px !important;
 }
+
+.css-1p3m7a8-multiValue{
+    background-color: #141313!important;
+    border-radius: 8px!important;
+    padding: 8px!important;
+    font-size: 16px!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.css-wsp0cs-MultiValueGeneric{
+    font-size: 16px!important;
+    font-family: 'vazirmatn', sans-serif!important;
+    color: white!important;
+}

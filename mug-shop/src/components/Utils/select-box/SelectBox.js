@@ -3,7 +3,7 @@ import Select from 'react-select';
 import "./selectBox.css"
 import CreatableSelect from 'react-select/creatable';
 
- export function CreatableSelect_single({options,value,Focus,CreateOption }) {
+ export function CreatableSelect_single({options,value,Focus,CreateOption,...props }) {
     const [selectedOption, setSelectedOption] = useState(null);
 
     return (
@@ -11,6 +11,7 @@ import CreatableSelect from 'react-select/creatable';
             <CreatableSelect
                 onFocus={Focus}
                 onCreateOption={CreateOption}
+                onChange={props?.selectedOption}
                 isClearable
                 // defaultValue={selectedOption}
                 // onChange={setSelectedOption}
