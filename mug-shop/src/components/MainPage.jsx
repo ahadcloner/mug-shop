@@ -74,9 +74,9 @@ function MainPage() {
                     <>
                         <Carosel></Carosel>
                         {
-                            productCategories.map((pg) => {
+                            productCategories.map((pg,index) => {
                                 return (
-                                    <Category data={[...data]} title={pg.name} changeView={view_products}></Category>
+                                    <Category key={index} data={[...data]} title={pg.name} changeView={view_products}></Category>
                                 )
                             })
                         }

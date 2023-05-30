@@ -60,7 +60,7 @@ function DataGrid({
                                                     headers.map((h, hindex) => {
 
                                                         return (
-                                                            <div className={'grid-card-row-child'}>
+                                                            <div key={hindex} className={'grid-card-row-child'}>
                                                                 <span>{h.title}</span>
                                                                 {hindex === 0 && <span>{index + 1}</span>}
                                                                 {hindex === headers.length - 1 && <span></span>}
@@ -125,8 +125,8 @@ function DataGrid({
                                             </div>
                                             <div className={'grid-card-actions'}>
                                                 {
-                                                    buttons.map((b) => {
-                                                        return <button onClick={
+                                                    buttons.map((b,bindex) => {
+                                                        return < button onClick={
                                                             b.func !== '' ? () => {
                                                                 b.func(d.id);
                                                                 if (additional_id_setter !== '') {
@@ -175,7 +175,7 @@ function DataGrid({
 
                                     return (
 
-                                        <tr className={'table-data'} key={d.id}>
+                                        <tr  className={'table-data'} key={d.id}>
 
                                             <td>{index + 1}</td>
                                             {
@@ -217,7 +217,7 @@ function DataGrid({
                                             <td>
                                                 {
                                                     buttons.map((b) => {
-                                                        return <button onClick={
+                                                        return <button key={b?.id} onClick={
                                                             b.func !== '' ? () => {
                                                                 b.func(d.id);
                                                                 if (additional_id_setter !== '') {

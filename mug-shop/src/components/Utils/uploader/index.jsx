@@ -2,11 +2,6 @@ import { useState } from 'react';
 import ImageUploader from 'react-images-upload';
 
 const UploadForm = (props) => {
-    console.log(props)
-    // const [pictures, setPictures] = useState([]);
-
-
-
     return (
         <div className="flex w-full flex-col py-2" style={{width:"100%"}}>
 

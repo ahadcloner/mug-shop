@@ -10,6 +10,7 @@ import Creatable, {useCreatable} from 'react-select/creatable'
 import {CreatableSelect_multi, CreatableSelect_single} from "../Utils/select-box/SelectBox";
 import UploadForm from "../Utils/uploader";
 import "../Utils/uploader/uploadForm.css"
+import {queries} from "@testing-library/react";
 
 // import CreatableSelect from 'react-select/creatable';
 
@@ -39,6 +40,46 @@ function AddProduct() {
 
     const [dynamicInputs, setDynamicInputs] = useState([]);
 
+
+
+    const get_dynamic_inputs = ()=>{
+        let result ={}
+        for (let i=0 ; i<dynamicInputs.length;i++)
+        {
+            let element = document.getElementById('dynamic-input-'+dynamicInputs[i].label+'-'+i)
+            result[dynamicInputs[i].label] = element.value
+        }
+        return result
+    }
+
+    const create_product = (e)=>{
+        e.preventDefault();
+        let dynamics = get_dynamic_inputs()
+        let dataObg ={
+            'name':selectedName ,
+            'price':selectedPrice,
+            'discount':selectedDiscount ,
+            'quantity':selectedQuantity
+        }
+
+        for (const [key, value] of Object.entries(dynamics)) {
+            dataObg[key] = value
+        }
+
+        console.log(dataObg)
+
+        const data   = Simple_get('https://hitmug.ir/api/product/create',true ,'',cookie.token,'post',{...dataObg})
+            .then((d)=>{
+                if(d?.[2]>=200 && d?.[2] <=300)
+                {
+                    Notifier('success' ,'محصول با موفقیت ایجاد شد');
+                }
+                else
+                {
+                    Notifier('danger' ,'خطا');
+                }
+            });
+    }
     const chanage_refresh_brands = () => {
         setRefreshBrands(!refreshBrands);
     }
@@ -57,7 +98,7 @@ function AddProduct() {
                 .then((d) => {
                     if (d?.[2] >= 200 && d?.[2] <= 300) {
                         setCategories(d?.[0]);
-                        console.log(categories);
+
                     } else {
                         Notifier('danger', 'خطا در دریافت دسته بندی ها');
                     }
@@ -182,7 +223,7 @@ function AddProduct() {
                 })
         }
     }
-    console.log(selectedName , selectedDiscount , selectedPrice , selectedQuantity , selectedBrand ,selectedTags , selectedAttributes)
+
     return (
         <div className={'add-p-container'}>
             <div className={'add-p-header'}><h2>تعریف محصول</h2></div>
@@ -258,11 +299,11 @@ function AddProduct() {
                 </div>
                 <div className="inputs-row">
                     {
-                        dynamicInputs?.map((di) => {
+                        dynamicInputs?.map((di,index) => {
                             return (
-                                <div className={'inputs-child'}>
+                                <div key={di.value} className={'inputs-child'}>
                                     <span>{di?.label}</span>
-                                    <input type={'text'}/>
+                                    <input id={'dynamic-input-'+di.label.toString()+'-'+index.toString()} type={'text'}/>
                                 </div>
                             )
                         })
@@ -278,7 +319,7 @@ function AddProduct() {
                 </div>
             </div>
             <div className="add-p-actions">
-                <button>ثبت محصول</button>
+                <button type={"submit"} onClick={(e)=>create_product(e)}>ثبت محصول</button>
             </div>
         </div>
     )
