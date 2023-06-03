@@ -41,6 +41,7 @@ function AddProduct() {
     const [dynamicInputs, setDynamicInputs] = useState([]);
 
 
+    console.log(selectedTags)
 
     const get_dynamic_inputs = ()=>{
         let result ={}
@@ -59,14 +60,17 @@ function AddProduct() {
             'name':selectedName ,
             'price':selectedPrice,
             'discount':selectedDiscount ,
-            'quantity':selectedQuantity
+            'quantity':selectedQuantity,
+            'brand_id':selectedBrand?.value,
+            'category_id':selectedCategory?.value,
+            'tags':selectedTags,
+            'dynamics':dynamics
         }
 
-        for (const [key, value] of Object.entries(dynamics)) {
-            dataObg[key] = value
-        }
+        // for (const [key, value] of Object.entries(dynamics)) {
+        //     dataObg[key] = value
+        // }
 
-        console.log(dataObg)
 
         const data   = Simple_get('https://hitmug.ir/api/product/create',true ,'',cookie.token,'post',{...dataObg})
             .then((d)=>{
