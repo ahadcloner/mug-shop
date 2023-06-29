@@ -11,7 +11,6 @@ function EditBrand() {
     const [selectedBrand , setSelectedBrand]=useState();
     const [selectedBrand2 , setSelectedBrand2]=useState();
     const brand_id  = useParams();
-    console.log(selectedBrand ,selectedBrand2)
 
 
     const get_brands = ()=>{
