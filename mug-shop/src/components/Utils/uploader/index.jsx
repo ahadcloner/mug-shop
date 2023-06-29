@@ -4,8 +4,6 @@ import ImageUploader from 'react-images-upload';
 const UploadForm = (props) => {
     return (
         <div className="flex w-full flex-col py-2" style={{width:"100%"}}>
-
-
             <div className="w-full">
                 <label htmlFor="cover" className="block text-gray-700 font-bold">
                     {props.lable}
